@@ -420,6 +420,15 @@
             left: 50%;
             transform: translateX(-50%);
             z-index: 50;
+            transition: opacity 0.8s ease;
+        }
+
+        /* Op mobiel vervaagt de Tickets-knop bovenin zodra de Tickets-knop in de zwarte sectie in beeld komt */
+        @media (max-width: 639px) {
+            .ticket-btn-container.is-hidden {
+                opacity: 0;
+                pointer-events: none;
+            }
         }
 
         .agenda-btn-container {
@@ -793,7 +802,7 @@
     </div>
 
     <!-- Rechtsboven: Ticket Knop -->
-    <div class="ticket-btn-container">
+    <div class="ticket-btn-container" id="topTicketBtn">
         <a href="#tickets" class="top-btn">Tickets</a>
     </div>
 
@@ -961,6 +970,16 @@
                 logoWrapper.style.transform = 'scale(0.75)';
             }
         });
+
+        /* ---------- Tickets-knop bovenin verdwijnt zodra de onderste Tickets-knop in beeld is ---------- */
+        const topTicketBtn = document.getElementById('topTicketBtn');
+        const bottomTicketBtn = document.querySelector('.bottom-ticket-btn');
+        if (topTicketBtn && bottomTicketBtn && 'IntersectionObserver' in window) {
+            new IntersectionObserver(([entry]) => {
+                const inOfVoorbij = entry.isIntersecting || entry.boundingClientRect.top < 0;
+                topTicketBtn.classList.toggle('is-hidden', inOfVoorbij);
+            }).observe(bottomTicketBtn);
+        }
     </script>
 
     <!-- ===================== SCRIPT 2: muziek + volume. SoundCloud wordt pas geladen na een klik op play. ===================== -->
