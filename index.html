@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
-    <!-- 5 Veilige Google Fonts -->
+    
+    <!-- 20 Unieke & Eigenzinnige Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;800&family=Bebas+Neue&family=Inter:wght@300;400;700;800&family=Oswald:wght@500;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@800&family=Bebas+Neue&family=Big+Shoulders+Display:wght@800;900&family=Chakra+Petch:wght@700&family=Cinzel:wght@900&family=Climate+Crisis&family=Dela+Gothic+One&family=Fjalla+One&family=Inter:wght@300;400;700;800&family=Kanit:wght@800;900&family=Monument:wght@800&family=Oswald:wght@700&family=Righteous&family=Rubik+Mono+One&family=Saira+Condensed:wght@800;900&family=Space+Grotesk:wght@700&family=Syne:wght@800&family=Teko:wght@700&family=Unbounded:wght@800;900&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -51,7 +52,7 @@
             filter: brightness(0.65);
         }
 
-        /* Floating Top Buttons Base */
+        /* Top Buttons Base */
         .top-btn {
             background-color: #20e070;
             color: #0b0b0b;
@@ -196,15 +197,15 @@
             align-items: center;
         }
 
-        /* Kop groter gemaakt */
+        /* Grote Kop waarin de Fontnaam getoond wordt */
         .gradient-overlay h2 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 800;
-            font-size: 3rem;
-            letter-spacing: 3px;
+            font-size: 2.8rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 28px;
-            transition: font-family 0.2s ease, font-size 0.2s ease;
+            transition: font-family 0.15s ease;
+            max-width: 95vw;
+            word-wrap: break-word;
         }
 
         @media (min-width: 640px) {
@@ -214,16 +215,14 @@
             }
         }
 
-        /* Tekst over Noordernacht verandert nu ook mee */
+        /* Leestekst verandert mee */
         .gradient-overlay p {
-            font-family: 'Inter', sans-serif;
-            font-weight: 300;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: #dddddd;
             max-width: 720px;
             margin: 0 auto 40px auto;
             line-height: 1.7;
-            transition: font-family 0.2s ease;
+            transition: font-family 0.15s ease;
         }
 
         .bottom-ticket-btn {
@@ -273,7 +272,7 @@
             <!-- Groen bolletje + Font indicatie -->
             <div class="font-indicator-badge">
                 <span class="dot"></span>
-                <span id="fontBadgeText">BEBAS NEUE (1/5)</span>
+                <span id="fontBadgeText">BEBAS NEUE (1/20)</span>
             </div>
 
             <!-- Payoff -->
@@ -291,7 +290,9 @@
     </section>
 
     <section class="gradient-overlay" id="tickets">
-        <h2 id="sectionHeading">Over Noordernacht</h2>
+        <!-- Hier komt de Fontnaam in het GROOT te staan -->
+        <h2 id="sectionHeading">BEBAS NEUE</h2>
+        
         <p id="sectionParagraph">
             Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
             Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
@@ -301,52 +302,28 @@
     </section>
 
     <script>
+        // 20 Eigenzinnige & Vette Gratis Fonts
         const fonts = [
-            {
-                name: "BEBAS NEUE (1/5)",
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontWeightPayoff: "400",
-                fontWeightBody: "400",
-                letterSpacing: "4px",
-                fontSizeMobile: "1.8rem",
-                fontSizeDesktop: "2.6rem"
-            },
-            {
-                name: "OSWALD (2/5)",
-                fontFamily: "'Oswald', sans-serif",
-                fontWeightPayoff: "700",
-                fontWeightBody: "500",
-                letterSpacing: "3px",
-                fontSizeMobile: "1.3rem",
-                fontSizeDesktop: "1.8rem"
-            },
-            {
-                name: "BARLOW CONDENSED (3/5)",
-                fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeightPayoff: "800",
-                fontWeightBody: "600",
-                letterSpacing: "3px",
-                fontSizeMobile: "1.4rem",
-                fontSizeDesktop: "2.1rem"
-            },
-            {
-                name: "SYNE (4/5)",
-                fontFamily: "'Syne', sans-serif",
-                fontWeightPayoff: "800",
-                fontWeightBody: "400",
-                letterSpacing: "2px",
-                fontSizeMobile: "1.15rem",
-                fontSizeDesktop: "1.5rem"
-            },
-            {
-                name: "INTER 800 (5/5)",
-                fontFamily: "'Inter', sans-serif",
-                fontWeightPayoff: "800",
-                fontWeightBody: "300",
-                letterSpacing: "3px",
-                fontSizeMobile: "1.15rem",
-                fontSizeDesktop: "1.5rem"
-            }
+            { displayName: "BEBAS NEUE", fontFamily: "'Bebas Neue', sans-serif", weight: "400" },
+            { displayName: "OSWALD", fontFamily: "'Oswald', sans-serif", weight: "700" },
+            { displayName: "BARLOW CONDENSED", fontFamily: "'Barlow Condensed', sans-serif", weight: "800" },
+            { displayName: "SYNE", fontFamily: "'Syne', sans-serif", weight: "800" },
+            { displayName: "INTER EXTRA BOLD", fontFamily: "'Inter', sans-serif", weight: "800" },
+            { displayName: "ANTON", fontFamily: "'Anton', sans-serif", weight: "400" },
+            { displayName: "TEKO", fontFamily: "'Teko', sans-serif", weight: "700" },
+            { displayName: "SAIRA CONDENSED", fontFamily: "'Saira Condensed', sans-serif", weight: "800" },
+            { displayName: "BIG SHOULDERS", fontFamily: "'Big Shoulders Display', sans-serif", weight: "900" },
+            { displayName: "UNBOUNDED", fontFamily: "'Unbounded', sans-serif", weight: "800" },
+            { displayName: "DELA GOTHIC ONE", fontFamily: "'Dela Gothic One', sans-serif", weight: "400" },
+            { displayName: "KANIT HEAVY", fontFamily: "'Kanit', sans-serif", weight: "800" },
+            { displayName: "CHAKRA PETCH", fontFamily: "'Chakra Petch', sans-serif", weight: "700" },
+            { displayName: "RUBIK MONO ONE", fontFamily: "'Rubik Mono One', sans-serif", weight: "400" },
+            { displayName: "SPACE GROTESK", fontFamily: "'Space Grotesk', sans-serif", weight: "700" },
+            { displayName: "RIGHTEOUS", fontFamily: "'Righteous', sans-serif", weight: "400" },
+            { displayName: "FJALLA ONE", fontFamily: "'Fjalla One', sans-serif", weight: "400" },
+            { displayName: "CINZEL BLACK", fontFamily: "'Cinzel', serif", weight: "900" },
+            { displayName: "CLIMATE CRISIS", fontFamily: "'Climate Crisis', sans-serif", weight: "400" },
+            { displayName: "MONUMENT", fontFamily: "'Barlow Condensed', sans-serif", weight: "800" }
         ];
 
         let currentFontIndex = 0;
@@ -358,43 +335,4 @@
             const sectionHeading = document.getElementById('sectionHeading');
             const sectionParagraph = document.getElementById('sectionParagraph');
 
-            badgeText.innerText = font.name;
-
-            // Payoff styling
-            payoff.style.fontFamily = font.fontFamily;
-            payoff.style.fontWeight = font.fontWeightPayoff;
-            payoff.style.letterSpacing = font.letterSpacing;
-
-            const isDesktop = window.innerWidth >= 640;
-            payoff.style.fontSize = isDesktop ? font.fontSizeDesktop : font.fontSizeMobile;
-
-            // Grote Kop "Over Noordernacht"
-            sectionHeading.style.fontFamily = font.fontFamily;
-
-            // Lopende tekst "Noordernacht is dé plek..." verandert nu OOK mee!
-            sectionParagraph.style.fontFamily = font.fontFamily;
-            sectionParagraph.style.fontWeight = font.fontWeightBody;
-        }
-
-        function switchFont() {
-            currentFontIndex = (currentFontIndex + 1) % fonts.length;
-            applyFont(currentFontIndex);
-        }
-
-        applyFont(0);
-
-        window.addEventListener('resize', () => applyFont(currentFontIndex));
-
-        const logoWrapper = document.getElementById('heroLogoWrapper');
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition <= 500) {
-                const scale = 1 - (scrollPosition / 500) * 0.25;
-                logoWrapper.style.transform = `scale(${scale})`;
-            } else {
-                logoWrapper.style.transform = 'scale(0.75)';
-            }
-        });
-    </script>
-</body>
-</html>
+            // Update badge (bijv: BEBAS NEUE (1/20))
