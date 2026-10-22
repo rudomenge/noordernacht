@@ -1,4 +1,4 @@
-<!-- Versie: 36.2 - Noordernacht: mobiel logo 1.1x groter, payoff dichter op het logo, geheel gecentreerd; rest van v36.1 -->
+<!-- Versie: 36.3 - Noordernacht: tekst "Over Noordernacht" op desktop gelijkmatig verdeeld (geen los woord onderaan); rest van v36.2 -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -652,6 +652,8 @@
                 max-width: 960px;
                 padding: 0 24px;
                 margin-bottom: 65px;
+                /* Regels gelijkmatig verdelen, zodat er geen los woord onderaan blijft staan */
+                text-wrap: balance;
             }
         }
 
@@ -737,7 +739,7 @@
 <body>
 
     <!-- Klein versienummer linksboven -->
-    <div class="version-tag">v36.2</div>
+    <div class="version-tag">v36.3</div>
 
     <!-- Muziekspeler linksonder: play/pauze + titel + artiest + volume. Muziek staat uit tot de bezoeker op play drukt. -->
     <div id="scPlayer" class="sc-player invite" role="group" aria-label="Muziekspeler">
@@ -822,7 +824,7 @@
         <p>
             Noordernacht is waar gelijkgestemden samenkomen in het duister van de nacht.
             Laat de muziek je meenemen en verlies jezelf in een ruimte waarin muziek, energie
-            en verbinding je meenemen. Hier vind je jouw mensen en beleef je het moment.
+            en verbinding je meenemen. Hier vind je jouw mensen en beleef je het&nbsp;moment.
         </p>
         <a href="#tickets" class="bottom-ticket-btn">
             <span class="d-only">Bestel hier je tickets</span><span class="m-only">Tickets</span>
