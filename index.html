@@ -22,7 +22,7 @@
         }
     </script>
     <style>
-        /* Fixed Video Background for Parallax Scroll */
+        /* Fixed Video Background for Parallax Effect */
         .bg-video {
             position: fixed;
             top: 0;
@@ -31,24 +31,34 @@
             height: 100vh;
             z-index: -20;
             object-fit: cover;
-            filter: brightness(0.7) contrast(1.05);
+            filter: brightness(0.75) contrast(1.05);
         }
 
-        /* Glowing Accent for Buttons and Logo */
+        /* Glowing Accent for Buttons & Logo Shadow */
         .glow-btn {
             box-shadow: 0 0 20px rgba(32, 224, 112, 0.4);
         }
         .glow-btn:hover {
-            box-shadow: 0 0 30px rgba(32, 224, 112, 0.7);
+            box-shadow: 0 0 35px rgba(32, 224, 112, 0.75);
         }
 
         .logo-glow {
-            filter: drop-shadow(0 0 35px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 25px rgba(32, 224, 112, 0.3));
+            filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 20px rgba(32, 224, 112, 0.25));
         }
 
-        /* Smooth Gradient Transition Mask from Hero to Semi-Transparent Info */
+        /* 0% to ~70% Gradient Transition Mask (NO BLUR) */
         .hero-gradient-overlay {
-            background: linear-gradient(to bottom, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, 0.5) 60%, rgba(11, 11, 11, 0.8) 100%);
+            background: linear-gradient(
+                to bottom, 
+                rgba(11, 11, 11, 0) 0%, 
+                rgba(11, 11, 11, 0.35) 40%, 
+                rgba(11, 11, 11, 0.7) 100%
+            );
+        }
+
+        /* Semi-transparent dark section background (~70% opacity so video shines through) */
+        .semi-transparent-content {
+            background-color: rgba(11, 11, 11, 0.72);
         }
 
         /* Smooth transformation for the scrolling shrink animation */
@@ -66,37 +76,38 @@
         Je browser ondersteunt geen video.
     </video>
 
-    <!-- Ambient Dark Overlay for Readability -->
-    <div class="fixed inset-0 bg-black/25 z-[-10] pointer-events-none"></div>
+    <!-- Subtle Ambient Dark Overlay for General Contrast -->
+    <div class="fixed inset-0 bg-black/20 z-[-10] pointer-events-none"></div>
 
-    <!-- 2. MINIMAL TOP HEADER (ONLY TICKETS BUTTON) -->
+    <!-- 2. MINIMAL TOP HEADER (ONLY GLOWING TICKETS BUTTON) -->
     <header class="fixed top-0 left-0 w-full z-50 p-6 sm:p-8 flex justify-end pointer-events-none">
         <a href="#tickets" class="pointer-events-auto inline-flex items-center justify-center px-7 py-3 text-sm font-black text-black bg-brand-500 hover:bg-brand-400 rounded-full transition-all duration-300 transform hover:scale-105 glow-btn tracking-wider uppercase">
             Tickets
         </a>
     </header>
 
-    <!-- 3. HERO SECTION WITH PERFECTLY CENTERED LOGO (OPTIMIZED FOR DESKTOP & MOBILE) -->
+    <!-- 3. HERO SECTION WITH CENTERED LOGO & MOBILE FINE-TUNING -->
     <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-4 sm:px-6 z-10 overflow-hidden">
         
         <!-- Central Logo & Payoff Content Wrapper -->
-        <!-- Mobile elevation (-mt-6 on sm/mobile) & larger mobile sizing (w-[92vw]) -->
-        <div id="heroLogoWrapper" class="flex flex-col items-center justify-center max-w-5xl w-full mx-auto my-auto -mt-6 sm:mt-0">
-            <!-- 120% larger on mobile screens, balanced on desktop -->
+        <!-- On mobile: positioned lower (mt-10) & 130% larger (w-[98vw] max-w-none) -->
+        <!-- On desktop: perfectly centered (sm:mt-0) -->
+        <div id="heroLogoWrapper" class="flex flex-col items-center justify-center max-w-5xl w-full mx-auto my-auto mt-10 sm:mt-0">
+            <!-- Mobile 130% boost: w-[98vw] sm:w-[760px] md:w-[840px] lg:w-[880px] -->
             <img 
                 src="logo.png" 
                 alt="Noordernacht Logo" 
-                class="w-[92vw] sm:w-[720px] md:w-[820px] lg:w-[880px] max-w-[95vw] sm:max-w-[88vw] h-auto logo-glow transition-all duration-300 transform hover:scale-[1.01] mb-3 sm:mb-6"
+                class="w-[98vw] sm:w-[760px] md:w-[840px] lg:w-[880px] h-auto logo-glow transition-all duration-300 transform hover:scale-[1.01] mb-4 sm:mb-6"
                 onerror="this.onerror=null; this.src='https://placehold.co/880x500/000000/20e070?text=NOORDERNACHT';"
             />
             
-            <!-- Bold & Heavy Payoff Slogan -->
-            <h1 class="text-base sm:text-2xl md:text-3xl font-extrabold uppercase tracking-[0.18em] sm:tracking-[0.25em] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] max-w-2xl leading-relaxed px-2">
+            <!-- Bold Payoff Slogan -->
+            <h1 class="text-sm sm:text-2xl md:text-3xl font-extrabold uppercase tracking-[0.16em] sm:tracking-[0.25em] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] max-w-2xl leading-relaxed px-2">
                 Find your people, Feel the moment
             </h1>
         </div>
 
-        <!-- Scroll Indicator Arrow Only -->
+        <!-- Bouncing Scroll Arrow Indicator -->
         <a href="#info" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center text-gray-400 hover:text-brand-400 transition-colors cursor-pointer group z-20">
             <svg class="w-6 h-6 sm:w-7 sm:h-7 animate-bounce text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
@@ -104,14 +115,14 @@
         </a>
     </section>
 
-    <!-- 4. SEMI-TRANSPARENT PARALLAX SCROLL CONTENT SECTION (80% OPACITY FOR VIDEO SHINE-THROUGH) -->
+    <!-- 4. PARALLAX CONTENT SECTION WITH CLEAN GRADIENT TRANSITION (NO BLUR, 70% OPACITY) -->
     <div id="info" class="relative z-20">
         
-        <!-- Smooth Gradient Fade Transition Overlay -->
-        <div class="h-28 sm:h-48 w-full hero-gradient-overlay pointer-events-none"></div>
+        <!-- Smooth Dark Gradient Transition Mask (From 0% to ~70% Dark) -->
+        <div class="h-36 sm:h-52 w-full hero-gradient-overlay pointer-events-none"></div>
 
-        <!-- 80% Opaque Dark Area with Backdrop Blur -->
-        <div class="bg-[#0b0b0b]/80 backdrop-blur-md px-6 pb-24 border-t border-white/5 shadow-2xl">
+        <!-- ~70% Opaque Dark Background Section (No Blur, Video Visible Behind) -->
+        <div class="semi-transparent-content px-6 pb-24 border-t border-white/5 shadow-2xl">
             <div class="max-w-3xl mx-auto text-center pt-8">
                 
                 <span class="inline-block w-12 h-1 bg-brand-500 rounded-full mb-8"></span>
@@ -138,8 +149,8 @@
             </div>
         </div>
 
-        <!-- Footer (Also 80% Opaque) -->
-        <footer class="w-full bg-[#0b0b0b]/80 backdrop-blur-md border-t border-white/10 py-8 px-6 text-center text-xs text-gray-400">
+        <!-- Footer (~70% Opaque) -->
+        <footer class="w-full semi-transparent-content border-t border-white/10 py-8 px-6 text-center text-xs text-gray-400">
             &copy; 2026 Noordernacht. Alle rechten voorbehouden.
         </footer>
     </div>
@@ -152,11 +163,10 @@
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
 
-            // Subtle scale reduction without modifying opacity
             if (scrollY <= windowHeight) {
                 const progress = scrollY / windowHeight;
-                const scale = Math.max(0.75, 1 - (progress * 0.25));
-                const translateY = scrollY * 0.2; // Parallax translation
+                const scale = Math.max(0.72, 1 - (progress * 0.28));
+                const translateY = scrollY * 0.18; // Subtle parallax translation
 
                 logoWrapper.style.transform = `translateY(${translateY}px) scale(${scale})`;
             }
