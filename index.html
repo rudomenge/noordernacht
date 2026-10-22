@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
     
-    <!-- Jouw Top 3 Google Fonts + Inter voor de leestekst -->
+    <!-- Top 3 Google Fonts + Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Inter:wght@300;400;700;800&family=Space+Grotesk:wght@700&family=Unbounded:wght@800;900&display=swap" rel="stylesheet">
@@ -77,7 +77,7 @@
             box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
         }
 
-        /* Font Switch Knop Linksboven met Versienummer */
+        /* Font Switch Knop Linksboven + Versie Tag */
         .font-btn-container {
             position: fixed;
             top: 25px;
@@ -209,7 +209,7 @@
             align-items: center;
         }
 
-        /* Kop "Over Noordernacht" - Wisselt mee met de knop */
+        /* Kop "Over Noordernacht" */
         .gradient-overlay h2 {
             font-size: 2.2rem;
             letter-spacing: 2px;
@@ -226,7 +226,7 @@
             }
         }
 
-        /* Broodtekst - VAST op Inter */
+        /* Broodtekst - Altijd vast op Inter */
         .gradient-overlay p {
             font-family: 'Inter', sans-serif !important;
             font-weight: 300;
@@ -257,4 +257,106 @@
             background-color: #28f07c;
             transform: translateY(-3px) scale(1.05);
         }
-    </
+    </style>
+</head>
+<body>
+
+    <!-- Linksboven: Font Switch Knop + Versietag -->
+    <div class="font-btn-container">
+        <button id="fontBtn" class="top-btn" type="button">Font</button>
+        <span class="version-tag">v12.0</span>
+    </div>
+
+    <!-- Rechtsboven: Ticket Knop -->
+    <div class="ticket-btn-container">
+        <a href="#tickets" class="top-btn">Tickets</a>
+    </div>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="achtergrond.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-content">
+            <div id="heroLogoWrapper">
+                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
+            </div>
+
+            <!-- Groen bolletje + Font indicatie -->
+            <div class="font-indicator-badge">
+                <span class="dot"></span>
+                <span id="fontBadgeText">UNBOUNDED (1/3)</span>
+            </div>
+
+            <!-- Payoff -->
+            <div id="payoffText" class="hero-subtitle">
+                <span class="whitespace-nowrap">Find your people,</span> 
+                <span class="whitespace-nowrap">Feel the moment</span>
+            </div>
+        </div>
+
+        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </a>
+    </section>
+
+    <section class="gradient-overlay" id="tickets">
+        <h2 id="sectionHeading">Over Noordernacht</h2>
+        
+        <p>
+            Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
+            Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
+            waarin muziek, energie en verbinding centraal staan. Hier vind je jouw mensen en beleef je het moment.
+        </p>
+        <a href="#tickets" class="bottom-ticket-btn">Meteen Tickets Bestellen</a>
+    </section>
+
+    <script>
+        // Jouw Top 3 Favorites
+        const fonts = [
+            { displayName: "UNBOUNDED", fontFamily: "'Unbounded', sans-serif", weight: "800" },
+            { displayName: "DELA GOTHIC ONE", fontFamily: "'Dela Gothic One', sans-serif", weight: "400" },
+            { displayName: "SPACE GROTESK", fontFamily: "'Space Grotesk', sans-serif", weight: "700" }
+        ];
+
+        let currentFontIndex = 0;
+
+        function applyFont(index) {
+            const font = fonts[index];
+            const payoff = document.getElementById('payoffText');
+            const badgeText = document.getElementById('fontBadgeText');
+            const sectionHeading = document.getElementById('sectionHeading');
+
+            // Badge text (bijv: UNBOUNDED (1/3))
+            badgeText.innerText = `${font.displayName} (${index + 1}/${fonts.length})`;
+
+            // Alleen Payoff en Kop switchen
+            payoff.style.fontFamily = font.fontFamily;
+            payoff.style.fontWeight = font.weight;
+
+            sectionHeading.style.fontFamily = font.fontFamily;
+            sectionHeading.style.fontWeight = font.weight;
+        }
+
+        function switchFont() {
+            currentFontIndex = (currentFontIndex + 1) % fonts.length;
+            applyFont(currentFontIndex);
+        }
+
+        document.getElementById('fontBtn').addEventListener('click', switchFont);
+
+        applyFont(0);
+
+        const logoWrapper = document.getElementById('heroLogoWrapper');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            if (scrollPosition <= 500) {
+                const scale = 1 - (scrollPosition / 500) * 0.25;
+                logoWrapper.style.transform = `scale(${scale})`;
+            } else {
+                logoWrapper.style.transform = 'scale(0.75)';
+            }
+        });
+    </script>
+</body>
+</html>
