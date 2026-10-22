@@ -75,7 +75,7 @@
             box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
         }
 
-        /* Alleen nog de versie & status indicator linksboven */
+        /* Schone status-indicator linksboven */
         .info-tag-container {
             position: fixed;
             top: 25px;
@@ -131,6 +131,7 @@
             margin-bottom: 20px;
             filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
             will-change: transform;
+            transform-origin: center center;
         }
 
         @media (min-width: 640px) {
@@ -276,9 +277,8 @@
         </svg>
     </div>
 
-    <!-- Schone status-indicator linksboven -->
     <div class="info-tag-container">
-        <span class="version-tag">v21.0</span>
+        <span class="version-tag">v21.1</span>
         <span class="status-tag">SMART AUTO</span>
     </div>
 
@@ -293,4 +293,129 @@
 
         <div class="hero-content">
             <div id="heroLogoWrapper">
-                <img src="logo.png" alt
+                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
+            </div>
+
+            <div class="hero-subtitle">
+                <span class="whitespace-nowrap">Find your people,</span> 
+                <span class="whitespace-nowrap">Feel the moment</span>
+            </div>
+        </div>
+
+        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </a>
+    </section>
+
+    <section class="gradient-overlay" id="tickets">
+        <h2>
+            Over<br class="desktop-only-break"> 
+            Noorder<br class="desktop-only-break"> 
+            nacht
+        </h2>
+        <p>
+            Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
+            Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
+            waarin muziek, energie en verbinding centraal staan. Hier vind je jouw mensen en beleef je het moment.
+        </p>
+        <a href="#tickets" class="bottom-ticket-btn">Meteen Tickets Bestellen</a>
+    </section>
+
+    <script>
+        const starContainer = document.getElementById('starContainer');
+        
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        let starX = targetX;
+        let starY = targetY;
+
+        let rotationAngle = 0;
+        let lastMouseTime = Date.now();
+        let isUserMovingMouse = true;
+        let isTouchDevice = false;
+        let orbitTime = 0;
+
+        function updateMousePos(x, y) {
+            lastMouseTime = Date.now();
+            isUserMovingMouse = true;
+            targetX = x;
+            targetY = y;
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            isTouchDevice = false;
+            updateMousePos(e.clientX, e.clientY);
+        });
+
+        window.addEventListener('touchstart', () => {
+            isTouchDevice = true;
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+            isTouchDevice = true;
+            if (e.touches.length > 0) {
+                updateMousePos(e.touches[0].clientX, e.touches[0].clientY);
+            }
+        }, { passive: true });
+
+        function renderAnimation() {
+            rotationAngle += 0.6;
+
+            if (isTouchDevice) {
+                // Mobiel: direct actiever rondvliegen
+                orbitTime += 0.0014;
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2 - 50;
+                const radiusX = Math.min(window.innerWidth * 0.3, 300);
+                const radiusY = Math.min(window.innerHeight * 0.2, 160);
+
+                const destX = centerX + Math.cos(orbitTime) * radiusX;
+                const destY = centerY + Math.sin(orbitTime * 1.3) * radiusY;
+
+                starX += (destX - starX) * 0.03;
+                starY += (destY - starY) * 0.03;
+            } else {
+                // Desktop: Smart Auto (volg muis, na 1.5s stilstand organisch verder zweven)
+                const timeSinceMove = Date.now() - lastMouseTime;
+                if (timeSinceMove > 1500) {
+                    isUserMovingMouse = false;
+                }
+
+                if (isUserMovingMouse) {
+                    starX += (targetX - starX) * 0.018;
+                    starY += (targetY - starY) * 0.018;
+                } else {
+                    orbitTime += 0.0014;
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2 - 50;
+                    const radiusX = Math.min(window.innerWidth * 0.3, 300);
+                    const radiusY = Math.min(window.innerHeight * 0.2, 160);
+
+                    const destX = centerX + Math.cos(orbitTime) * radiusX;
+                    const destY = centerY + Math.sin(orbitTime * 1.3) * radiusY;
+
+                    starX += (destX - starX) * 0.02;
+                    starY += (destY - starY) * 0.02;
+                }
+            }
+
+            starContainer.style.transform = `translate3d(${starX - 22}px, ${starY - 22}px, 0) rotate(${rotationAngle}deg)`;
+            requestAnimationFrame(renderAnimation);
+        }
+
+        requestAnimationFrame(renderAnimation);
+
+        // Logo Parallax Shrink bij scrollen
+        const logoElement = document.querySelector('.hero-logo');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            if (scrollPosition <= 500) {
+                const scale = 1 - (scrollPosition / 500) * 0.25;
+                logoElement.style.transform = `scale(${scale})`;
+            } else {
+                logoElement.style.transform = 'scale(0.75)';
+            }
+        });
+    </script>
+</body>
+</html>
