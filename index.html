@@ -32,9 +32,10 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            background-color: #000000;
         }
 
-        /* Video */
+        /* Video op laag 1 met hardware-acceleratie fix */
         .hero video {
             position: absolute;
             top: 50%;
@@ -44,12 +45,13 @@
             width: auto;
             height: auto;
             transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
             object-fit: cover;
             z-index: 1;
             filter: brightness(0.65);
         }
 
-        /* Ticket Button rechtsboven */
+        /* Floating Ticket Button (Vast rechtsboven) */
         .ticket-btn-container {
             position: fixed;
             top: 25px;
@@ -77,7 +79,7 @@
             box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
         }
 
-        /* Hero Content Container */
+        /* Hero Content Container op laag 10 */
         .hero-content {
             position: relative;
             z-index: 10;
@@ -89,22 +91,22 @@
             padding: 0 20px;
         }
 
-        /* Logo Fade-In Animatie */
-        @keyframes logoFadeIn {
+        /* VEILIGE Fade-in Animatie (ALLEEN OPACITY, geen transform) */
+        @keyframes pureFadeIn {
             0% {
                 opacity: 0;
-                transform: translateY(12px);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0);
             }
         }
 
         .hero-logo-container {
-            animation: logoFadeIn 1.2s ease-out forwards;
+            will-change: opacity;
+            animation: pureFadeIn 1.4s ease-out forwards;
         }
 
+        /* Logo styling */
         .hero-logo {
             width: 130%;
             max-width: 92vw;
@@ -124,7 +126,7 @@
             }
         }
 
-        /* Payoff in Inter Extra Bold 800 */
+        /* Payoff in Inter Extra Bold (800) met veilige Fade-In */
         .hero-subtitle {
             font-family: 'Inter', sans-serif;
             font-weight: 800;
@@ -135,7 +137,8 @@
             line-height: 1.4;
             text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
             max-width: 90vw;
-            animation: logoFadeIn 1.5s ease-out forwards;
+            will-change: opacity;
+            animation: pureFadeIn 1.8s ease-out forwards;
         }
 
         @media (min-width: 640px) {
@@ -149,7 +152,7 @@
             white-space: nowrap;
         }
 
-        /* Scroll Arrow */
+        /* Bouncing Scroll Arrow */
         .scroll-arrow {
             position: absolute;
             bottom: 30px;
@@ -181,7 +184,7 @@
             }
         }
 
-        /* Parallax Gradient Overlay */
+        /* Parallax Gradient Overlay naar ~75% donker op laag 20 */
         .gradient-overlay {
             position: relative;
             z-index: 20;
@@ -212,23 +215,4 @@
             font-weight: 300;
         }
 
-        .bottom-ticket-btn {
-            background-color: #20e070;
-            color: #0b0b0b;
-            padding: 16px 40px;
-            border-radius: 9999px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 6px 24px rgba(32, 224, 112, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .bottom-ticket-btn:hover {
-            background-color: #28f07c;
-            transform: translateY(-3px) scale(1.05);
-            box-shadow:
+        /* Tweede Ticket-knop onder
