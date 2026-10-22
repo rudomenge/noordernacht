@@ -4,166 +4,161 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#39ff14',
+                            500: '#20e070',
+                            600: '#16b858',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body, html {
-            height: 100%;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #0b0b0b;
-            color: #ffffff;
-            scroll-behavior: smooth;
-        }
-
-        /* Hero sectie met achtergrondvideo */
-        .hero {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            background: #000; /* Zwarte achtergrond als fallback voor de video */
-        }
-
-        .hero video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            z-index: 1; /* Duidelijk op laag 1 gezet */
-            filter: brightness(0.7);
-        }
-
-        /* Glasmorphism Header (Bovenkant) */
-        header {
-            position: absolute;
+        /* Fixed Video Background for Smooth Parallax Scroll */
+        .bg-video {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background: rgba(11, 11, 11, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 20; /* Boven alles */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            height: 100vh;
+            z-index: -20;
+            object-fit: cover;
+            filter: brightness(0.65) contrast(1.05);
         }
 
-        .nav-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+        /* Glowing Accent for Logo and Buttons */
+        .glow-btn {
+            box-shadow: 0 0 20px rgba(32, 224, 112, 0.4);
+        }
+        .glow-btn:hover {
+            box-shadow: 0 0 30px rgba(32, 224, 112, 0.7);
         }
 
-        .ticket-btn {
-            background: #ffffff;
-            color: #0b0b0b;
-            padding: 10px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+        .logo-glow {
+            filter: drop-shadow(0 0 25px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 10px rgba(32, 224, 112, 0.15));
         }
 
-        .ticket-btn:hover {
-            background: rgba(255, 255, 255, 0.8);
-            transform: scale(1.05);
-        }
-
-        /* Centraal zwevend logo + slogan */
-        .hero-content {
-            position: relative;
-            text-align: center;
-            z-index: 10; /* Ligt boven de video (z-index 1) */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .hero-logo {
-            width: 320px;
-            max-width: 80vw;
-            height: auto;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
-        }
-
-        .hero-subtitle {
-            font-size: 1.3rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 300;
-            color: #f1f1f1;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-
-        /* Informatie / Parallax sectie onder de video */
-        .info-section {
-            padding: 100px 20px;
-            background: #0b0b0b;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .info-section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
-
-        .info-section p {
-            font-size: 1.1rem;
-            color: #aaaaaa;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
+        /* Soft Gradient Transition Mask from Hero to Info */
+        .hero-gradient-overlay {
+            background: linear-gradient(to bottom, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, 0.3) 50%, rgba(11, 11, 11, 0.95) 85%, #0b0b0b 100%);
         }
     </style>
 </head>
-<body>
+<body class="bg-[#0b0b0b] text-white font-sans antialiased selection:bg-brand-500 selection:text-black scroll-smooth">
 
-    <!-- Header met kleine navigatie -->
-    <header>
-        <div class="nav-title">Noordernacht</div>
-        <a href="#tickets" class="ticket-btn">Tickets</a>
+    <!-- 1. FULLSCREEN BACKGROUND VIDEO -->
+    <video id="bgVideo" autoplay muted loop playsinline preload="auto" class="bg-video">
+        <source src="achtergrond.mp4" type="video/mp4">
+        Je browser ondersteunt geen video.
+    </video>
+
+    <!-- Ambient Dark Overlay for Readability -->
+    <div class="fixed inset-0 bg-black/30 z-[-10] pointer-events-none"></div>
+
+    <!-- 2. MINIMAL TOP HEADER (ONLY TICKETS BUTTON, NO BAR / NO TITLE) -->
+    <header class="fixed top-0 left-0 w-full z-50 p-6 sm:p-8 flex justify-end pointer-events-none">
+        <a href="#tickets" class="pointer-events-auto inline-flex items-center justify-center px-7 py-3 text-sm font-extrabold text-black bg-brand-500 hover:bg-brand-400 rounded-full transition-all duration-300 transform hover:scale-105 glow-btn tracking-wider uppercase">
+            Tickets
+        </a>
     </header>
 
-    <!-- Hero Sectie met Achtergrondvideo en Centraal Logo -->
-    <section class="hero">
-        <video autoplay muted loop playsinline preload="auto">
-            <source src="achtergrond.mp4" type="video/mp4">
-            Je browser ondersteunt geen video.
-        </video>
+    <!-- 3. HERO SECTION WITH LARGER RESPONSIVE LOGO -->
+    <section class="relative min-h-screen flex flex-col justify-between items-center text-center px-4 pt-20 pb-12 z-10">
+        <div><!-- Spacer for centering --></div>
 
-        <div class="hero-content">
-            <!-- Het geüploadde logo -->
-            <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
-            <div class="hero-subtitle">Find your people, Feel the moment</div>
+        <!-- Central Logo & Slogan Content -->
+        <div class="flex flex-col items-center justify-center max-w-4xl mx-auto my-auto">
+            <!-- Fluid Responsive Logo (Scales smoothly up to 500px) -->
+            <img 
+                src="logo.png" 
+                alt="Noordernacht Logo" 
+                class="w-[280px] sm:w-[380px] md:w-[480px] lg:w-[500px] max-w-[85vw] h-auto logo-glow transition-all duration-300 transform hover:scale-[1.02] mb-6"
+                onerror="this.onerror=null; this.src='https://placehold.co/500x300/000000/20e070?text=NOORDERNACHT';"
+            />
+            
+            <!-- Slogan -->
+            <h1 class="text-base sm:text-xl md:text-2xl font-light uppercase tracking-[0.25em] text-gray-200 drop-shadow-lg max-w-xl leading-relaxed">
+                Find your people, Feel the moment
+            </h1>
         </div>
+
+        <!-- Scroll Indicator -->
+        <a href="#info" class="flex flex-col items-center gap-2 text-gray-400 hover:text-brand-400 transition-colors cursor-pointer group mb-4">
+            <span class="text-xs uppercase tracking-[0.2em] font-medium opacity-80 group-hover:opacity-100">Ontdek Meer</span>
+            <svg class="w-5 h-5 animate-bounce text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </a>
     </section>
 
-    <!-- Informatie Sectie -->
-    <section class="info-section" id="tickets">
-        <h2>Over Noordernacht</h2>
-        <p>Duister, elektronisch en betoverend. Beleef de ultieme nacht waarin muziek en samenzijn samenkomen op een unieke locatie in het Noorden.</p>
-    </section>
+    <!-- 4. SMOOTH PARALLAX FADE & CONTENT SECTION -->
+    <div id="info" class="relative z-20">
+        
+        <!-- Deep Smooth Gradient Fade Transition Overlay (No Hard Line) -->
+        <div class="h-40 sm:h-64 w-full hero-gradient-overlay pointer-events-none"></div>
+
+        <!-- Dark Content Area -->
+        <div class="bg-[#0b0b0b] px-6 pb-24">
+            <div class="max-w-4xl mx-auto text-center pt-8">
+                
+                <span class="inline-block w-12 h-1 bg-brand-500 rounded-full mb-8"></span>
+                
+                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-6">
+                    Over Noordernacht
+                </h2>
+                
+                <p class="text-gray-300 text-base sm:text-xl leading-relaxed font-light max-w-2xl mx-auto mb-16">
+                    Duister, elektronisch en betoverend. Beleef de ultieme nacht waarin muziek, visuele kunst en gelijkgestemden samenkomen op een unieke locatie in het Noorden.
+                </p>
+
+                <!-- Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mb-20">
+                    <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:border-brand-500/40 transition-all duration-300">
+                        <div class="w-10 h-10 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold mb-4">★</div>
+                        <h3 class="text-lg font-semibold text-white mb-2">Sfeer & Visuals</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Een meeslepende combinatie van licht, duisternis en kunstzinnige projecties.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:border-brand-500/40 transition-all duration-300">
+                        <div class="w-10 h-10 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold mb-4">♪</div>
+                        <h3 class="text-lg font-semibold text-white mb-2">Geluid & DJ's</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Diepe bassen en meeslepende elektronische beats die je meenemen tot in de vroege uurtjes.</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:border-brand-500/40 transition-all duration-300">
+                        <div class="w-10 h-10 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold mb-4">♥</div>
+                        <h3 class="text-lg font-semibold text-white mb-2">Community</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">Een veilige en open sfeer waar iedereen zichzelf kan zijn en samen het moment kan beleven.</p>
+                    </div>
+                </div>
+
+                <!-- Ticket Banner Call-to-Action -->
+                <div id="tickets" class="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-brand-950/30 via-white/[0.04] to-black border border-brand-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+                    <div>
+                        <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">Klaar om de nacht te beleven?</h3>
+                        <p class="text-gray-400 text-sm sm:text-base">Meld je aan voor de ticket-voorverkoop en mis niks.</p>
+                    </div>
+                    <a href="#" class="px-8 py-4 rounded-full bg-brand-500 hover:bg-brand-400 text-black font-extrabold text-sm uppercase tracking-wider transition-all duration-300 glow-btn whitespace-nowrap">
+                        Koop Tickets
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="w-full bg-[#0b0b0b] border-t border-white/10 py-8 px-6 text-center text-xs text-gray-500">
+            &copy; 2026 Noordernacht. Alle rechten voorbehouden.
+        </footer>
+    </div>
 
 </body>
 </html>
