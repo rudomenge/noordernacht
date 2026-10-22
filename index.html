@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
-    <!-- Google Font: Oswald (Condensed, bold & strak passend bij het logo) -->
+    <!-- Google Font: Oswald (Strak, dik en condensed passend bij het logo) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * {
@@ -33,7 +33,6 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            background: #000;
         }
 
         /* Background Video */
@@ -70,7 +69,7 @@
             text-decoration: none;
             display: inline-block;
             box-shadow: 0 4px 20px rgba(32, 224, 112, 0.35);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
 
         .ticket-btn:hover {
@@ -89,16 +88,14 @@
             justify-content: center;
             text-align: center;
             padding: 0 20px;
-            transition: transform 0.1s cubic-bezier(0, 0, 0.2, 1);
         }
 
         /* Logo styling */
         .hero-logo {
-            /* Mobiel: groter & iets naar onderen geschoven */
             width: 130%;
             max-width: 92vw;
             height: auto;
-            margin-top: 40px;
+            margin-top: 30px;
             margin-bottom: 20px;
             filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
             transition: transform 0.1s linear;
@@ -116,12 +113,12 @@
         /* Payoff Subtitle met Oswald Font & Non-breaking zinsdelen */
         .hero-subtitle {
             font-family: 'Oswald', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 2.5px;
+            letter-spacing: 3px;
             color: #ffffff;
-            font-size: 1.15rem;
-            line-height: 1.5;
+            font-size: 1.2rem;
+            line-height: 1.4;
             text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
             max-width: 90vw;
         }
@@ -129,7 +126,7 @@
         @media (min-width: 640px) {
             .hero-subtitle {
                 font-size: 1.6rem;
-                letter-spacing: 3.5px;
+                letter-spacing: 4px;
             }
         }
 
@@ -161,9 +158,81 @@
             }
         }
 
-        /* Information Section met Zachte Gradient Transition (0% naar 70%) */
-        .info-section {
+        /* Overgangsgraad (Gradient van 0% naar 70% transparant zwart) */
+        .gradient-overlay {
             position: relative;
             z-index: 20;
-            background: linear-gradient(to bottom, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, 0.75) 15%, rgba(11, 11, 11, 0.95) 100%);
-            padding: 120px 24px 100px
+            background: linear-gradient(to bottom, transparent 0%, rgba(11, 11, 11, 0.7) 30%, rgba(11, 11, 11, 0.95) 100%);
+            padding: 100px 24px 80px 24px;
+            text-align: center;
+        }
+
+        .gradient-overlay h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+        }
+
+        .gradient-overlay p {
+            font-size: 1.15rem;
+            color: #cccccc;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Ticket Button -->
+    <div class="ticket-btn-container">
+        <a href="#tickets" class="ticket-btn">Tickets</a>
+    </div>
+
+    <!-- Hero Section met Background Video -->
+    <section class="hero">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="achtergrond.mp4" type="video/mp4">
+            Je browser ondersteunt geen video.
+        </video>
+
+        <div class="hero-content">
+            <!-- Logo wrapper voor de krimp-animatie -->
+            <div id="heroLogoWrapper">
+                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
+            </div>
+
+            <!-- Payoff met Oswald Font & vastgezette zinsdelen -->
+            <div class="hero-subtitle">
+                <span class="whitespace-nowrap">Find your people,</span> 
+                <span class="whitespace-nowrap">Feel the moment</span>
+            </div>
+        </div>
+
+        <!-- Pijltje onderin -->
+        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </a>
+    </section>
+
+    <!-- Informatie Sectie met zachte verloop-gradiënt naar 70% -->
+    <section class="gradient-overlay" id="tickets">
+        <h2>Over Noordernacht</h2>
+        <p>Duister, elektronisch en betoverend. Beleef de ultieme nacht waarin muziek en samenzijn samenkomen op een unieke locatie in het Noorden.</p>
+    </section>
+
+    <!-- Parallax Scroll Shrink Script -->
+    <script>
+        const logoWrapper = document.getElementById('heroLogoWrapper');
+
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            const maxScroll = 500;
+            
+            if (scrollPosition <= maxScroll) {
+                const scale = 1 - (scrollPosition / max
