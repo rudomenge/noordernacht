@@ -1,3 +1,4 @@
+<!-- Versie: 28.0 - Noordernacht Hero & Smart Auto Sterretje -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -53,7 +54,7 @@
             filter: brightness(0.7);
         }
 
-        /* Subtiele Interlacing Overlay over de video */
+        /* Subtiele Interlace Overlay over de video */
         .hero-interlace-overlay {
             position: absolute;
             top: 0;
@@ -96,36 +97,38 @@
             box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
         }
 
-        /* Animatie Knop Linksboven + Versie & Status Tag */
-        .anim-btn-container {
+        /* Status Container Linksboven (Geen knop meer, alleen versie & status) */
+        .status-container {
             position: fixed;
             top: 25px;
             left: 30px;
             z-index: 50;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
+            background: rgba(11, 11, 11, 0.6);
+            padding: 10px 16px;
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .version-tag {
             font-family: 'Inter', sans-serif;
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 6px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
             letter-spacing: 1px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .status-tag {
             font-family: 'Inter', sans-serif;
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             color: #20e070;
             margin-top: 3px;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             text-transform: uppercase;
-            font-weight: 700;
-            text-align: center;
-            max-width: 140px;
+            font-weight: 800;
         }
 
         /* Ticket Knop Rechtsboven */
@@ -148,10 +151,10 @@
             padding: 0 20px;
         }
 
-        /* Logo styling */
+        /* Logo styling (120% op mobiel, parallax responsive) */
         .hero-logo {
-            width: 130%;
-            max-width: 92vw;
+            width: 156%;
+            max-width: 110vw;
             height: auto;
             margin-top: 10px;
             margin-bottom: 20px;
@@ -193,7 +196,7 @@
             white-space: nowrap;
         }
 
-        /* Zwevend SVG Sterretje Container (Laden van jouw specifieke ster.svg, 1.3x groter, felle neon kleur) */
+        /* Zwevend SVG Sterretje Container (Standaard 52px, op mobiel 1.5x vergroot = ~78px) */
         .floating-star-container {
             position: fixed;
             top: 0;
@@ -205,12 +208,18 @@
             will-change: transform;
         }
 
+        @media (max-width: 768px) {
+            .floating-star-container {
+                width: 78px;
+                height: 78px;
+            }
+        }
+
         .floating-star-container img {
             width: 100%;
             height: 100%;
             object-fit: contain;
             display: block;
-            /* Maakt de geüploade SVG spatzuiver fel neon-groen (#20e070) zonder gloei-waas */
             filter: brightness(0) saturate(100%) invert(68%) sepia(85%) saturate(450%) hue-rotate(90deg) brightness(102%) contrast(98%);
         }
 
@@ -252,27 +261,38 @@
             font-family: 'Unbounded', sans-serif;
             font-weight: 800;
             font-size: 2.2rem;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 32px;
             max-width: 95vw;
+            line-height: 1.15;
         }
 
         @media (min-width: 640px) {
             .gradient-overlay h2 {
                 font-size: 3.5rem;
-                letter-spacing: 3px;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Regeling voor mobiel afbreken van de kop (Over / Noordernacht) */
+        .header-title-line {
+            display: block;
+        }
+        @media (max-width: 640px) {
+            .header-title-line {
+                display: block;
             }
         }
 
         .gradient-overlay p {
             font-family: 'Inter', sans-serif;
             font-weight: 300;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: #cccccc;
             max-width: 720px;
             margin: 0 auto 50px auto;
-            line-height: 1.8;
+            line-height: 1.55;
         }
 
         .bottom-ticket-btn {
@@ -299,16 +319,15 @@
 </head>
 <body>
 
-    <!-- Zwevend SVG Sterretje Container die exact jouw ster.svg inlaadt -->
+    <!-- Het Zwevende SVG Sterretje -->
     <div id="starContainer" class="floating-star-container">
         <img src="ster.svg" alt="Noordernacht Ster" />
     </div>
 
-    <!-- Linksboven: Animatie Switch Knop + Versietag + Status -->
-    <div class="anim-btn-container">
-        <button id="animBtn" class="top-btn" type="button">Animatie</button>
-        <span class="version-tag">v27.0</span>
-        <span id="statusSubTag" class="status-tag">TRAIL (SLOW)</span>
+    <!-- Linksboven: Versietag & Vaste Status (Smart Auto) -->
+    <div class="status-container">
+        <span class="version-tag">v28.0</span>
+        <span class="status-tag">SMART AUTO</span>
     </div>
 
     <!-- Rechtsboven: Ticket Knop -->
@@ -341,7 +360,10 @@
     </section>
 
     <section class="gradient-overlay" id="tickets">
-        <h2>Over Noordernacht</h2>
+        <h2>
+            <span class="header-title-line">Over</span>
+            <span class="header-title-line">Noordernacht</span>
+        </h2>
         
         <p>
             Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
@@ -353,17 +375,18 @@
 
     <script>
         const starContainer = document.getElementById('starContainer');
-        const statusSubTag = document.getElementById('statusSubTag');
         
         let targetX = window.innerWidth / 2;
         let targetY = window.innerHeight / 2;
         let starX = targetX;
         let starY = targetY;
 
-        let currentAnimMode = 0; 
         let rotationAngle = 0;
         let lastMouseTime = Date.now();
         let isUserMovingMouse = true;
+
+        // Detecteer of het een mobiel/touch apparaat is
+        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.innerWidth <= 768);
 
         window.addEventListener('mousemove', () => {
             lastMouseTime = Date.now();
@@ -385,60 +408,52 @@
         });
 
         function renderAnimation() {
-            rotationAngle += 1.2;
+            rotationAngle += 1.5; // Actievere rotatie
 
-            if (currentAnimMode === 0) {
-                starX += (targetX - starX) * 0.04;
-                starY += (targetY - starY) * 0.04;
-            } 
-            else if (currentAnimMode === 1) {
+            // Op mobiel/touchapparaten direct automatische zweefbeweging (Orbit), op desktop Smart Auto
+            if (isTouchDevice) {
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2 - 50;
-                const radiusX = Math.min(window.innerWidth * 0.3, 300);
-                const radiusY = Math.min(window.innerHeight * 0.2, 160);
-                const time = Date.now() * 0.0012;
+                const radiusX = Math.min(window.innerWidth * 0.32, 320);
+                const radiusY = Math.min(window.innerHeight * 0.22, 170);
+                const time = Date.now() * 0.0015; // Wat vlotter
                 starX = centerX + Math.cos(time) * radiusX;
                 starY = centerY + Math.sin(time * 1.3) * radiusY;
-            } 
-            else {
+            } else {
+                // Desktop Smart Auto-Pilot
                 const timeSinceMove = Date.now() - lastMouseTime;
-                if (timeSinceMove > 1500) {
+                if (timeSinceMove > 1200) {
                     isUserMovingMouse = false;
                 }
 
                 if (isUserMovingMouse) {
-                    starX += (targetX - starX) * 0.04;
-                    starY += (targetY - starY) * 0.04;
+                    // Volgt de muis met dromerige vertraging
+                    starX += (targetX - starX) * 0.035;
+                    starY += (targetY - starY) * 0.035;
                 } else {
+                    // Naadloze overgang naar actievere vrije zweefbeweging zonder sprongen
                     const centerX = window.innerWidth / 2;
                     const centerY = window.innerHeight / 2 - 50;
-                    const radiusX = Math.min(window.innerWidth * 0.3, 300);
-                    const radiusY = Math.min(window.innerHeight * 0.2, 160);
-                    const time = Date.now() * 0.0012;
-                    starX = centerX + Math.cos(time) * radiusX;
-                    starY = centerY + Math.sin(time * 1.3) * radiusY;
+                    const radiusX = Math.min(window.innerWidth * 0.32, 320);
+                    const radiusY = Math.min(window.innerHeight * 0.22, 170);
+                    const time = Date.now() * 0.0015; // Vlottere orbit
+                    
+                    const targetOrbitX = centerX + Math.cos(time) * radiusX;
+                    const targetOrbitY = centerY + Math.sin(time * 1.3) * radiusY;
+
+                    starX += (targetOrbitX - starX) * 0.02;
+                    starY += (targetOrbitY - starY) * 0.02;
                 }
             }
 
-            starContainer.style.transform = `translate3d(${starX - 26}px, ${starY - 26}px, 0) rotate(${rotationAngle}deg)`;
+            const offsetCorrection = window.innerWidth <= 768 ? 39 : 26;
+            starContainer.style.transform = `translate3d(${starX - offsetCorrection}px, ${starY - offsetCorrection}px, 0) rotate(${rotationAngle}deg)`;
             requestAnimationFrame(renderAnimation);
         }
 
         requestAnimationFrame(renderAnimation);
 
-        function switchAnimation() {
-            currentAnimMode = (currentAnimMode + 1) % 3;
-            if (currentAnimMode === 0) {
-                statusSubTag.innerText = "TRAIL (SLOW)";
-            } else if (currentAnimMode === 1) {
-                statusSubTag.innerText = "ORBIT FLOW";
-            } else {
-                statusSubTag.innerText = "SMART AUTO";
-            }
-        }
-
-        document.getElementById('animBtn').addEventListener('click', switchAnimation);
-
+        // Logo Parallax Shrink bij scrollen
         const logoWrapper = document.getElementById('heroLogoWrapper');
         window.addEventListener('scroll', () => {
             const scrollPosition = window.scrollY;
