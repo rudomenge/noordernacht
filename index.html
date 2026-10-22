@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
-    <!-- Webfonts inladen -->
+    <!-- 5 Veilige Google Fonts inladen -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Bebas+Neue&family=Inter:wght@300;400;700;800&family=Syne:wght@800&display=swap" rel="stylesheet">
-    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Bebas+Neue&family=Inter:wght@300;400;700;800&family=Oswald:wght@700&family=Syne:wght@800&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -116,7 +115,7 @@
         /* Font Switcher Interactive Box */
         .font-switcher-box {
             cursor: pointer;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.55);
             border: 2px solid #20e070;
             padding: 16px 24px;
             border-radius: 16px;
@@ -128,7 +127,7 @@
         }
 
         .font-switcher-box:hover, .font-switcher-box:active {
-            background: rgba(32, 224, 112, 0.15);
+            background: rgba(32, 224, 112, 0.18);
             border-color: #28f07c;
             transform: scale(1.02);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(32, 224, 112, 0.4);
@@ -199,4 +198,190 @@
             z-index: 20;
             background: linear-gradient(to bottom, transparent 0%, rgba(11, 11, 11, 0.75) 25%, rgba(11, 11, 11, 0.95) 100%);
             padding: 120px 24px 100px 24px;
-            text-align
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gradient-overlay h2 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            transition: font-family 0.2s ease;
+        }
+
+        .gradient-overlay p {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 1.15rem;
+            color: #cccccc;
+            max-width: 680px;
+            margin: 0 auto 40px auto;
+            line-height: 1.7;
+        }
+
+        .bottom-ticket-btn {
+            background-color: #20e070;
+            color: #0b0b0b;
+            padding: 16px 40px;
+            border-radius: 9999px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 6px 24px rgba(32, 224, 112, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .bottom-ticket-btn:hover {
+            background-color: #28f07c;
+            transform: translateY(-3px) scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ticket-btn-container">
+        <a href="#tickets" class="ticket-btn">Tickets</a>
+    </div>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="achtergrond.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-content">
+            <div id="heroLogoWrapper">
+                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
+            </div>
+
+            <!-- Klikbare Box met groene rand -->
+            <div class="font-switcher-box" id="fontSwitcherBox">
+                <div id="fontBadge" class="font-badge">
+                    FONT 1/5: BEBAS NEUE
+                </div>
+
+                <div id="payoffText" class="hero-subtitle">
+                    <span class="whitespace-nowrap">Find your people,</span> 
+                    <span class="whitespace-nowrap">Feel the moment</span>
+                </div>
+
+                <div class="click-hint">
+                    👇 Klik hier om het volgende lettertype te bekijken
+                </div>
+            </div>
+        </div>
+
+        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </a>
+    </section>
+
+    <section class="gradient-overlay" id="tickets">
+        <h2 id="sectionHeading">Over Noordernacht</h2>
+        <p>
+            Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
+            Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
+            waarin muziek, energie en verbinding centraal staan. Hier vind je jouw mensen en beleef je het moment.
+        </p>
+        <a href="#tickets" class="bottom-ticket-btn">Meteen Tickets Bestellen</a>
+    </section>
+
+    <script>
+        const fonts = [
+            {
+                name: "FONT 1/5: BEBAS NEUE (Smal & Hoog)",
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontWeight: "400",
+                letterSpacing: "4px",
+                fontSizeMobile: "1.8rem",
+                fontSizeDesktop: "2.6rem"
+            },
+            {
+                name: "FONT 2/5: OSWALD (Strak & Condensed)",
+                fontFamily: "'Oswald', sans-serif",
+                fontWeight: "700",
+                letterSpacing: "3px",
+                fontSizeMobile: "1.3rem",
+                fontSizeDesktop: "1.8rem"
+            },
+            {
+                name: "FONT 3/5: BARLOW CONDENSED (Techno & Industrieel)",
+                fontFamily: "'Barlow Condensed', sans-serif",
+                fontWeight: "800",
+                letterSpacing: "3px",
+                fontSizeMobile: "1.4rem",
+                fontSizeDesktop: "2.1rem"
+            },
+            {
+                name: "FONT 4/5: SYNE (Uniek & Artistiek)",
+                fontFamily: "'Syne', sans-serif",
+                fontWeight: "800",
+                letterSpacing: "2px",
+                fontSizeMobile: "1.15rem",
+                fontSizeDesktop: "1.5rem"
+            },
+            {
+                name: "FONT 5/5: INTER (Extra Bold 800 - Clean)",
+                fontFamily: "'Inter', sans-serif",
+                fontWeight: "800",
+                letterSpacing: "3px",
+                fontSizeMobile: "1.15rem",
+                fontSizeDesktop: "1.5rem"
+            }
+        ];
+
+        let currentFontIndex = 0;
+
+        function applyFont(index) {
+            const font = fonts[index];
+            const payoff = document.getElementById('payoffText');
+            const badge = document.getElementById('fontBadge');
+            const sectionHeading = document.getElementById('sectionHeading');
+
+            badge.innerText = font.name;
+
+            payoff.style.fontFamily = font.fontFamily;
+            payoff.style.fontWeight = font.fontWeight;
+            payoff.style.letterSpacing = font.letterSpacing;
+
+            const isDesktop = window.innerWidth >= 640;
+            payoff.style.fontSize = isDesktop ? font.fontSizeDesktop : font.fontSizeMobile;
+
+            sectionHeading.style.fontFamily = font.fontFamily;
+        }
+
+        function switchFont() {
+            currentFontIndex = (currentFontIndex + 1) % fonts.length;
+            applyFont(currentFontIndex);
+        }
+
+        const switcherBox = document.getElementById('fontSwitcherBox');
+        switcherBox.addEventListener('click', switchFont);
+
+        applyFont(0);
+
+        window.addEventListener('resize', () => applyFont(currentFontIndex));
+
+        const logoWrapper = document.getElementById('heroLogoWrapper');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            if (scrollPosition <= 500) {
+                const scale = 1 - (scrollPosition / 500) * 0.25;
+                logoWrapper.style.transform = `scale(${scale})`;
+            } else {
+                logoWrapper.style.transform = 'scale(0.75)';
+            }
+        });
+    </script>
+</body>
+</html>
