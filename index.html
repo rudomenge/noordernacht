@@ -75,7 +75,6 @@
             box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
         }
 
-        /* Schone status-indicator linksboven */
         .info-tag-container {
             position: fixed;
             top: 25px;
@@ -179,6 +178,12 @@
             filter: drop-shadow(0 0 12px rgba(32, 224, 112, 0.9));
         }
 
+        .floating-star-container img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
         .scroll-arrow {
             position: absolute;
             bottom: 30px;
@@ -272,13 +277,11 @@
 <body>
 
     <div id="starContainer" class="floating-star-container">
-        <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z" fill="#20e070"/>
-        </svg>
+        <img src="ster.svg" alt="Ster animatie">
     </div>
 
     <div class="info-tag-container">
-        <span class="version-tag">v21.1</span>
+        <span class="version-tag">v22.0</span>
         <span class="status-tag">SMART AUTO</span>
     </div>
 
@@ -293,7 +296,7 @@
 
         <div class="hero-content">
             <div id="heroLogoWrapper">
-                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
+                <img src="logo.svg" alt="Noordernacht Logo" class="hero-logo">
             </div>
 
             <div class="hero-subtitle">
@@ -362,7 +365,6 @@
             rotationAngle += 0.6;
 
             if (isTouchDevice) {
-                // Mobiel: direct actiever rondvliegen
                 orbitTime += 0.0014;
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2 - 50;
@@ -375,7 +377,6 @@
                 starX += (destX - starX) * 0.03;
                 starY += (destY - starY) * 0.03;
             } else {
-                // Desktop: Smart Auto (volg muis, na 1.5s stilstand organisch verder zweven)
                 const timeSinceMove = Date.now() - lastMouseTime;
                 if (timeSinceMove > 1500) {
                     isUserMovingMouse = false;
@@ -405,7 +406,6 @@
 
         requestAnimationFrame(renderAnimation);
 
-        // Logo Parallax Shrink bij scrollen
         const logoElement = document.querySelector('.hero-logo');
         window.addEventListener('scroll', () => {
             const scrollPosition = window.scrollY;
