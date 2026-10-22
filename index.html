@@ -18,4 +18,398 @@
 
         body, html {
             height: 100%;
-            font-family:
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0b0b;
+            color: #ffffff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.65);
+        }
+
+        .top-btn {
+            background-color: #20e070;
+            color: #0b0b0b;
+            padding: 12px 28px;
+            border-radius: 9999px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 20px rgba(32, 224, 112, 0.35);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .top-btn:hover {
+            background-color: #28f07c;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
+        }
+
+        .anim-btn-container {
+            position: fixed;
+            top: 25px;
+            left: 30px;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .version-tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 6px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .status-tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.55rem;
+            color: #20e070;
+            margin-top: 3px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-align: center;
+            max-width: 140px;
+        }
+
+        .ticket-btn-container {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            z-index: 50;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 30;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-logo {
+            width: 130%;
+            max-width: 92vw;
+            height: auto;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
+            transition: transform 0.1s linear;
+        }
+
+        @media (min-width: 640px) {
+            .hero-logo {
+                width: 100%;
+                max-width: 880px;
+                margin-top: 0;
+                margin-bottom: 24px;
+            }
+        }
+
+        .hero-subtitle {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.3;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
+            max-width: 90vw;
+            font-size: 1.15rem;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        @media (min-width: 640px) {
+            .hero-subtitle {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
+        }
+
+        .whitespace-nowrap {
+            white-space: nowrap;
+        }
+
+        .floating-star-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 44px;
+            height: 44px;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform;
+            filter: drop-shadow(0 0 12px rgba(32, 224, 112, 0.9));
+        }
+
+        .scroll-arrow {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            color: rgba(255, 255, 255, 0.75);
+            animation: bounce 2s infinite;
+            text-decoration: none;
+        }
+
+        .scroll-arrow svg { width: 32px; height: 32px; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -12px); }
+            60% { transform: translate(-50%, -6px); }
+        }
+
+        .gradient-overlay {
+            position: relative;
+            z-index: 20;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, #0b0b0b 20%, #0b0b0b 100%);
+            padding: 180px 24px 160px 24px;
+            min-height: 100vh;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gradient-overlay h2 {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 800;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            max-width: 95vw;
+        }
+
+        @media (min-width: 640px) {
+            .gradient-overlay h2 {
+                font-size: 3.5rem;
+                letter-spacing: 3px;
+            }
+        }
+
+        .gradient-overlay p {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 1.25rem;
+            color: #cccccc;
+            max-width: 720px;
+            margin: 0 auto 50px auto;
+            line-height: 1.8;
+        }
+
+        .bottom-ticket-btn {
+            background-color: #20e070;
+            color: #0b0b0b;
+            padding: 16px 40px;
+            border-radius: 9999px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 6px 24px rgba(32, 224, 112, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .bottom-ticket-btn:hover {
+            background-color: #28f07c;
+            transform: translateY(-3px) scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="starContainer" class="floating-star-container">
+        <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z" fill="#20e070"/>
+        </svg>
+    </div>
+
+    <div class="anim-btn-container">
+        <button id="animBtn" class="top-btn" type="button">Animatie</button>
+        <span class="version-tag">v18.0</span>
+        <span id="statusSubTag" class="status-tag">TRAIL (SLOW)</span>
+    </div>
+
+    <div class="ticket-btn-container">
+        <a href="#tickets" class="top-btn">Tickets</a>
+    </div>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="achtergrond.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-content">
+            <div id="heroLogoWrapper">
+                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
+            </div>
+
+            <div class="hero-subtitle">
+                <span class="whitespace-nowrap">Find your people,</span> 
+                <span class="whitespace-nowrap">Feel the moment</span>
+            </div>
+        </div>
+
+        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </a>
+    </section>
+
+    <section class="gradient-overlay" id="tickets">
+        <h2>Over Noordernacht</h2>
+        <p>
+            Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
+            Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
+            waarin muziek, energie en verbinding centraal staan. Hier vind je jouw mensen en beleef je het moment.
+        </p>
+        <a href="#tickets" class="bottom-ticket-btn">Meteen Tickets Bestellen</a>
+    </section>
+
+    <script>
+        const starContainer = document.getElementById('starContainer');
+        const statusSubTag = document.getElementById('statusSubTag');
+        
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        let starX = targetX;
+        let starY = targetY;
+
+        let currentAnimMode = 0; 
+        let rotationAngle = 0;
+        let lastMouseTime = Date.now();
+        let isUserMovingMouse = true;
+
+        window.addEventListener('mousemove', () => {
+            lastMouseTime = Date.now();
+            isUserMovingMouse = true;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            lastMouseTime = Date.now();
+            isUserMovingMouse = true;
+            if (e.touches.length > 0) {
+                targetX = e.touches[0].clientX;
+                targetY = e.touches[0].clientY;
+            }
+        });
+
+        function renderAnimation() {
+            rotationAngle += 0.5; // Rustigere rotatie van het sterretje
+
+            if (currentAnimMode === 0) {
+                // MODUS 1: Extra trage, dromerige muisvolging (vertraging 0.018)
+                starX += (targetX - starX) * 0.018;
+                starY += (targetY - starY) * 0.018;
+            } 
+            else if (currentAnimMode === 1) {
+                // MODUS 2: Heel rustige eigen zweefroute
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2 - 50;
+                const radiusX = Math.min(window.innerWidth * 0.3, 300);
+                const radiusY = Math.min(window.innerHeight * 0.2, 160);
+                const time = Date.now() * 0.0006; // Halve snelheid
+                starX = centerX + Math.cos(time) * radiusX;
+                starY = centerY + Math.sin(time * 1.3) * radiusY;
+            } 
+            else {
+                // MODUS 3: Smart Auto-Pilot
+                const timeSinceMove = Date.now() - lastMouseTime;
+                if (timeSinceMove > 1500) {
+                    isUserMovingMouse = false;
+                }
+
+                if (isUserMovingMouse) {
+                    starX += (targetX - starX) * 0.018;
+                    starY += (targetY - starY) * 0.018;
+                } else {
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2 - 50;
+                    const radiusX = Math.min(window.innerWidth * 0.3, 300);
+                    const radiusY = Math.min(window.innerHeight * 0.2, 160);
+                    const time = Date.now() * 0.0006;
+                    starX = centerX + Math.cos(time) * radiusX;
+                    starY = centerY + Math.sin(time * 1.3) * radiusY;
+                }
+            }
+
+            starContainer.style.transform = `translate3d(${starX - 22}px, ${starY - 22}px, 0) rotate(${rotationAngle}deg)`;
+            requestAnimationFrame(renderAnimation);
+        }
+
+        requestAnimationFrame(renderAnimation);
+
+        function switchAnimation() {
+            currentAnimMode = (currentAnimMode + 1) % 3;
+            if (currentAnimMode === 0) {
+                statusSubTag.innerText = "TRAIL (SLOW)";
+            } else if (currentAnimMode === 1) {
+                statusSubTag.innerText = "ORBIT FLOW";
+            } else {
+                statusSubTag.innerText = "SMART AUTO";
+            }
+        }
+
+        document.getElementById('animBtn').addEventListener('click', switchAnimation);
+
+        const logoWrapper = document.getElementById('heroLogoWrapper');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            if (scrollPosition <= 500) {
+                const scale = 1 - (scrollPosition / 500) * 0.25;
+                logoWrapper.style.transform = `scale(${scale})`;
+            } else {
+                logoWrapper.style.transform = 'scale(0.75)';
+            }
+        });
+    </script>
+</body>
+</html>
