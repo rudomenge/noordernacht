@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
     
-    <!-- Top 3 Google Fonts + Inter -->
+    <!-- Unbounded (Headers, Payoff, Knoppen) + Inter (Broodtekst) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Inter:wght@300;400;700;800&family=Space+Grotesk:wght@700&family=Unbounded:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Unbounded:wght@700;800;900&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -23,6 +23,7 @@
             background-color: #0b0b0b;
             color: #ffffff;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         /* Hero Container */
@@ -52,14 +53,15 @@
             filter: brightness(0.65);
         }
 
-        /* Top Buttons Base */
+        /* Top Buttons Base (Nu in Unbounded) */
         .top-btn {
             background-color: #20e070;
             color: #0b0b0b;
             padding: 12px 28px;
             border-radius: 9999px;
-            font-family: 'Inter', sans-serif;
-            font-weight: 700;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 800;
+            font-size: 0.85rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             text-decoration: none;
@@ -77,8 +79,8 @@
             box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
         }
 
-        /* Font Switch Knop Linksboven + Versie Tag */
-        .font-btn-container {
+        /* Animatie Knop Linksboven + Versie Tag */
+        .anim-btn-container {
             position: fixed;
             top: 25px;
             left: 30px;
@@ -138,7 +140,7 @@
         }
 
         /* Subtiel groen bolletje + indicatie */
-        .font-indicator-badge {
+        .anim-indicator-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -164,17 +166,42 @@
             box-shadow: 0 0 8px #20e070;
         }
 
-        /* Payoff base style */
+        /* Payoff in Unbounded */
         .hero-subtitle {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 800;
             text-transform: uppercase;
             color: #ffffff;
             line-height: 1.3;
             text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
             max-width: 90vw;
+            font-size: 1.15rem;
+            letter-spacing: 2px;
+        }
+
+        @media (min-width: 640px) {
+            .hero-subtitle {
+                font-size: 1.5rem;
+                letter-spacing: 3px;
+            }
         }
 
         .whitespace-nowrap {
             white-space: nowrap;
+        }
+
+        /* Zwevend Sterretje SVG Element */
+        .floating-star {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 38px;
+            height: 38px;
+            pointer-events: none;
+            z-index: 9999;
+            filter: drop-shadow(0 0 10px rgba(32, 224, 112, 0.8));
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s ease;
         }
 
         /* Scroll Arrow */
@@ -209,154 +236,26 @@
             align-items: center;
         }
 
-        /* Kop "Over Noordernacht" */
+        /* Kop "Over Noordernacht" in Unbounded */
         .gradient-overlay h2 {
-            font-size: 2.2rem;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 800;
+            font-size: 2rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 28px;
-            transition: font-family 0.15s ease;
             max-width: 95vw;
         }
 
         @media (min-width: 640px) {
             .gradient-overlay h2 {
-                font-size: 3.5rem;
+                font-size: 3.2rem;
                 letter-spacing: 3px;
             }
         }
 
         /* Broodtekst - Altijd vast op Inter */
         .gradient-overlay p {
-            font-family: 'Inter', sans-serif !important;
+            font-family: 'Inter', sans-serif;
             font-weight: 300;
             font-size: 1.2rem;
-            color: #cccccc;
-            max-width: 720px;
-            margin: 0 auto 40px auto;
-            line-height: 1.7;
-        }
-
-        .bottom-ticket-btn {
-            background-color: #20e070;
-            color: #0b0b0b;
-            padding: 16px 40px;
-            border-radius: 9999px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 6px 24px rgba(32, 224, 112, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .bottom-ticket-btn:hover {
-            background-color: #28f07c;
-            transform: translateY(-3px) scale(1.05);
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Linksboven: Font Switch Knop + Versietag -->
-    <div class="font-btn-container">
-        <button id="fontBtn" class="top-btn" type="button">Font</button>
-        <span class="version-tag">v12.0</span>
-    </div>
-
-    <!-- Rechtsboven: Ticket Knop -->
-    <div class="ticket-btn-container">
-        <a href="#tickets" class="top-btn">Tickets</a>
-    </div>
-
-    <section class="hero">
-        <video autoplay muted loop playsinline preload="auto">
-            <source src="achtergrond.mp4" type="video/mp4">
-        </video>
-
-        <div class="hero-content">
-            <div id="heroLogoWrapper">
-                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
-            </div>
-
-            <!-- Groen bolletje + Font indicatie -->
-            <div class="font-indicator-badge">
-                <span class="dot"></span>
-                <span id="fontBadgeText">UNBOUNDED (1/3)</span>
-            </div>
-
-            <!-- Payoff -->
-            <div id="payoffText" class="hero-subtitle">
-                <span class="whitespace-nowrap">Find your people,</span> 
-                <span class="whitespace-nowrap">Feel the moment</span>
-            </div>
-        </div>
-
-        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-        </a>
-    </section>
-
-    <section class="gradient-overlay" id="tickets">
-        <h2 id="sectionHeading">Over Noordernacht</h2>
-        
-        <p>
-            Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
-            Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
-            waarin muziek, energie en verbinding centraal staan. Hier vind je jouw mensen en beleef je het moment.
-        </p>
-        <a href="#tickets" class="bottom-ticket-btn">Meteen Tickets Bestellen</a>
-    </section>
-
-    <script>
-        // Jouw Top 3 Favorites
-        const fonts = [
-            { displayName: "UNBOUNDED", fontFamily: "'Unbounded', sans-serif", weight: "800" },
-            { displayName: "DELA GOTHIC ONE", fontFamily: "'Dela Gothic One', sans-serif", weight: "400" },
-            { displayName: "SPACE GROTESK", fontFamily: "'Space Grotesk', sans-serif", weight: "700" }
-        ];
-
-        let currentFontIndex = 0;
-
-        function applyFont(index) {
-            const font = fonts[index];
-            const payoff = document.getElementById('payoffText');
-            const badgeText = document.getElementById('fontBadgeText');
-            const sectionHeading = document.getElementById('sectionHeading');
-
-            // Badge text (bijv: UNBOUNDED (1/3))
-            badgeText.innerText = `${font.displayName} (${index + 1}/${fonts.length})`;
-
-            // Alleen Payoff en Kop switchen
-            payoff.style.fontFamily = font.fontFamily;
-            payoff.style.fontWeight = font.weight;
-
-            sectionHeading.style.fontFamily = font.fontFamily;
-            sectionHeading.style.fontWeight = font.weight;
-        }
-
-        function switchFont() {
-            currentFontIndex = (currentFontIndex + 1) % fonts.length;
-            applyFont(currentFontIndex);
-        }
-
-        document.getElementById('fontBtn').addEventListener('click', switchFont);
-
-        applyFont(0);
-
-        const logoWrapper = document.getElementById('heroLogoWrapper');
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition <= 500) {
-                const scale = 1 - (scrollPosition / 500) * 0.25;
-                logoWrapper.style.transform = `scale(${scale})`;
-            } else {
-                logoWrapper.style.transform = 'scale(0.75)';
-            }
-        });
-    </script>
-</body>
-</html>
