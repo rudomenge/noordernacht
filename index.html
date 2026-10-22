@@ -53,8 +53,8 @@
 
         /* Smooth transformation for the scrolling shrink animation */
         #heroLogoWrapper {
-            will-change: transform, opacity;
-            transition: transform 0.05s ease-out, opacity 0.05s ease-out;
+            will-change: transform;
+            transition: transform 0.05s ease-out;
         }
     </style>
 </head>
@@ -76,29 +76,29 @@
         </a>
     </header>
 
-    <!-- 3. HERO SECTION WITH ENLARGED & HIGHER POSITIONED LOGO -->
-    <section class="relative min-h-screen flex flex-col justify-start items-center text-center px-4 pt-6 sm:pt-10 pb-12 z-10 overflow-hidden">
+    <!-- 3. HERO SECTION WITH PERFECTLY CENTERED & BALANCED LOGO -->
+    <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-6 z-10 overflow-hidden">
         
-        <!-- Central Logo & Payoff Content Wrapper (Shifted Higher Up) -->
-        <div id="heroLogoWrapper" class="flex flex-col items-center justify-center max-w-6xl mx-auto mt-2 sm:mt-4 mb-auto">
-            <!-- 125% Extra Enlarged Logo (~1050px max width on large displays) -->
+        <!-- Central Logo & Payoff Content Wrapper -->
+        <div id="heroLogoWrapper" class="flex flex-col items-center justify-center max-w-5xl w-full mx-auto my-auto -mt-4 sm:-mt-8">
+            <!-- Perfectly balanced 95% scaled logo (max ~880px on desktop) -->
             <img 
                 src="logo.png" 
                 alt="Noordernacht Logo" 
-                class="w-[580px] sm:w-[800px] md:w-[980px] lg:w-[1050px] max-w-[98vw] h-auto logo-glow transition-all duration-300 transform hover:scale-[1.01] mb-2 sm:mb-4"
-                onerror="this.onerror=null; this.src='https://placehold.co/1050x600/000000/20e070?text=NOORDERNACHT';"
+                class="w-[450px] sm:w-[680px] md:w-[820px] lg:w-[880px] max-w-[88vw] h-auto logo-glow transition-all duration-300 transform hover:scale-[1.01] mb-4 sm:mb-6"
+                onerror="this.onerror=null; this.src='https://placehold.co/880x500/000000/20e070?text=NOORDERNACHT';"
             />
             
             <!-- Bold & Heavy Payoff Slogan -->
-            <h1 class="text-xl sm:text-3xl md:text-4xl font-extrabold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] max-w-3xl leading-relaxed">
+            <h1 class="text-lg sm:text-2xl md:text-3xl font-extrabold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] max-w-2xl leading-relaxed">
                 Find your people, Feel the moment
             </h1>
         </div>
 
-        <!-- Scroll Indicator -->
-        <a href="#info" class="flex flex-col items-center gap-2 text-gray-400 hover:text-brand-400 transition-colors cursor-pointer group mb-2 z-20">
-            <span class="text-xs uppercase tracking-[0.2em] font-semibold opacity-80 group-hover:opacity-100">Ontdek Meer</span>
-            <svg class="w-5 h-5 animate-bounce text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Scroll Indicator (Positioned at bottom) -->
+        <a href="#info" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400 hover:text-brand-400 transition-colors cursor-pointer group z-20">
+            <span class="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold opacity-80 group-hover:opacity-100">Ontdek Meer</span>
+            <svg class="w-4 h-4 sm:w-5 sm:h-5 animate-bounce text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
         </a>
@@ -144,7 +144,7 @@
         </footer>
     </div>
 
-    <!-- 5. JAVASCRIPT FOR PARALLAX LOGO SHRINK ANIMATION -->
+    <!-- 5. JAVASCRIPT FOR SUBTLE LOGO SHRINK ON SCROLL (NO FADE) -->
     <script>
         const logoWrapper = document.getElementById('heroLogoWrapper');
 
@@ -152,15 +152,13 @@
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
 
-            // Calculate scale factor from 1.0 down to ~0.55 as user scrolls down
+            // Subtle scale reduction (from 1.0 down to ~0.75) without changing opacity
             if (scrollY <= windowHeight) {
                 const progress = scrollY / windowHeight;
-                const scale = Math.max(0.55, 1 - (progress * 0.45));
-                const opacity = Math.max(0, 1 - (progress * 1.2));
-                const translateY = scrollY * 0.3; // Slight upward parallax drift
+                const scale = Math.max(0.75, 1 - (progress * 0.25));
+                const translateY = scrollY * 0.2; // Gentle parallax movement
 
                 logoWrapper.style.transform = `translateY(${translateY}px) scale(${scale})`;
-                logoWrapper.style.opacity = opacity;
             }
         });
     </script>
