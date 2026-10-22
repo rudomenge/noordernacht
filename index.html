@@ -7,7 +7,7 @@
     <!-- 5 Veilige Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Bebas+Neue&family=Inter:wght@300;400;700;800&family=Oswald:wght@700&family=Syne:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;800&family=Bebas+Neue&family=Inter:wght@300;400;700;800&family=Oswald:wght@500;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -196,24 +196,34 @@
             align-items: center;
         }
 
+        /* Kop groter gemaakt */
         .gradient-overlay h2 {
             font-family: 'Inter', sans-serif;
-            font-weight: 700;
-            font-size: 2.2rem;
-            letter-spacing: 2px;
+            font-weight: 800;
+            font-size: 3rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 24px;
-            transition: font-family 0.2s ease;
+            margin-bottom: 28px;
+            transition: font-family 0.2s ease, font-size 0.2s ease;
         }
 
+        @media (min-width: 640px) {
+            .gradient-overlay h2 {
+                font-size: 4rem;
+                letter-spacing: 4px;
+            }
+        }
+
+        /* Tekst over Noordernacht verandert nu ook mee */
         .gradient-overlay p {
             font-family: 'Inter', sans-serif;
             font-weight: 300;
-            font-size: 1.15rem;
-            color: #cccccc;
-            max-width: 680px;
+            font-size: 1.25rem;
+            color: #dddddd;
+            max-width: 720px;
             margin: 0 auto 40px auto;
             line-height: 1.7;
+            transition: font-family 0.2s ease;
         }
 
         .bottom-ticket-btn {
@@ -282,7 +292,7 @@
 
     <section class="gradient-overlay" id="tickets">
         <h2 id="sectionHeading">Over Noordernacht</h2>
-        <p>
+        <p id="sectionParagraph">
             Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
             Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
             waarin muziek, energie en verbinding centraal staan. Hier vind je jouw mensen en beleef je het moment.
@@ -295,7 +305,8 @@
             {
                 name: "BEBAS NEUE (1/5)",
                 fontFamily: "'Bebas Neue', sans-serif",
-                fontWeight: "400",
+                fontWeightPayoff: "400",
+                fontWeightBody: "400",
                 letterSpacing: "4px",
                 fontSizeMobile: "1.8rem",
                 fontSizeDesktop: "2.6rem"
@@ -303,7 +314,8 @@
             {
                 name: "OSWALD (2/5)",
                 fontFamily: "'Oswald', sans-serif",
-                fontWeight: "700",
+                fontWeightPayoff: "700",
+                fontWeightBody: "500",
                 letterSpacing: "3px",
                 fontSizeMobile: "1.3rem",
                 fontSizeDesktop: "1.8rem"
@@ -311,7 +323,8 @@
             {
                 name: "BARLOW CONDENSED (3/5)",
                 fontFamily: "'Barlow Condensed', sans-serif",
-                fontWeight: "800",
+                fontWeightPayoff: "800",
+                fontWeightBody: "600",
                 letterSpacing: "3px",
                 fontSizeMobile: "1.4rem",
                 fontSizeDesktop: "2.1rem"
@@ -319,7 +332,8 @@
             {
                 name: "SYNE (4/5)",
                 fontFamily: "'Syne', sans-serif",
-                fontWeight: "800",
+                fontWeightPayoff: "800",
+                fontWeightBody: "400",
                 letterSpacing: "2px",
                 fontSizeMobile: "1.15rem",
                 fontSizeDesktop: "1.5rem"
@@ -327,7 +341,8 @@
             {
                 name: "INTER 800 (5/5)",
                 fontFamily: "'Inter', sans-serif",
-                fontWeight: "800",
+                fontWeightPayoff: "800",
+                fontWeightBody: "300",
                 letterSpacing: "3px",
                 fontSizeMobile: "1.15rem",
                 fontSizeDesktop: "1.5rem"
@@ -341,17 +356,24 @@
             const payoff = document.getElementById('payoffText');
             const badgeText = document.getElementById('fontBadgeText');
             const sectionHeading = document.getElementById('sectionHeading');
+            const sectionParagraph = document.getElementById('sectionParagraph');
 
             badgeText.innerText = font.name;
 
+            // Payoff styling
             payoff.style.fontFamily = font.fontFamily;
-            payoff.style.fontWeight = font.fontWeight;
+            payoff.style.fontWeight = font.fontWeightPayoff;
             payoff.style.letterSpacing = font.letterSpacing;
 
             const isDesktop = window.innerWidth >= 640;
             payoff.style.fontSize = isDesktop ? font.fontSizeDesktop : font.fontSizeMobile;
 
+            // Grote Kop "Over Noordernacht"
             sectionHeading.style.fontFamily = font.fontFamily;
+
+            // Lopende tekst "Noordernacht is dé plek..." verandert nu OOK mee!
+            sectionParagraph.style.fontFamily = font.fontFamily;
+            sectionParagraph.style.fontWeight = font.fontWeightBody;
         }
 
         function switchFont() {
@@ -365,4 +387,14 @@
 
         const logoWrapper = document.getElementById('heroLogoWrapper');
         window.addEventListener('scroll', () => {
-            const scrollPosition
+            const scrollPosition = window.scrollY;
+            if (scrollPosition <= 500) {
+                const scale = 1 - (scrollPosition / 500) * 0.25;
+                logoWrapper.style.transform = `scale(${scale})`;
+            } else {
+                logoWrapper.style.transform = 'scale(0.75)';
+            }
+        });
+    </script>
+</body>
+</html>
