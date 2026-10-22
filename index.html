@@ -124,9 +124,10 @@
             padding: 0 20px;
         }
 
+        /* Logo op mobiel vergroot naar 120% */
         .hero-logo {
-            width: 130%;
-            max-width: 92vw;
+            width: 156%;
+            max-width: 95vw;
             height: auto;
             margin-top: 10px;
             margin-bottom: 20px;
@@ -211,7 +212,7 @@
             justify-content: center;
         }
 
-        /* Kop "Over Noordernacht" */
+        /* Kop "Over Noordernacht" met compactere interlinie op mobiel */
         .gradient-overlay h2 {
             font-family: 'Unbounded', sans-serif;
             font-weight: 800;
@@ -220,10 +221,9 @@
             text-transform: uppercase;
             margin-bottom: 32px;
             max-width: 95vw;
-            line-height: 1.25;
+            line-height: 1.1; /* Strakkere interlinie voor de koppen */
         }
 
-        /* Standaard op mobiel tonen we het netjes onder elkaar zodat het niet uit de bocht vliegt */
         .desktop-only-break {
             display: inline;
         }
@@ -232,20 +232,22 @@
             .gradient-overlay h2 {
                 font-size: 3.5rem;
                 letter-spacing: 3px;
+                line-height: 1.25;
             }
             .desktop-only-break {
-                display: none; /* Op grotere schermen staat het gewoon naast elkaar */
+                display: none;
             }
         }
 
+        /* Broodtekst met compactere interlinie */
         .gradient-overlay p {
             font-family: 'Inter', sans-serif;
             font-weight: 300;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: #cccccc;
             max-width: 720px;
             margin: 0 auto 50px auto;
-            line-height: 1.8;
+            line-height: 1.6; /* Iets vlottere/kleinere interlinie */
         }
 
         .bottom-ticket-btn {
@@ -280,7 +282,7 @@
 
     <div class="anim-btn-container">
         <button id="animBtn" class="top-btn" type="button">Animatie</button>
-        <span class="version-tag">v19.3</span>
+        <span class="version-tag">v20.0</span>
         <span id="statusSubTag" class="status-tag">TRAIL (SLOW)</span>
     </div>
 
@@ -363,14 +365,15 @@
         }, { passive: true });
 
         function renderAnimation() {
-            rotationAngle += 0.5;
+            rotationAngle += 0.6; // Iets vlottere rotatie
 
             if (currentAnimMode === 0) {
                 starX += (targetX - starX) * 0.018;
                 starY += (targetY - starY) * 0.018;
             } 
             else if (currentAnimMode === 1) {
-                orbitTime += 0.0008;
+                // Iets actievere/snellere orbit snelheid (0.0014 i.p.v. 0.0008)
+                orbitTime += 0.0014;
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2 - 50;
                 const radiusX = Math.min(window.innerWidth * 0.3, 300);
@@ -379,12 +382,12 @@
                 const destX = centerX + Math.cos(orbitTime) * radiusX;
                 const destY = centerY + Math.sin(orbitTime * 1.3) * radiusY;
 
-                starX += (destX - starX) * 0.02;
-                starY += (destY - starY) * 0.02;
+                starX += (destX - starX) * 0.03;
+                starY += (destY - starY) * 0.03;
             } 
             else {
                 if (isTouchDevice) {
-                    orbitTime += 0.0008;
+                    orbitTime += 0.0014;
                     const centerX = window.innerWidth / 2;
                     const centerY = window.innerHeight / 2 - 50;
                     const radiusX = Math.min(window.innerWidth * 0.3, 300);
@@ -393,8 +396,8 @@
                     const destX = centerX + Math.cos(orbitTime) * radiusX;
                     const destY = centerY + Math.sin(orbitTime * 1.3) * radiusY;
 
-                    starX += (destX - starX) * 0.02;
-                    starY += (destY - starY) * 0.02;
+                    starX += (destX - starX) * 0.03;
+                    starY += (destY - starY) * 0.03;
                 } else {
                     const timeSinceMove = Date.now() - lastMouseTime;
                     if (timeSinceMove > 1500) {
@@ -405,7 +408,8 @@
                         starX += (targetX - starX) * 0.018;
                         starY += (targetY - starY) * 0.018;
                     } else {
-                        orbitTime += 0.0008;
+                        // Slimme auto-pilot zweeft nu ook net wat vlotter en actiever weg
+                        orbitTime += 0.0014;
                         const centerX = window.innerWidth / 2;
                         const centerY = window.innerHeight / 2 - 50;
                         const radiusX = Math.min(window.innerWidth * 0.3, 300);
@@ -414,8 +418,8 @@
                         const destX = centerX + Math.cos(orbitTime) * radiusX;
                         const destY = centerY + Math.sin(orbitTime * 1.3) * radiusY;
 
-                        starX += (destX - starX) * 0.012;
-                        starY += (destY - starY) * 0.012;
+                        starX += (destX - starX) * 0.02;
+                        starY += (destY - starY) * 0.02;
                     }
                 }
             }
