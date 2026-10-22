@@ -50,7 +50,7 @@
             filter: brightness(0.65);
         }
 
-        /* Ticket Button floating top right */
+        /* Floating Ticket Button (rechtsboven) */
         .ticket-btn-container {
             position: fixed;
             top: 25px;
@@ -158,13 +158,16 @@
             }
         }
 
-        /* Overgangsgraad (Gradient van 0% naar 70% transparant zwart) */
+        /* Parallax Gradient-overgang naar ~75% donker */
         .gradient-overlay {
             position: relative;
             z-index: 20;
-            background: linear-gradient(to bottom, transparent 0%, rgba(11, 11, 11, 0.7) 30%, rgba(11, 11, 11, 0.95) 100%);
-            padding: 100px 24px 80px 24px;
+            background: linear-gradient(to bottom, transparent 0%, rgba(11, 11, 11, 0.75) 25%, rgba(11, 11, 11, 0.95) 100%);
+            padding: 120px 24px 100px 24px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .gradient-overlay h2 {
@@ -178,61 +181,14 @@
         .gradient-overlay p {
             font-size: 1.15rem;
             color: #cccccc;
-            max-width: 650px;
-            margin: 0 auto;
+            max-width: 680px;
+            margin: 0 auto 40px auto;
             line-height: 1.7;
             font-weight: 300;
         }
-    </style>
-</head>
-<body>
 
-    <!-- Floating Ticket Button -->
-    <div class="ticket-btn-container">
-        <a href="#tickets" class="ticket-btn">Tickets</a>
-    </div>
-
-    <!-- Hero Section met Background Video -->
-    <section class="hero">
-        <video autoplay muted loop playsinline preload="auto">
-            <source src="achtergrond.mp4" type="video/mp4">
-            Je browser ondersteunt geen video.
-        </video>
-
-        <div class="hero-content">
-            <!-- Logo wrapper voor de krimp-animatie -->
-            <div id="heroLogoWrapper">
-                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
-            </div>
-
-            <!-- Payoff met Oswald Font & vastgezette zinsdelen -->
-            <div class="hero-subtitle">
-                <span class="whitespace-nowrap">Find your people,</span> 
-                <span class="whitespace-nowrap">Feel the moment</span>
-            </div>
-        </div>
-
-        <!-- Pijltje onderin -->
-        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </a>
-    </section>
-
-    <!-- Informatie Sectie met zachte verloop-gradiënt naar 70% -->
-    <section class="gradient-overlay" id="tickets">
-        <h2>Over Noordernacht</h2>
-        <p>Duister, elektronisch en betoverend. Beleef de ultieme nacht waarin muziek en samenzijn samenkomen op een unieke locatie in het Noorden.</p>
-    </section>
-
-    <!-- Parallax Scroll Shrink Script -->
-    <script>
-        const logoWrapper = document.getElementById('heroLogoWrapper');
-
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            const maxScroll = 500;
-            
-            if (scrollPosition <= maxScroll) {
-                const scale = 1 - (scrollPosition / max
+        /* Tweede Ticket-knop onderaan */
+        .bottom-ticket-btn {
+            background-color: #20e070;
+            color: #0b0b0b;
+            padding: 16
