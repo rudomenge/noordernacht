@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
-    <!-- 5 Veilige Google Fonts inladen -->
+    <!-- 5 Veilige Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Bebas+Neue&family=Inter:wght@300;400;700;800&family=Oswald:wght@700&family=Syne:wght@800&display=swap" rel="stylesheet">
@@ -51,15 +51,8 @@
             filter: brightness(0.65);
         }
 
-        /* Floating Ticket Button */
-        .ticket-btn-container {
-            position: fixed;
-            top: 25px;
-            right: 30px;
-            z-index: 50;
-        }
-
-        .ticket-btn {
+        /* Floating Top Buttons Base */
+        .top-btn {
             background-color: #20e070;
             color: #0b0b0b;
             padding: 12px 28px;
@@ -72,11 +65,31 @@
             display: inline-block;
             box-shadow: 0 4px 20px rgba(32, 224, 112, 0.35);
             transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            outline: none;
         }
 
-        .ticket-btn:hover {
+        .top-btn:hover {
             background-color: #28f07c;
             transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
+        }
+
+        /* Font Knop Linksboven */
+        .font-btn-container {
+            position: fixed;
+            top: 25px;
+            left: 30px;
+            z-index: 50;
+        }
+
+        /* Ticket Knop Rechtsboven */
+        .ticket-btn-container {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            z-index: 50;
         }
 
         /* Hero Content */
@@ -97,10 +110,9 @@
             max-width: 92vw;
             height: auto;
             margin-top: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
             transition: transform 0.1s linear;
-            pointer-events: none;
         }
 
         @media (min-width: 640px) {
@@ -108,45 +120,35 @@
                 width: 100%;
                 max-width: 880px;
                 margin-top: 0;
-                margin-bottom: 20px;
+                margin-bottom: 24px;
             }
         }
 
-        /* Font Switcher Interactive Box */
-        .font-switcher-box {
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.55);
-            border: 2px solid #20e070;
-            padding: 16px 24px;
-            border-radius: 16px;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 15px rgba(32, 224, 112, 0.2);
-            transition: all 0.2s ease;
-            user-select: none;
-            max-width: 95vw;
-        }
-
-        .font-switcher-box:hover, .font-switcher-box:active {
-            background: rgba(32, 224, 112, 0.18);
-            border-color: #28f07c;
-            transform: scale(1.02);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(32, 224, 112, 0.4);
-        }
-
-        /* Font Indicator Badge */
-        .font-badge {
-            display: inline-block;
-            background: #20e070;
-            color: #0b0b0b;
+        /* Subtiel groen bolletje / label boven de payoff */
+        .font-indicator-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(32, 224, 112, 0.4);
+            color: #20e070;
             font-family: 'Inter', sans-serif;
             font-size: 0.75rem;
-            font-weight: 800;
+            font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            padding: 6px 14px;
+            padding: 4px 12px;
             border-radius: 20px;
             margin-bottom: 12px;
-            pointer-events: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #20e070;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #20e070;
         }
 
         /* Payoff base style */
@@ -155,21 +157,11 @@
             color: #ffffff;
             line-height: 1.3;
             text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
-            pointer-events: none;
+            max-width: 90vw;
         }
 
         .whitespace-nowrap {
             white-space: nowrap;
-        }
-
-        .click-hint {
-            margin-top: 10px;
-            font-size: 0.8rem;
-            color: #20e070;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            pointer-events: none;
         }
 
         /* Scroll Arrow */
@@ -248,8 +240,14 @@
 </head>
 <body>
 
+    <!-- Linksboven: Font Switch Knop -->
+    <div class="font-btn-container">
+        <button id="fontBtn" class="top-btn" onclick="switchFont()">Font</button>
+    </div>
+
+    <!-- Rechtsboven: Ticket Knop -->
     <div class="ticket-btn-container">
-        <a href="#tickets" class="ticket-btn">Tickets</a>
+        <a href="#tickets" class="top-btn">Tickets</a>
     </div>
 
     <section class="hero">
@@ -262,20 +260,16 @@
                 <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
             </div>
 
-            <!-- Klikbare Box met groene rand -->
-            <div class="font-switcher-box" id="fontSwitcherBox">
-                <div id="fontBadge" class="font-badge">
-                    FONT 1/5: BEBAS NEUE
-                </div>
+            <!-- Groen bolletje + Font indicatie -->
+            <div class="font-indicator-badge">
+                <span class="dot"></span>
+                <span id="fontBadgeText">BEBAS NEUE (1/5)</span>
+            </div>
 
-                <div id="payoffText" class="hero-subtitle">
-                    <span class="whitespace-nowrap">Find your people,</span> 
-                    <span class="whitespace-nowrap">Feel the moment</span>
-                </div>
-
-                <div class="click-hint">
-                    👇 Klik hier om het volgende lettertype te bekijken
-                </div>
+            <!-- Payoff -->
+            <div id="payoffText" class="hero-subtitle">
+                <span class="whitespace-nowrap">Find your people,</span> 
+                <span class="whitespace-nowrap">Feel the moment</span>
             </div>
         </div>
 
@@ -299,7 +293,7 @@
     <script>
         const fonts = [
             {
-                name: "FONT 1/5: BEBAS NEUE (Smal & Hoog)",
+                name: "BEBAS NEUE (1/5)",
                 fontFamily: "'Bebas Neue', sans-serif",
                 fontWeight: "400",
                 letterSpacing: "4px",
@@ -307,7 +301,7 @@
                 fontSizeDesktop: "2.6rem"
             },
             {
-                name: "FONT 2/5: OSWALD (Strak & Condensed)",
+                name: "OSWALD (2/5)",
                 fontFamily: "'Oswald', sans-serif",
                 fontWeight: "700",
                 letterSpacing: "3px",
@@ -315,7 +309,7 @@
                 fontSizeDesktop: "1.8rem"
             },
             {
-                name: "FONT 3/5: BARLOW CONDENSED (Techno & Industrieel)",
+                name: "BARLOW CONDENSED (3/5)",
                 fontFamily: "'Barlow Condensed', sans-serif",
                 fontWeight: "800",
                 letterSpacing: "3px",
@@ -323,7 +317,7 @@
                 fontSizeDesktop: "2.1rem"
             },
             {
-                name: "FONT 4/5: SYNE (Uniek & Artistiek)",
+                name: "SYNE (4/5)",
                 fontFamily: "'Syne', sans-serif",
                 fontWeight: "800",
                 letterSpacing: "2px",
@@ -331,7 +325,7 @@
                 fontSizeDesktop: "1.5rem"
             },
             {
-                name: "FONT 5/5: INTER (Extra Bold 800 - Clean)",
+                name: "INTER 800 (5/5)",
                 fontFamily: "'Inter', sans-serif",
                 fontWeight: "800",
                 letterSpacing: "3px",
@@ -345,10 +339,10 @@
         function applyFont(index) {
             const font = fonts[index];
             const payoff = document.getElementById('payoffText');
-            const badge = document.getElementById('fontBadge');
+            const badgeText = document.getElementById('fontBadgeText');
             const sectionHeading = document.getElementById('sectionHeading');
 
-            badge.innerText = font.name;
+            badgeText.innerText = font.name;
 
             payoff.style.fontFamily = font.fontFamily;
             payoff.style.fontWeight = font.fontWeight;
@@ -365,23 +359,10 @@
             applyFont(currentFontIndex);
         }
 
-        const switcherBox = document.getElementById('fontSwitcherBox');
-        switcherBox.addEventListener('click', switchFont);
-
         applyFont(0);
 
         window.addEventListener('resize', () => applyFont(currentFontIndex));
 
         const logoWrapper = document.getElementById('heroLogoWrapper');
         window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition <= 500) {
-                const scale = 1 - (scrollPosition / 500) * 0.25;
-                logoWrapper.style.transform = `scale(${scale})`;
-            } else {
-                logoWrapper.style.transform = 'scale(0.75)';
-            }
-        });
-    </script>
-</body>
-</html>
+            const scrollPosition
