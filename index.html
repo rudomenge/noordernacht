@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
     
-    <!-- Werkende Google Fonts import -->
+    <!-- Google Fonts: Unbounded (Headers/Knoppen) + Inter (Broodtekst) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Unbounded:wght@400..900&display=swap" rel="stylesheet">
@@ -93,10 +93,10 @@
         .version-tag {
             font-family: 'Inter', sans-serif;
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.6);
             margin-top: 6px;
             letter-spacing: 1px;
-            font-weight: 400;
+            font-weight: 600;
         }
 
         /* Ticket Knop Rechtsboven */
@@ -190,17 +190,17 @@
             white-space: nowrap;
         }
 
-        /* Zwevend Sterretje SVG Element */
-        .floating-star {
+        /* Zwevend Logo Sterretje SVG Element */
+        .floating-star-container {
             position: fixed;
             top: 0;
             left: 0;
-            width: 38px;
-            height: 38px;
+            width: 44px;
+            height: 44px;
             pointer-events: none;
             z-index: 9999;
-            filter: drop-shadow(0 0 10px rgba(32, 224, 112, 0.8));
-            transform: translate(-50%, -50%);
+            will-change: transform;
+            filter: drop-shadow(0 0 12px rgba(32, 224, 112, 0.9));
         }
 
         /* Scroll Arrow */
@@ -288,15 +288,17 @@
 </head>
 <body>
 
-    <!-- SVG Sterretje uit het logo -->
-    <svg id="starSvg" class="floating-star" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M50 0 C50 32, 68 50, 100 50 C68 50, 50 68, 50 100 C50 68, 32 50, 0 50 C32 50, 50 32, 50 0 Z" fill="#20e070"/>
-    </svg>
+    <!-- 4-Puntig Logo Sterretje SVG -->
+    <div id="starContainer" class="floating-star-container">
+        <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z" fill="#20e070"/>
+        </svg>
+    </div>
 
     <!-- Linksboven: Animatie Switch Knop + Versietag -->
     <div class="anim-btn-container">
         <button id="animBtn" class="top-btn" type="button">Animatie</button>
-        <span class="version-tag">v14.0</span>
+        <span class="version-tag">v15.0</span>
     </div>
 
     <!-- Rechtsboven: Ticket Knop (in Unbounded) -->
@@ -344,16 +346,86 @@
     </section>
 
     <script>
-        const star = document.getElementById('starSvg');
+        const starContainer = document.getElementById('starContainer');
         const badgeText = document.getElementById('animBadgeText');
         
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let starX = mouseX;
-        let starY = mouseY;
+        // Start het sterretje netjes in het midden van het scherm
+        let targetX = window.innerWidth / 2;
+        let targetY = window.innerHeight / 2;
+        let starX = targetX;
+        let starY = targetY;
 
         // 0 = Cursor Trail (Slow Motion), 1 = Orbit Flow (Rondzweven)
         let currentAnimMode = 0; 
-        let orbitAngle = 0;
+        let rotationAngle = 0;
 
-        window.addEventListener('mousemove', (e)
+        // Vang muis- en touchbewegingen op
+        window.addEventListener('mousemove', (e) => {
+            if (currentAnimMode === 0) {
+                targetX = e.clientX;
+                targetY = e.clientY;
+            }
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if (currentAnimMode === 0 && e.touches.length > 0) {
+                targetX = e.touches[0].clientX;
+                targetY = e.touches[0].clientY;
+            }
+        });
+
+        // Continue Animatie Loop
+        function renderAnimation() {
+            rotationAngle += 1.2;
+
+            if (currentAnimMode === 0) {
+                // MODUS 1: Lerp Vertraging (0.04 voor diepe slow-motion zweef)
+                starX += (targetX - starX) * 0.04;
+                starY += (targetY - starY) * 0.04;
+            } else {
+                // MODUS 2: Zelfstandig in een organische ovaal zweven rond het midden
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2 - 50;
+                const radiusX = Math.min(window.innerWidth * 0.3, 300);
+                const radiusY = Math.min(window.innerHeight * 0.2, 160);
+
+                const time = Date.now() * 0.0012;
+                starX = centerX + Math.cos(time) * radiusX;
+                starY = centerY + Math.sin(time * 1.3) * radiusY;
+            }
+
+            // Pas positie en rotatie toe op het sterretje
+            starContainer.style.transform = `translate3d(${starX - 22}px, ${starY - 22}px, 0) rotate(${rotationAngle}deg)`;
+
+            requestAnimationFrame(renderAnimation);
+        }
+
+        // Start direct met renderen bij het inladen
+        requestAnimationFrame(renderAnimation);
+
+        // Knop om tussen modi te schakelen
+        function switchAnimation() {
+            currentAnimMode = (currentAnimMode + 1) % 2;
+            if (currentAnimMode === 0) {
+                badgeText.innerText = "CURSOR TRAIL (SLOW MOTION)";
+            } else {
+                badgeText.innerText = "ORBIT FLOW (RONDZWEVEN)";
+            }
+        }
+
+        document.getElementById('animBtn').addEventListener('click', switchAnimation);
+
+        // Logo shrink effect bij scrollen
+        const logoWrapper = document.getElementById('heroLogoWrapper');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            if (scrollPosition <= 500) {
+                const scale = 1 - (scrollPosition / 500) * 0.25;
+                logoWrapper.style.transform = `scale(${scale})`;
+            } else {
+                logoWrapper.style.transform = 'scale(0.75)';
+            }
+        });
+    </script>
+</body>
+</html>
