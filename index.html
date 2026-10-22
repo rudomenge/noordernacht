@@ -53,8 +53,8 @@
             filter: brightness(0.7);
         }
 
-        /* Subtiele Grain / Noise Overlay over de video */
-        .hero-grain-overlay {
+        /* Subtiele Interlacing Overlay over de video */
+        .hero-interlace-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -62,8 +62,12 @@
             height: 100%;
             z-index: 2;
             pointer-events: none;
-            opacity: 0.12;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.3) 50%
+            );
+            background-size: 100% 4px;
+            opacity: 0.5;
         }
 
         /* Top Buttons Base (In Unbounded) */
@@ -189,7 +193,7 @@
             white-space: nowrap;
         }
 
-        /* Zwevend SVG Sterretje Container (1.3x groter, zonder glow) */
+        /* Zwevend SVG Sterretje Container (Laden van jouw specifieke ster.svg, 1.3x groter, felle neon kleur) */
         .floating-star-container {
             position: fixed;
             top: 0;
@@ -201,10 +205,13 @@
             will-change: transform;
         }
 
-        .floating-star-container svg {
+        .floating-star-container img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
             display: block;
+            /* Maakt de geüploade SVG spatzuiver fel neon-groen (#20e070) zonder gloei-waas */
+            filter: brightness(0) saturate(100%) invert(68%) sepia(85%) saturate(450%) hue-rotate(90deg) brightness(102%) contrast(98%);
         }
 
         /* Scroll Arrow */
@@ -292,17 +299,15 @@
 </head>
 <body>
 
-    <!-- Het SVG Sterretje (Inline SVG in exacte kleur #20e070, 1.3x groter, zonder glow) -->
+    <!-- Zwevend SVG Sterretje Container die exact jouw ster.svg inlaadt -->
     <div id="starContainer" class="floating-star-container">
-        <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z" fill="#20e070"/>
-        </svg>
+        <img src="ster.svg" alt="Noordernacht Ster" />
     </div>
 
     <!-- Linksboven: Animatie Switch Knop + Versietag + Status -->
     <div class="anim-btn-container">
         <button id="animBtn" class="top-btn" type="button">Animatie</button>
-        <span class="version-tag">v26.0</span>
+        <span class="version-tag">v27.0</span>
         <span id="statusSubTag" class="status-tag">TRAIL (SLOW)</span>
     </div>
 
@@ -316,8 +321,8 @@
             <source src="achtergrond.mp4" type="video/mp4">
         </video>
 
-        <!-- Subtiele Film Grain Overlay -->
-        <div class="hero-grain-overlay"></div>
+        <!-- Subtiele Interlace Overlay -->
+        <div class="hero-interlace-overlay"></div>
 
         <div class="hero-content">
             <div id="heroLogoWrapper">
