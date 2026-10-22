@@ -211,20 +211,30 @@
             justify-content: center;
         }
 
+        /* Kop "Over Noordernacht" */
         .gradient-overlay h2 {
             font-family: 'Unbounded', sans-serif;
             font-weight: 800;
-            font-size: 2.2rem;
+            font-size: 2.1rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 32px;
             max-width: 95vw;
+            line-height: 1.25;
         }
 
-        @media (min-width: 640px) {
+        /* Standaard op mobiel tonen we het netjes onder elkaar zodat het niet uit de bocht vliegt */
+        .desktop-only-break {
+            display: inline;
+        }
+
+        @media (min-width: 768px) {
             .gradient-overlay h2 {
                 font-size: 3.5rem;
                 letter-spacing: 3px;
+            }
+            .desktop-only-break {
+                display: none; /* Op grotere schermen staat het gewoon naast elkaar */
             }
         }
 
@@ -270,7 +280,7 @@
 
     <div class="anim-btn-container">
         <button id="animBtn" class="top-btn" type="button">Animatie</button>
-        <span class="version-tag">v19.2</span>
+        <span class="version-tag">v19.3</span>
         <span id="statusSubTag" class="status-tag">TRAIL (SLOW)</span>
     </div>
 
@@ -300,7 +310,11 @@
     </section>
 
     <section class="gradient-overlay" id="tickets">
-        <h2>Over Noordernacht</h2>
+        <h2>
+            Over<br class="desktop-only-break"> 
+            Noorder<br class="desktop-only-break"> 
+            nacht
+        </h2>
         <p>
             Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
             Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
@@ -352,12 +366,10 @@
             rotationAngle += 0.5;
 
             if (currentAnimMode === 0) {
-                // MODUS 1: Trage muisvolging
                 starX += (targetX - starX) * 0.018;
                 starY += (targetY - starY) * 0.018;
             } 
             else if (currentAnimMode === 1) {
-                // MODUS 2: Vrij rondzweven
                 orbitTime += 0.0008;
                 const centerX = window.innerWidth / 2;
                 const centerY = window.innerHeight / 2 - 50;
@@ -371,9 +383,7 @@
                 starY += (destY - starY) * 0.02;
             } 
             else {
-                // MODUS 3: Smart Auto-Pilot (Automatisch Orbit op mobiel / Na 1.5s stilstand op desktop)
                 if (isTouchDevice) {
-                    // Mobiel / Touch: direct automatisch rondvliegen
                     orbitTime += 0.0008;
                     const centerX = window.innerWidth / 2;
                     const centerY = window.innerHeight / 2 - 50;
@@ -386,7 +396,6 @@
                     starX += (destX - starX) * 0.02;
                     starY += (destY - starY) * 0.02;
                 } else {
-                    // Desktop: Volg muis, en ga na 1.5 seconde stilstand naadloos over op orbit
                     const timeSinceMove = Date.now() - lastMouseTime;
                     if (timeSinceMove > 1500) {
                         isUserMovingMouse = false;
