@@ -1,4 +1,4 @@
-<!-- Versie: 36.0 - Noordernacht: volumeknop bij muziek, carousel pauzeert niet meer, mobiel groter logo + Agenda-knop onder de carousel -->
+<!-- Versie: 36.1 - Noordernacht: SoundCloud start pas na een klik op play, rest van v36.0 (volume, carousel, mobiel) -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -65,7 +65,7 @@
             .m-only { display: none; }
         }
 
-        /* SoundCloud-speler: klein pilletje linksonder. Muziek staat standaard uit. */
+        /* Muziekspeler: klein pilletje linksonder. Muziek staat standaard uit. */
         .sc-player {
             position: fixed;
             left: 20px;
@@ -308,7 +308,7 @@
             background: var(--accent);
         }
 
-        /* Verborgen SoundCloud-frame (wordt door het script aangemaakt): levert alleen het geluid */
+        /* Verborgen SoundCloud-frame (wordt pas na een klik op play aangemaakt): levert alleen het geluid */
         .sc-frame {
             position: fixed;
             left: -9999px;
@@ -657,19 +657,3 @@
             flex: 0 0 auto;
             width: 183px;
             height: 125px;
-            margin-right: 22px;
-            border-radius: 22px;
-            overflow: hidden;
-            background: #111;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Elke foto vult het kader volledig, gecentreerd, ongeacht het originele formaat */
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center center;
-            display: block;
