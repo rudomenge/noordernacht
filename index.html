@@ -1,4 +1,4 @@
-<!-- Versie: 29.0 - Noordernacht Hero & Smart Auto Sterretje (#ffa570) -->
+<!-- Versie: 31.0 - Noordernacht Exact Unbounded Black Typography (Desktop 76/66px, Mobile 32/30px) -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
     
-    <!-- Google Fonts: Inter (Broodtekst & Koppen) -->
+    <!-- Google Fonts: Unbounded (Headers/Knoppen) + Inter (Broodtekst) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;800&family=Unbounded:wght@400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Unbounded:wght@400..900&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -54,7 +54,7 @@
             filter: brightness(0.7);
         }
 
-        /* Subtiele Interlace Overlay over de video */
+        /* Subtiele Interlace Overlay */
         .hero-interlace-overlay {
             position: absolute;
             top: 0;
@@ -71,13 +71,13 @@
             opacity: 0.5;
         }
 
-        /* Top Buttons Base (In Inter / Unbounded) */
+        /* Top Buttons Base (Unbounded) */
         .top-btn {
             background-color: #ffa570;
             color: #0b0b0b;
             padding: 12px 28px;
             border-radius: 9999px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 800;
             font-size: 0.85rem;
             letter-spacing: 1px;
@@ -171,9 +171,9 @@
             }
         }
 
-        /* Payoff */
+        /* Payoff in Unbounded */
         .hero-subtitle {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-weight: 800;
             text-transform: uppercase;
             color: #ffffff;
@@ -220,7 +220,6 @@
             height: 100%;
             object-fit: contain;
             display: block;
-            /* Filter voor #ffa570 */
             filter: brightness(0) saturate(100%) invert(75%) sepia(38%) saturate(1478%) hue-rotate(325deg) brightness(103%) contrast(101%);
         }
 
@@ -258,21 +257,23 @@
             justify-content: center;
         }
 
+        /* Koppen: Unbounded Black, Mobile 32pt/30pt, Desktop 76pt/66pt */
         .gradient-overlay h2 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 800;
-            font-size: 2.2rem;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 900; /* Black */
+            font-size: 32px;
+            line-height: 30px;
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 32px;
             max-width: 95vw;
-            line-height: 1.15;
             color: #ffa570;
         }
 
         @media (min-width: 640px) {
             .gradient-overlay h2 {
-                font-size: 3.5rem;
+                font-size: 76px;
+                line-height: 66px;
                 letter-spacing: 2px;
             }
         }
@@ -296,7 +297,7 @@
             color: #0b0b0b;
             padding: 16px 40px;
             border-radius: 9999px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Unbounded', sans-serif;
             font-size: 1rem;
             font-weight: 800;
             letter-spacing: 1.5px;
@@ -320,9 +321,9 @@
         <img src="ster.svg" alt="Noordernacht Ster" />
     </div>
 
-    <!-- Linksboven: Versietag & Vaste Status (Smart Auto) -->
+    <!-- Linksboven: Versietag & Status -->
     <div class="status-container">
-        <span class="version-tag">v29.0</span>
+        <span class="version-tag">v31.0</span>
         <span class="status-tag">SMART AUTO</span>
     </div>
 
