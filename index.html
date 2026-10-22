@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
-    <!-- Google Font: Inter -->
+    <!-- Google Font Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -23,7 +23,7 @@
             scroll-behavior: smooth;
         }
 
-        /* Hero Container */
+        /* Hero Sectie */
         .hero {
             position: relative;
             width: 100%;
@@ -35,7 +35,7 @@
             background: #000;
         }
 
-        /* Background Video */
+        /* Video op achtergrond */
         .hero video {
             position: absolute;
             top: 50%;
@@ -50,7 +50,7 @@
             filter: brightness(0.65);
         }
 
-        /* Floating Ticket Button (rechtsboven) */
+        /* Floating Ticket Button */
         .ticket-btn-container {
             position: fixed;
             top: 25px;
@@ -69,16 +69,9 @@
             text-decoration: none;
             display: inline-block;
             box-shadow: 0 4px 20px rgba(32, 224, 112, 0.35);
-            transition: all 0.3s ease;
         }
 
-        .ticket-btn:hover {
-            background-color: #28f07c;
-            transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
-        }
-
-        /* Hero Content Container */
+        /* Inhoud in het midden */
         .hero-content {
             position: relative;
             z-index: 10;
@@ -90,87 +83,33 @@
             padding: 0 20px;
         }
 
-        /* Logo styling */
         .hero-logo {
-            width: 130%;
-            max-width: 92vw;
+            width: 100%;
+            max-width: 880px;
             height: auto;
-            margin-top: 30px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
-            transition: transform 0.1s linear;
         }
 
-        @media (min-width: 640px) {
-            .hero-logo {
-                width: 100%;
-                max-width: 880px;
-                margin-top: 0;
-                margin-bottom: 24px;
-            }
-        }
-
-        /* Payoff Subtitle in Inter Extra Bold (800) */
         .hero-subtitle {
             font-family: 'Inter', sans-serif;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 3px;
             color: #ffffff;
-            font-size: 1.15rem;
-            line-height: 1.4;
+            font-size: 1.5rem;
             text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
-            max-width: 90vw;
-        }
-
-        @media (min-width: 640px) {
-            .hero-subtitle {
-                font-size: 1.5rem;
-                letter-spacing: 4px;
-            }
         }
 
         .whitespace-nowrap {
             white-space: nowrap;
         }
 
-        /* Bouncing Scroll Arrow */
-        .scroll-arrow {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            color: rgba(255, 255, 255, 0.75);
-            animation: bounce 2s infinite;
-            text-decoration: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .scroll-arrow svg {
-            width: 32px;
-            height: 32px;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translate(-50%, 0);
-            }
-            40% {
-                transform: translate(-50%, -12px);
-            }
-            60% {
-                transform: translate(-50%, -6px);
-            }
-        }
-
-        /* Gradient Overlay voor de parallax-overgang naar beneden */
+        /* Informatie / Parallax sectie */
         .gradient-overlay {
             position: relative;
             z-index: 20;
-            background: linear-gradient(to bottom, transparent 0%, rgba(11, 11, 11, 0.75) 25%, rgba(11, 11, 11, 0.95) 100%);
+            background: linear-gradient(to bottom, transparent 0%, rgba(11, 11, 11, 0.8) 30%, #0b0b0b 100%);
             padding: 120px 24px 100px 24px;
             text-align: center;
             display: flex;
@@ -179,8 +118,6 @@
         }
 
         .gradient-overlay h2 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 700;
             font-size: 2.2rem;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -188,102 +125,54 @@
         }
 
         .gradient-overlay p {
-            font-family: 'Inter', sans-serif;
             font-size: 1.15rem;
             color: #cccccc;
             max-width: 680px;
             margin: 0 auto 40px auto;
             line-height: 1.7;
-            font-weight: 300;
         }
 
-        /* Tweede Ticket-knop onderaan */
         .bottom-ticket-btn {
             background-color: #20e070;
             color: #0b0b0b;
             padding: 16px 40px;
             border-radius: 9999px;
-            font-family: 'Inter', sans-serif;
             font-size: 1.1rem;
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 6px 24px rgba(32, 224, 112, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .bottom-ticket-btn:hover {
-            background-color: #28f07c;
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 32px rgba(32, 224, 112, 0.6);
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating Ticket Button (Vast rechtsboven) -->
     <div class="ticket-btn-container">
         <a href="#tickets" class="ticket-btn">Tickets</a>
     </div>
 
-    <!-- Hero Section met Background Video -->
     <section class="hero">
         <video autoplay muted loop playsinline preload="auto">
             <source src="achtergrond.mp4" type="video/mp4">
-            Je browser ondersteunt geen video.
         </video>
 
         <div class="hero-content">
-            <!-- Logo wrapper voor de krimp-animatie -->
-            <div id="heroLogoWrapper">
-                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
-            </div>
-
-            <!-- Payoff in Inter Extra Bold (800) -->
+            <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
             <div class="hero-subtitle">
                 <span class="whitespace-nowrap">Find your people,</span> 
                 <span class="whitespace-nowrap">Feel the moment</span>
             </div>
         </div>
-
-        <!-- Pijltje onderin -->
-        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </a>
     </section>
 
-    <!-- Informatie Sectie met Parallax Gradient -->
     <section class="gradient-overlay" id="tickets">
         <h2>Over Noordernacht</h2>
         <p>
             Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
-            Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
-            waarin muziek, energie en verbinding centraal staan. Hier vind je jouw mensen en beleef je het moment.
+            Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer.
         </p>
-        
-        <!-- Tweede Ticket-knop onder het informatieblok -->
         <a href="#tickets" class="bottom-ticket-btn">Meteen Tickets Bestellen</a>
     </section>
 
-    <!-- Parallax Scroll Shrink Script voor het Logo -->
-    <script>
-        const logoWrapper = document.getElementById('heroLogoWrapper');
-
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            const maxScroll = 500;
-            
-            if (scrollPosition <= maxScroll) {
-                const scale = 1 - (scrollPosition / maxScroll) * 0.25;
-                logoWrapper.style.transform = `scale(${scale})`;
-            } else {
-                logoWrapper.style.transform = 'scale(0.75)';
-            }
-        });
-    </script>
 </body>
 </html>
