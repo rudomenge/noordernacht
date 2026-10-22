@@ -79,9 +79,9 @@
     <!-- 3. HERO SECTION WITH PERFECTLY CENTERED & BALANCED LOGO -->
     <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-6 z-10 overflow-hidden">
         
-        <!-- Central Logo & Payoff Content Wrapper -->
-        <div id="heroLogoWrapper" class="flex flex-col items-center justify-center max-w-5xl w-full mx-auto my-auto -mt-4 sm:-mt-8">
-            <!-- Perfectly balanced 95% scaled logo (max ~880px on desktop) -->
+        <!-- Central Logo & Payoff Content Wrapper (Vertically Centered with equal spacing top and bottom) -->
+        <div id="heroLogoWrapper" class="flex flex-col items-center justify-center max-w-5xl w-full mx-auto my-auto">
+            <!-- Perfectly balanced 95% scaled logo -->
             <img 
                 src="logo.png" 
                 alt="Noordernacht Logo" 
@@ -95,10 +95,9 @@
             </h1>
         </div>
 
-        <!-- Scroll Indicator (Positioned at bottom) -->
-        <a href="#info" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-400 hover:text-brand-400 transition-colors cursor-pointer group z-20">
-            <span class="text-[10px] sm:text-xs uppercase tracking-[0.2em] font-semibold opacity-80 group-hover:opacity-100">Ontdek Meer</span>
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 animate-bounce text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <!-- Scroll Indicator Arrow Only (Without "Ontdek Meer" text and isolated from scale animation) -->
+        <a href="#info" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center text-gray-400 hover:text-brand-400 transition-colors cursor-pointer group z-20">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 animate-bounce text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
         </a>
