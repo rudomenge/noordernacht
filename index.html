@@ -4,173 +4,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Google Font: Oswald (Condensed, bold & strak passend bij het logo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            400: '#39ff14',
-                            500: '#20e070',
-                            600: '#16b858',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
     <style>
-        /* Fixed Video Background for Parallax Effect */
-        .bg-video {
-            position: fixed;
-            top: 0;
-            left: 0;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #0b0b0b;
+            color: #ffffff;
+            scroll-behavior: smooth;
+        }
+
+        /* Hero Container */
+        .hero {
+            position: relative;
             width: 100%;
             height: 100vh;
-            z-index: -20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: #000;
+        }
+
+        /* Background Video */
+        .hero video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
             object-fit: cover;
-            filter: brightness(0.75) contrast(1.05);
+            z-index: 1;
+            filter: brightness(0.65);
         }
 
-        /* Glowing Accent for Buttons & Logo Shadow */
-        .glow-btn {
-            box-shadow: 0 0 20px rgba(32, 224, 112, 0.4);
-        }
-        .glow-btn:hover {
-            box-shadow: 0 0 35px rgba(32, 224, 112, 0.75);
-        }
-
-        .logo-glow {
-            filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.95)) drop-shadow(0 0 20px rgba(32, 224, 112, 0.25));
+        /* Ticket Button floating top right */
+        .ticket-btn-container {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            z-index: 50;
         }
 
-        /* 0% to ~70% Gradient Transition Mask (NO BLUR) */
-        .hero-gradient-overlay {
-            background: linear-gradient(
-                to bottom, 
-                rgba(11, 11, 11, 0) 0%, 
-                rgba(11, 11, 11, 0.35) 40%, 
-                rgba(11, 11, 11, 0.7) 100%
-            );
+        .ticket-btn {
+            background-color: #20e070;
+            color: #0b0b0b;
+            padding: 12px 28px;
+            border-radius: 9999px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 20px rgba(32, 224, 112, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Semi-transparent dark section background (~70% opacity so video shines through) */
-        .semi-transparent-content {
-            background-color: rgba(11, 11, 11, 0.72);
+        .ticket-btn:hover {
+            background-color: #28f07c;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
         }
 
-        /* Smooth transformation for the scrolling shrink animation */
-        #heroLogoWrapper {
-            will-change: transform;
-            transition: transform 0.05s ease-out;
+        /* Hero Content Container */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            transition: transform 0.1s cubic-bezier(0, 0, 0.2, 1);
         }
-    </style>
-</head>
-<body class="bg-[#0b0b0b] text-white font-sans antialiased selection:bg-brand-500 selection:text-black scroll-smooth min-h-screen">
 
-    <!-- 1. FULLSCREEN BACKGROUND VIDEO -->
-    <video id="bgVideo" autoplay muted loop playsinline preload="auto" class="bg-video">
-        <source src="achtergrond.mp4" type="video/mp4">
-        Je browser ondersteunt geen video.
-    </video>
+        /* Logo styling */
+        .hero-logo {
+            /* Mobiel: groter & iets naar onderen geschoven */
+            width: 130%;
+            max-width: 92vw;
+            height: auto;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
+            transition: transform 0.1s linear;
+        }
 
-    <!-- Subtle Ambient Dark Overlay for General Contrast -->
-    <div class="fixed inset-0 bg-black/20 z-[-10] pointer-events-none"></div>
-
-    <!-- 2. MINIMAL TOP HEADER (ONLY GLOWING TICKETS BUTTON) -->
-    <header class="fixed top-0 left-0 w-full z-50 p-6 sm:p-8 flex justify-end pointer-events-none">
-        <a href="#tickets" class="pointer-events-auto inline-flex items-center justify-center px-7 py-3 text-sm font-black text-black bg-brand-500 hover:bg-brand-400 rounded-full transition-all duration-300 transform hover:scale-105 glow-btn tracking-wider uppercase">
-            Tickets
-        </a>
-    </header>
-
-    <!-- 3. HERO SECTION WITH CENTERED LOGO & MOBILE FINE-TUNING -->
-    <section class="relative h-screen w-full flex flex-col justify-center items-center text-center px-4 sm:px-6 z-10 overflow-hidden">
-        
-        <!-- Central Logo & Payoff Content Wrapper -->
-        <!-- On mobile: positioned lower (mt-10) & 130% larger (w-[98vw] max-w-none) -->
-        <!-- On desktop: perfectly centered (sm:mt-0) -->
-        <div id="heroLogoWrapper" class="flex flex-col items-center justify-center max-w-5xl w-full mx-auto my-auto mt-10 sm:mt-0">
-            <!-- Mobile 130% boost: w-[98vw] sm:w-[760px] md:w-[840px] lg:w-[880px] -->
-            <img 
-                src="logo.png" 
-                alt="Noordernacht Logo" 
-                class="w-[98vw] sm:w-[760px] md:w-[840px] lg:w-[880px] h-auto logo-glow transition-all duration-300 transform hover:scale-[1.01] mb-4 sm:mb-6"
-                onerror="this.onerror=null; this.src='https://placehold.co/880x500/000000/20e070?text=NOORDERNACHT';"
-            />
-            
-            <!-- Bold Payoff Slogan -->
-            <h1 class="text-sm sm:text-2xl md:text-3xl font-extrabold uppercase tracking-[0.16em] sm:tracking-[0.25em] text-white drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)] max-w-2xl leading-relaxed px-2">
-                Find your people, Feel the moment
-            </h1>
-        </div>
-
-        <!-- Bouncing Scroll Arrow Indicator -->
-        <a href="#info" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center justify-center text-gray-400 hover:text-brand-400 transition-colors cursor-pointer group z-20">
-            <svg class="w-6 h-6 sm:w-7 sm:h-7 animate-bounce text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </a>
-    </section>
-
-    <!-- 4. PARALLAX CONTENT SECTION WITH CLEAN GRADIENT TRANSITION (NO BLUR, 70% OPACITY) -->
-    <div id="info" class="relative z-20">
-        
-        <!-- Smooth Dark Gradient Transition Mask (From 0% to ~70% Dark) -->
-        <div class="h-36 sm:h-52 w-full hero-gradient-overlay pointer-events-none"></div>
-
-        <!-- ~70% Opaque Dark Background Section (No Blur, Video Visible Behind) -->
-        <div class="semi-transparent-content px-6 pb-24 border-t border-white/5 shadow-2xl">
-            <div class="max-w-3xl mx-auto text-center pt-8">
-                
-                <span class="inline-block w-12 h-1 bg-brand-500 rounded-full mb-8"></span>
-                
-                <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-6 uppercase">
-                    Over Noordernacht
-                </h2>
-                
-                <p class="text-gray-200 text-lg sm:text-2xl leading-relaxed font-normal max-w-2xl mx-auto mb-16 drop-shadow-md">
-                    Duister, elektronisch en betoverend. Beleef de ultieme nacht waarin muziek, visuele kunst en gelijkgestemden samenkomen op een unieke locatie in het Noorden.
-                </p>
-
-                <!-- Ticket Banner Call-to-Action -->
-                <div id="tickets" class="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-brand-950/60 via-black/80 to-black/90 border border-brand-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
-                    <div>
-                        <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">Klaar om de nacht te beleven?</h3>
-                        <p class="text-gray-300 text-sm sm:text-base">Meld je aan voor de ticket-voorverkoop en mis niks.</p>
-                    </div>
-                    <a href="#" class="px-8 py-4 rounded-full bg-brand-500 hover:bg-brand-400 text-black font-black text-sm uppercase tracking-wider transition-all duration-300 glow-btn whitespace-nowrap">
-                        Koop Tickets
-                    </a>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- Footer (~70% Opaque) -->
-        <footer class="w-full semi-transparent-content border-t border-white/10 py-8 px-6 text-center text-xs text-gray-400">
-            &copy; 2026 Noordernacht. Alle rechten voorbehouden.
-        </footer>
-    </div>
-
-    <!-- 5. JAVASCRIPT FOR SUBTLE LOGO SHRINK ON SCROLL -->
-    <script>
-        const logoWrapper = document.getElementById('heroLogoWrapper');
-
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            const windowHeight = window.innerHeight;
-
-            if (scrollY <= windowHeight) {
-                const progress = scrollY / windowHeight;
-                const scale = Math.max(0.72, 1 - (progress * 0.28));
-                const translateY = scrollY * 0.18; // Subtle parallax translation
-
-                logoWrapper.style.transform = `translateY(${translateY}px) scale(${scale})`;
+        @media (min-width: 640px) {
+            .hero-logo {
+                width: 100%;
+                max-width: 880px;
+                margin-top: 0;
+                margin-bottom: 24px;
             }
-        });
-    </script>
-</body>
-</html>
+        }
+
+        /* Payoff Subtitle met Oswald Font & Non-breaking zinsdelen */
+        .hero-subtitle {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #ffffff;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
+            max-width: 90vw;
+        }
+
+        @media (min-width: 640px) {
+            .hero-subtitle {
+                font-size: 1.6rem;
+                letter-spacing: 3.5px;
+            }
+        }
+
+        .whitespace-nowrap {
+            white-space: nowrap;
+        }
+
+        /* Bouncing Scroll Arrow */
+        .scroll-arrow {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            color: rgba(255, 255, 255, 0.75);
+            animation: bounce 2s infinite;
+            text-decoration: none;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translate(-50%, 0);
+            }
+            40% {
+                transform: translate(-50%, -12px);
+            }
+            60% {
+                transform: translate(-50%, -6px);
+            }
+        }
+
+        /* Information Section met Zachte Gradient Transition (0% naar 70%) */
+        .info-section {
+            position: relative;
+            z-index: 20;
+            background: linear-gradient(to bottom, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, 0.75) 15%, rgba(11, 11, 11, 0.95) 100%);
+            padding: 120px 24px 100px
