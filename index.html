@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
     
-    <!-- 20 Unieke & Eigenzinnige Google Fonts -->
+    <!-- Jouw Top 3 Google Fonts + Inter voor de leestekst -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@800&family=Bebas+Neue&family=Big+Shoulders+Display:wght@800;900&family=Chakra+Petch:wght@700&family=Cinzel:wght@900&family=Climate+Crisis&family=Dela+Gothic+One&family=Fjalla+One&family=Inter:wght@300;400;700;800&family=Kanit:wght@800;900&family=Montserrat:wght@800;900&family=Oswald:wght@700&family=Righteous&family=Rubik+Mono+One&family=Saira+Condensed:wght@800;900&family=Space+Grotesk:wght@700&family=Syne:wght@800&family=Teko:wght@700&family=Unbounded:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Inter:wght@300;400;700;800&family=Space+Grotesk:wght@700&family=Unbounded:wght@800;900&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -77,12 +77,24 @@
             box-shadow: 0 6px 28px rgba(32, 224, 112, 0.55);
         }
 
-        /* Font Knop Linksboven */
+        /* Font Switch Knop Linksboven met Versienummer */
         .font-btn-container {
             position: fixed;
             top: 25px;
             left: 30px;
             z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .version-tag {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 6px;
+            letter-spacing: 1px;
+            font-weight: 400;
         }
 
         /* Ticket Knop Rechtsboven */
@@ -125,7 +137,7 @@
             }
         }
 
-        /* Subtiel groen bolletje / label boven de payoff */
+        /* Subtiel groen bolletje + indicatie */
         .font-indicator-badge {
             display: inline-flex;
             align-items: center;
@@ -197,32 +209,32 @@
             align-items: center;
         }
 
-        /* Grote Kop waarin de Fontnaam getoond wordt */
+        /* Kop "Over Noordernacht" - Wisselt mee met de knop */
         .gradient-overlay h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 28px;
             transition: font-family 0.15s ease;
             max-width: 95vw;
-            word-wrap: break-word;
         }
 
         @media (min-width: 640px) {
             .gradient-overlay h2 {
-                font-size: 3.8rem;
-                letter-spacing: 4px;
+                font-size: 3.5rem;
+                letter-spacing: 3px;
             }
         }
 
-        /* Leestekst verandert mee */
+        /* Broodtekst - VAST op Inter */
         .gradient-overlay p {
+            font-family: 'Inter', sans-serif !important;
+            font-weight: 300;
             font-size: 1.2rem;
-            color: #dddddd;
+            color: #cccccc;
             max-width: 720px;
             margin: 0 auto 40px auto;
             line-height: 1.7;
-            transition: font-family 0.15s ease;
         }
 
         .bottom-ticket-btn {
@@ -245,134 +257,4 @@
             background-color: #28f07c;
             transform: translateY(-3px) scale(1.05);
         }
-    </style>
-</head>
-<body>
-
-    <!-- Linksboven: Font Switch Knop -->
-    <div class="font-btn-container">
-        <button id="fontBtn" class="top-btn" type="button">Font</button>
-    </div>
-
-    <!-- Rechtsboven: Ticket Knop -->
-    <div class="ticket-btn-container">
-        <a href="#tickets" class="top-btn">Tickets</a>
-    </div>
-
-    <section class="hero">
-        <video autoplay muted loop playsinline preload="auto">
-            <source src="achtergrond.mp4" type="video/mp4">
-        </video>
-
-        <div class="hero-content">
-            <div id="heroLogoWrapper">
-                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
-            </div>
-
-            <!-- Groen bolletje + Font indicatie -->
-            <div class="font-indicator-badge">
-                <span class="dot"></span>
-                <span id="fontBadgeText">BEBAS NEUE (1/20)</span>
-            </div>
-
-            <!-- Payoff -->
-            <div id="payoffText" class="hero-subtitle">
-                <span class="whitespace-nowrap">Find your people,</span> 
-                <span class="whitespace-nowrap">Feel the moment</span>
-            </div>
-        </div>
-
-        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </a>
-    </section>
-
-    <section class="gradient-overlay" id="tickets">
-        <!-- Hier komt de Fontnaam in het GROOT te staan -->
-        <h2 id="sectionHeading">BEBAS NEUE</h2>
-        
-        <p id="sectionParagraph">
-            Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
-            Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
-            waarin muziek, energie en verbinding centraal staan. Hier vind je jouw mensen en beleef je het moment.
-        </p>
-        <a href="#tickets" class="bottom-ticket-btn">Meteen Tickets Bestellen</a>
-    </section>
-
-    <script>
-        // 20 Unieke Gratis Fonts (zonder dubbelingen)
-        const fonts = [
-            { displayName: "BEBAS NEUE", fontFamily: "'Bebas Neue', sans-serif", weight: "400" },
-            { displayName: "OSWALD", fontFamily: "'Oswald', sans-serif", weight: "700" },
-            { displayName: "BARLOW CONDENSED", fontFamily: "'Barlow Condensed', sans-serif", weight: "800" },
-            { displayName: "SYNE", fontFamily: "'Syne', sans-serif", weight: "800" },
-            { displayName: "INTER EXTRA BOLD", fontFamily: "'Inter', sans-serif", weight: "800" },
-            { displayName: "ANTON", fontFamily: "'Anton', sans-serif", weight: "400" },
-            { displayName: "TEKO", fontFamily: "'Teko', sans-serif", weight: "700" },
-            { displayName: "SAIRA CONDENSED", fontFamily: "'Saira Condensed', sans-serif", weight: "800" },
-            { displayName: "BIG SHOULDERS", fontFamily: "'Big Shoulders Display', sans-serif", weight: "900" },
-            { displayName: "UNBOUNDED", fontFamily: "'Unbounded', sans-serif", weight: "800" },
-            { displayName: "DELA GOTHIC ONE", fontFamily: "'Dela Gothic One', sans-serif", weight: "400" },
-            { displayName: "KANIT HEAVY", fontFamily: "'Kanit', sans-serif", weight: "800" },
-            { displayName: "CHAKRA PETCH", fontFamily: "'Chakra Petch', sans-serif", weight: "700" },
-            { displayName: "RUBIK MONO ONE", fontFamily: "'Rubik Mono One', sans-serif", weight: "400" },
-            { displayName: "SPACE GROTESK", fontFamily: "'Space Grotesk', sans-serif", weight: "700" },
-            { displayName: "RIGHTEOUS", fontFamily: "'Righteous', sans-serif", weight: "400" },
-            { displayName: "FJALLA ONE", fontFamily: "'Fjalla One', sans-serif", weight: "400" },
-            { displayName: "CINZEL BLACK", fontFamily: "'Cinzel', serif", weight: "900" },
-            { displayName: "CLIMATE CRISIS", fontFamily: "'Climate Crisis', sans-serif", weight: "400" },
-            { displayName: "MONTSERRAT BLACK", fontFamily: "'Montserrat', sans-serif", weight: "900" }
-        ];
-
-        let currentFontIndex = 0;
-
-        function applyFont(index) {
-            const font = fonts[index];
-            const payoff = document.getElementById('payoffText');
-            const badgeText = document.getElementById('fontBadgeText');
-            const sectionHeading = document.getElementById('sectionHeading');
-            const sectionParagraph = document.getElementById('sectionParagraph');
-
-            // Badge text (bijv: BEBAS NEUE (1/20))
-            badgeText.innerText = `${font.displayName} (${index + 1}/${fonts.length})`;
-
-            // Grote Kop tekst aanpassen
-            sectionHeading.innerText = font.displayName;
-
-            // Font toepassen
-            payoff.style.fontFamily = font.fontFamily;
-            payoff.style.fontWeight = font.weight;
-
-            sectionHeading.style.fontFamily = font.fontFamily;
-            sectionHeading.style.fontWeight = font.weight;
-
-            sectionParagraph.style.fontFamily = font.fontFamily;
-        }
-
-        function switchFont() {
-            currentFontIndex = (currentFontIndex + 1) % fonts.length;
-            applyFont(currentFontIndex);
-        }
-
-        // Koppel de event listener direct aan de knop
-        document.getElementById('fontBtn').addEventListener('click', switchFont);
-
-        // Eerste font laden bij opstarten
-        applyFont(0);
-
-        // Logo krimp script bij scrollen
-        const logoWrapper = document.getElementById('heroLogoWrapper');
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition <= 500) {
-                const scale = 1 - (scrollPosition / 500) * 0.25;
-                logoWrapper.style.transform = `scale(${scale})`;
-            } else {
-                logoWrapper.style.transform = 'scale(0.75)';
-            }
-        });
-    </script>
-</body>
-</html>
+    </
