@@ -8,7 +8,7 @@
     <!-- 20 Unieke & Eigenzinnige Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@800&family=Bebas+Neue&family=Big+Shoulders+Display:wght@800;900&family=Chakra+Petch:wght@700&family=Cinzel:wght@900&family=Climate+Crisis&family=Dela+Gothic+One&family=Fjalla+One&family=Inter:wght@300;400;700;800&family=Kanit:wght@800;900&family=Monument:wght@800&family=Oswald:wght@700&family=Righteous&family=Rubik+Mono+One&family=Saira+Condensed:wght@800;900&family=Space+Grotesk:wght@700&family=Syne:wght@800&family=Teko:wght@700&family=Unbounded:wght@800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@800&family=Bebas+Neue&family=Big+Shoulders+Display:wght@800;900&family=Chakra+Petch:wght@700&family=Cinzel:wght@900&family=Climate+Crisis&family=Dela+Gothic+One&family=Fjalla+One&family=Inter:wght@300;400;700;800&family=Kanit:wght@800;900&family=Montserrat:wght@800;900&family=Oswald:wght@700&family=Righteous&family=Rubik+Mono+One&family=Saira+Condensed:wght@800;900&family=Space+Grotesk:wght@700&family=Syne:wght@800&family=Teko:wght@700&family=Unbounded:wght@800;900&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -199,7 +199,7 @@
 
         /* Grote Kop waarin de Fontnaam getoond wordt */
         .gradient-overlay h2 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 28px;
@@ -210,7 +210,7 @@
 
         @media (min-width: 640px) {
             .gradient-overlay h2 {
-                font-size: 4rem;
+                font-size: 3.8rem;
                 letter-spacing: 4px;
             }
         }
@@ -251,7 +251,7 @@
 
     <!-- Linksboven: Font Switch Knop -->
     <div class="font-btn-container">
-        <button id="fontBtn" class="top-btn" onclick="switchFont()">Font</button>
+        <button id="fontBtn" class="top-btn" type="button">Font</button>
     </div>
 
     <!-- Rechtsboven: Ticket Knop -->
@@ -302,7 +302,7 @@
     </section>
 
     <script>
-        // 20 Eigenzinnige & Vette Gratis Fonts
+        // 20 Unieke Gratis Fonts (zonder dubbelingen)
         const fonts = [
             { displayName: "BEBAS NEUE", fontFamily: "'Bebas Neue', sans-serif", weight: "400" },
             { displayName: "OSWALD", fontFamily: "'Oswald', sans-serif", weight: "700" },
@@ -323,7 +323,7 @@
             { displayName: "FJALLA ONE", fontFamily: "'Fjalla One', sans-serif", weight: "400" },
             { displayName: "CINZEL BLACK", fontFamily: "'Cinzel', serif", weight: "900" },
             { displayName: "CLIMATE CRISIS", fontFamily: "'Climate Crisis', sans-serif", weight: "400" },
-            { displayName: "MONUMENT", fontFamily: "'Barlow Condensed', sans-serif", weight: "800" }
+            { displayName: "MONTSERRAT BLACK", fontFamily: "'Montserrat', sans-serif", weight: "900" }
         ];
 
         let currentFontIndex = 0;
@@ -335,4 +335,32 @@
             const sectionHeading = document.getElementById('sectionHeading');
             const sectionParagraph = document.getElementById('sectionParagraph');
 
-            // Update badge (bijv: BEBAS NEUE (1/20))
+            // Badge text (bijv: BEBAS NEUE (1/20))
+            badgeText.innerText = `${font.displayName} (${index + 1}/${fonts.length})`;
+
+            // Grote Kop tekst aanpassen
+            sectionHeading.innerText = font.displayName;
+
+            // Font toepassen
+            payoff.style.fontFamily = font.fontFamily;
+            payoff.style.fontWeight = font.weight;
+
+            sectionHeading.style.fontFamily = font.fontFamily;
+            sectionHeading.style.fontWeight = font.weight;
+
+            sectionParagraph.style.fontFamily = font.fontFamily;
+        }
+
+        function switchFont() {
+            currentFontIndex = (currentFontIndex + 1) % fonts.length;
+            applyFont(currentFontIndex);
+        }
+
+        // Koppel de event listener direct aan de knop
+        document.getElementById('fontBtn').addEventListener('click', switchFont);
+
+        // Eerste font laden bij opstarten
+        applyFont(0);
+
+        // Logo krimp script bij scrollen
+        const logoWrapper = document.getElementById('heroLogo
