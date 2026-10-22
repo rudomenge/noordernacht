@@ -1,4 +1,4 @@
-<!-- Versie: 33.2 - Noordernacht: accentkleur #ff9b56, Agenda-knop, transparante payoff op desktop, foto-carousel, klein versienummer, ster terug naar img + filter -->
+<!-- Versie: 34.0 - Noordernacht: muziekknop (standaard uit), foto's gecentreerd in kaders -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -63,6 +63,70 @@
             .m-br { display: none; }
             .d-only { display: inline; }
             .m-only { display: none; }
+        }
+
+        /* Muziekknop: subtiel, linksonder, muziek staat standaard uit */
+        .music-btn {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 55;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(11, 11, 11, 0.55);
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.85);
+            cursor: pointer;
+            padding: 0;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: scale(1.08);
+        }
+
+        .music-btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        .music-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Standaard (muziek uit): doorgestreept icoon. Aan: geluidsgolven + accentkleur */
+        .music-btn .icon-on { display: none; }
+        .music-btn.is-playing .icon-on { display: block; }
+        .music-btn.is-playing .icon-off { display: none; }
+
+        .music-btn.is-playing {
+            color: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 16px var(--accent-glow);
+        }
+
+        @media (min-width: 640px) {
+            .music-btn {
+                left: 60px;
+                bottom: 60px;
+                width: 52px;
+                height: 52px;
+            }
+
+            .music-btn svg {
+                width: 24px;
+                height: 24px;
+            }
         }
 
         /* Hero Container */
@@ -353,10 +417,12 @@
             background: #111;
         }
 
+        /* Elke foto vult het kader volledig, gecentreerd, ongeacht het originele formaat */
         .carousel-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: center center;
             display: block;
         }
 
@@ -386,7 +452,26 @@
 <body>
 
     <!-- Klein versienummer linksboven -->
-    <div class="version-tag">v33.2</div>
+    <div class="version-tag">v34.0</div>
+
+    <!-- Achtergrondmuziek: staat uit tot de bezoeker op de knop drukt -->
+    <audio id="ambientAudio" src="ambient.mp3" loop preload="none"></audio>
+
+    <!-- Muziekknop linksonder -->
+    <button id="musicBtn" class="music-btn" type="button" aria-label="Muziek aanzetten" aria-pressed="false" title="Muziek">
+        <!-- Icoon: muziek uit (speaker met streep) -->
+        <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
+            <line x1="22" y1="9" x2="16" y2="15"></line>
+            <line x1="16" y1="9" x2="22" y2="15"></line>
+        </svg>
+        <!-- Icoon: muziek aan (speaker met geluidsgolven) -->
+        <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
+            <path d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+            <path d="M18.8 5.2a9.5 9.5 0 0 1 0 13.6"></path>
+        </svg>
+    </button>
 
     <!-- Het Zwevende SVG Sterretje -->
     <div id="starContainer" class="floating-star-container">
@@ -457,6 +542,48 @@
     </section>
 
     <script>
+        /* ---------- Muziekknop ---------- */
+        const audio = document.getElementById('ambientAudio');
+        const musicBtn = document.getElementById('musicBtn');
+        const MUSIC_VOLUME = 0.6;
+        let fadeTimer = null;
+
+        function fadeTo(target, onDone) {
+            clearInterval(fadeTimer);
+            fadeTimer = setInterval(() => {
+                const diff = target - audio.volume;
+                if (Math.abs(diff) < 0.03) {
+                    audio.volume = target;
+                    clearInterval(fadeTimer);
+                    if (onDone) onDone();
+                } else {
+                    audio.volume = Math.min(1, Math.max(0, audio.volume + Math.sign(diff) * 0.03));
+                }
+            }, 40);
+        }
+
+        function setPlayingUI(isPlaying) {
+            musicBtn.classList.toggle('is-playing', isPlaying);
+            musicBtn.setAttribute('aria-pressed', String(isPlaying));
+            musicBtn.setAttribute('aria-label', isPlaying ? 'Muziek uitzetten' : 'Muziek aanzetten');
+        }
+
+        musicBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.volume = 0;
+                audio.play().then(() => {
+                    setPlayingUI(true);
+                    fadeTo(MUSIC_VOLUME);
+                }).catch(() => {
+                    setPlayingUI(false);
+                });
+            } else {
+                setPlayingUI(false);
+                fadeTo(0, () => audio.pause());
+            }
+        });
+
+        /* ---------- Zwevende ster ---------- */
         const starContainer = document.getElementById('starContainer');
 
         let targetX = window.innerWidth / 2;
@@ -528,6 +655,7 @@
 
         requestAnimationFrame(renderAnimation);
 
+        /* ---------- Logo schaalt mee met scrollen ---------- */
         const logoWrapper = document.getElementById('heroLogoWrapper');
         window.addEventListener('scroll', () => {
             const scrollPosition = window.scrollY;
