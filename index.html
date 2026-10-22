@@ -22,7 +22,7 @@
         }
     </script>
     <style>
-        /* Fixed Video Background for Smooth Parallax Scroll */
+        /* Fixed Video Background for Parallax Scroll */
         .bg-video {
             position: fixed;
             top: 0;
@@ -43,12 +43,12 @@
         }
 
         .logo-glow {
-            filter: drop-shadow(0 0 25px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 10px rgba(32, 224, 112, 0.15));
+            filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 15px rgba(32, 224, 112, 0.2));
         }
 
         /* Soft Gradient Transition Mask from Hero to Info */
         .hero-gradient-overlay {
-            background: linear-gradient(to bottom, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, 0.3) 50%, rgba(11, 11, 11, 0.95) 85%, #0b0b0b 100%);
+            background: linear-gradient(to bottom, rgba(11, 11, 11, 0) 0%, rgba(11, 11, 11, 0.4) 50%, rgba(11, 11, 11, 0.95) 85%, #0b0b0b 100%);
         }
     </style>
 </head>
@@ -63,90 +63,68 @@
     <!-- Ambient Dark Overlay for Readability -->
     <div class="fixed inset-0 bg-black/30 z-[-10] pointer-events-none"></div>
 
-    <!-- 2. MINIMAL TOP HEADER (ONLY TICKETS BUTTON, NO BAR / NO TITLE) -->
+    <!-- 2. MINIMAL TOP HEADER (ONLY TICKETS BUTTON) -->
     <header class="fixed top-0 left-0 w-full z-50 p-6 sm:p-8 flex justify-end pointer-events-none">
-        <a href="#tickets" class="pointer-events-auto inline-flex items-center justify-center px-7 py-3 text-sm font-extrabold text-black bg-brand-500 hover:bg-brand-400 rounded-full transition-all duration-300 transform hover:scale-105 glow-btn tracking-wider uppercase">
+        <a href="#tickets" class="pointer-events-auto inline-flex items-center justify-center px-7 py-3 text-sm font-black text-black bg-brand-500 hover:bg-brand-400 rounded-full transition-all duration-300 transform hover:scale-105 glow-btn tracking-wider uppercase">
             Tickets
         </a>
     </header>
 
-    <!-- 3. HERO SECTION WITH LARGER RESPONSIVE LOGO -->
-    <section class="relative min-h-screen flex flex-col justify-between items-center text-center px-4 pt-20 pb-12 z-10">
-        <div><!-- Spacer for centering --></div>
-
-        <!-- Central Logo & Slogan Content -->
-        <div class="flex flex-col items-center justify-center max-w-4xl mx-auto my-auto">
-            <!-- Fluid Responsive Logo (Scales smoothly up to 500px) -->
+    <!-- 3. HERO SECTION WITH 170% ENLARGED & HIGHER POSITIONED LOGO -->
+    <section class="relative min-h-screen flex flex-col justify-start items-center text-center px-4 pt-12 sm:pt-16 pb-12 z-10">
+        
+        <!-- Central Logo & Payoff Content (Shifted Higher Up) -->
+        <div class="flex flex-col items-center justify-center max-w-5xl mx-auto mt-4 sm:mt-8 mb-auto">
+            <!-- 170% Enlarged Fluid Logo (Scales up to ~850px on desktop) -->
             <img 
                 src="logo.png" 
                 alt="Noordernacht Logo" 
-                class="w-[280px] sm:w-[380px] md:w-[480px] lg:w-[500px] max-w-[85vw] h-auto logo-glow transition-all duration-300 transform hover:scale-[1.02] mb-6"
-                onerror="this.onerror=null; this.src='https://placehold.co/500x300/000000/20e070?text=NOORDERNACHT';"
+                class="w-[470px] sm:w-[650px] md:w-[800px] lg:w-[850px] max-w-[95vw] h-auto logo-glow transition-all duration-300 transform hover:scale-[1.01] mb-4 sm:mb-6"
+                onerror="this.onerror=null; this.src='https://placehold.co/850x500/000000/20e070?text=NOORDERNACHT';"
             />
             
-            <!-- Slogan -->
-            <h1 class="text-base sm:text-xl md:text-2xl font-light uppercase tracking-[0.25em] text-gray-200 drop-shadow-lg max-w-xl leading-relaxed">
+            <!-- Bold & Heavy Payoff Slogan -->
+            <h1 class="text-lg sm:text-2xl md:text-3xl font-extrabold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.9)] max-w-2xl leading-relaxed">
                 Find your people, Feel the moment
             </h1>
         </div>
 
         <!-- Scroll Indicator -->
-        <a href="#info" class="flex flex-col items-center gap-2 text-gray-400 hover:text-brand-400 transition-colors cursor-pointer group mb-4">
-            <span class="text-xs uppercase tracking-[0.2em] font-medium opacity-80 group-hover:opacity-100">Ontdek Meer</span>
+        <a href="#info" class="flex flex-col items-center gap-2 text-gray-400 hover:text-brand-400 transition-colors cursor-pointer group mb-2">
+            <span class="text-xs uppercase tracking-[0.2em] font-semibold opacity-80 group-hover:opacity-100">Ontdek Meer</span>
             <svg class="w-5 h-5 animate-bounce text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
         </a>
     </section>
 
-    <!-- 4. SMOOTH PARALLAX FADE & CONTENT SECTION -->
+    <!-- 4. SMOOTH PARALLAX FADE & CLEAN CONTENT SECTION -->
     <div id="info" class="relative z-20">
         
-        <!-- Deep Smooth Gradient Fade Transition Overlay (No Hard Line) -->
-        <div class="h-40 sm:h-64 w-full hero-gradient-overlay pointer-events-none"></div>
+        <!-- Deep Smooth Gradient Fade Transition Overlay -->
+        <div class="h-32 sm:h-56 w-full hero-gradient-overlay pointer-events-none"></div>
 
         <!-- Dark Content Area -->
         <div class="bg-[#0b0b0b] px-6 pb-24">
-            <div class="max-w-4xl mx-auto text-center pt-8">
+            <div class="max-w-3xl mx-auto text-center pt-4">
                 
                 <span class="inline-block w-12 h-1 bg-brand-500 rounded-full mb-8"></span>
                 
-                <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-6">
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tight text-white mb-6 uppercase">
                     Over Noordernacht
                 </h2>
                 
-                <p class="text-gray-300 text-base sm:text-xl leading-relaxed font-light max-w-2xl mx-auto mb-16">
+                <p class="text-gray-300 text-lg sm:text-2xl leading-relaxed font-normal max-w-2xl mx-auto mb-16">
                     Duister, elektronisch en betoverend. Beleef de ultieme nacht waarin muziek, visuele kunst en gelijkgestemden samenkomen op een unieke locatie in het Noorden.
                 </p>
 
-                <!-- Cards Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mb-20">
-                    <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:border-brand-500/40 transition-all duration-300">
-                        <div class="w-10 h-10 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold mb-4">★</div>
-                        <h3 class="text-lg font-semibold text-white mb-2">Sfeer & Visuals</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Een meeslepende combinatie van licht, duisternis en kunstzinnige projecties.</p>
-                    </div>
-
-                    <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:border-brand-500/40 transition-all duration-300">
-                        <div class="w-10 h-10 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold mb-4">♪</div>
-                        <h3 class="text-lg font-semibold text-white mb-2">Geluid & DJ's</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Diepe bassen en meeslepende elektronische beats die je meenemen tot in de vroege uurtjes.</p>
-                    </div>
-
-                    <div class="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md hover:border-brand-500/40 transition-all duration-300">
-                        <div class="w-10 h-10 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center font-bold mb-4">♥</div>
-                        <h3 class="text-lg font-semibold text-white mb-2">Community</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">Een veilige en open sfeer waar iedereen zichzelf kan zijn en samen het moment kan beleven.</p>
-                    </div>
-                </div>
-
                 <!-- Ticket Banner Call-to-Action -->
-                <div id="tickets" class="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-brand-950/30 via-white/[0.04] to-black border border-brand-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div id="tickets" class="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-brand-950/40 via-white/[0.04] to-black border border-brand-500/30 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
                     <div>
                         <h3 class="text-2xl sm:text-3xl font-bold text-white mb-2">Klaar om de nacht te beleven?</h3>
                         <p class="text-gray-400 text-sm sm:text-base">Meld je aan voor de ticket-voorverkoop en mis niks.</p>
                     </div>
-                    <a href="#" class="px-8 py-4 rounded-full bg-brand-500 hover:bg-brand-400 text-black font-extrabold text-sm uppercase tracking-wider transition-all duration-300 glow-btn whitespace-nowrap">
+                    <a href="#" class="px-8 py-4 rounded-full bg-brand-500 hover:bg-brand-400 text-black font-black text-sm uppercase tracking-wider transition-all duration-300 glow-btn whitespace-nowrap">
                         Koop Tickets
                     </a>
                 </div>
