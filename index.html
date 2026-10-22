@@ -50,11 +50,11 @@
             transform: translate(-50%, -50%);
             object-fit: cover;
             z-index: 1;
-            filter: brightness(0.65);
+            filter: brightness(0.7);
         }
 
-        /* Sferische Blur-randen over de video */
-        .hero-blur-frame {
+        /* Subtiele Interlacing / Scanlines Overlay over de video (Super licht voor de CPU) */
+        .hero-interlace-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -62,11 +62,12 @@
             height: 100%;
             z-index: 2;
             pointer-events: none;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            /* Masker zorgt dat het midden scherp blijft en de randen blurren */
-            mask-image: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,1) 85%);
-            -webkit-mask-image: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,1) 85%);
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px; /* Maakt fijne horizontale interlacing-lijntjes */
+            opacity: 0.6;
         }
 
         /* Top Buttons Base (In Unbounded) */
@@ -192,7 +193,7 @@
             white-space: nowrap;
         }
 
-        /* Zwevend Logo Sterretje SVG Element (Exact felle kleur) */
+        /* Zwevend SVG Sterretje Container */
         .floating-star-container {
             position: fixed;
             top: 0;
@@ -202,7 +203,7 @@
             pointer-events: none;
             z-index: 9999;
             will-change: transform;
-            filter: drop-shadow(0 0 12px rgba(32, 224, 112, 0.9));
+            filter: drop-shadow(0 0 14px rgba(32, 224, 112, 0.9));
         }
 
         /* Scroll Arrow */
@@ -290,7 +291,7 @@
 </head>
 <body>
 
-    <!-- 4-Puntig Logo Sterretje SVG (Inline met exacte felle neon-kleur) -->
+    <!-- Het Geüploade SVG Sterretje (Inline geïmplementeerd voor exacte groene kleur #20e070) -->
     <div id="starContainer" class="floating-star-container">
         <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z" fill="#20e070"/>
@@ -300,7 +301,7 @@
     <!-- Linksboven: Animatie Switch Knop + Versietag + Status -->
     <div class="anim-btn-container">
         <button id="animBtn" class="top-btn" type="button">Animatie</button>
-        <span class="version-tag">v23.0</span>
+        <span class="version-tag">v24.0</span>
         <span id="statusSubTag" class="status-tag">TRAIL (SLOW)</span>
     </div>
 
@@ -314,8 +315,8 @@
             <source src="achtergrond.mp4" type="video/mp4">
         </video>
 
-        <!-- Sferische blur randen over de video -->
-        <div class="hero-blur-frame"></div>
+        <!-- Subtiele interlacing overlay -->
+        <div class="hero-interlace-overlay"></div>
 
         <div class="hero-content">
             <div id="heroLogoWrapper">
