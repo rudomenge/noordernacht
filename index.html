@@ -363,4 +363,16 @@
         applyFont(0);
 
         // Logo krimp script bij scrollen
-        const logoWrapper = document.getElementById('heroLogo
+        const logoWrapper = document.getElementById('heroLogoWrapper');
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            if (scrollPosition <= 500) {
+                const scale = 1 - (scrollPosition / 500) * 0.25;
+                logoWrapper.style.transform = `scale(${scale})`;
+            } else {
+                logoWrapper.style.transform = 'scale(0.75)';
+            }
+        });
+    </script>
+</body>
+</html>
