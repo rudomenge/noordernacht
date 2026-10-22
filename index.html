@@ -1,4 +1,4 @@
-<!-- Versie: 34.1 - Noordernacht: muziekknop met label + foutmelding, foto's met foutdetectie -->
+<!-- Versie: 35.1 - Noordernacht: SoundCloud-speler linksonder met link ingevuld -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -65,121 +65,193 @@
             .m-only { display: none; }
         }
 
-        /* Muziekknop: kleine pil met icoon + tekst, linksonder. Muziek staat standaard uit. */
-        .music-btn {
+        /* SoundCloud-speler: klein pilletje linksonder. Muziek staat standaard uit. */
+        .sc-player {
             position: fixed;
             left: 20px;
             bottom: 20px;
             z-index: 55;
-            height: 42px;
-            padding: 0 16px 0 12px;
-            border-radius: 9999px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            max-width: calc(100vw - 40px);
+            padding: 5px 16px 5px 5px;
+            border-radius: 9999px;
             background: rgba(11, 11, 11, 0.6);
             -webkit-backdrop-filter: blur(8px);
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            color: rgba(255, 255, 255, 0.9);
-            font-family: 'Inter', sans-serif;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            outline: none;
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .music-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: scale(1.05);
-        }
-
-        .music-btn:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 3px;
-        }
-
-        .music-btn svg {
-            width: 20px;
-            height: 20px;
-            flex: 0 0 auto;
-        }
-
-        /* Uit: doorgestreepte speaker + "Muziek aan". Aan: geluidsgolven + "Muziek uit" */
-        .music-btn .icon-on,
-        .music-btn .label-on { display: none; }
-        .music-btn.is-playing .icon-on { display: block; }
-        .music-btn.is-playing .label-on { display: inline; }
-        .music-btn.is-playing .icon-off,
-        .music-btn.is-playing .label-off { display: none; }
-
-        .music-btn.is-playing {
-            color: var(--accent);
+        .sc-player.is-playing {
             border-color: var(--accent);
             box-shadow: 0 0 16px var(--accent-glow);
         }
 
-        /* Zachte pulserende ring, tot de bezoeker voor het eerst klikt */
-        .music-btn.invite {
-            animation: music-pulse 2.4s ease-out infinite;
+        .sc-toggle {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 auto;
+            border-radius: 50%;
+            border: none;
+            outline: none;
+            background: var(--accent);
+            color: #0b0b0b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
         }
 
-        @keyframes music-pulse {
-            0%   { box-shadow: 0 0 0 0 rgba(255, 155, 86, 0.5); }
-            70%  { box-shadow: 0 0 0 14px rgba(255, 155, 86, 0); }
+        .sc-toggle:hover {
+            background: var(--accent-hover);
+            transform: scale(1.08);
+        }
+
+        .sc-toggle:focus-visible {
+            outline: 2px solid #ffffff;
+            outline-offset: 3px;
+        }
+
+        .sc-toggle svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Play-icoon staat een tikje naar rechts, zodat het optisch gecentreerd is */
+        .sc-toggle .icon-play { margin-left: 2px; }
+        .sc-toggle .icon-pause { display: none; }
+        .sc-player.is-playing .icon-play { display: none; }
+        .sc-player.is-playing .icon-pause { display: block; }
+
+        .sc-player.is-loading .sc-toggle {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .sc-player.is-loading .sc-toggle:hover {
+            transform: none;
+            background: var(--accent);
+        }
+
+        /* Zachte pulserende ring tot de bezoeker voor het eerst klikt */
+        .sc-player.invite:not(.is-loading) .sc-toggle {
+            animation: sc-pulse 2.4s ease-out infinite;
+        }
+
+        @keyframes sc-pulse {
+            0%   { box-shadow: 0 0 0 0 rgba(255, 155, 86, 0.55); }
+            70%  { box-shadow: 0 0 0 12px rgba(255, 155, 86, 0); }
             100% { box-shadow: 0 0 0 0 rgba(255, 155, 86, 0); }
         }
 
-        /* Melding bij problemen met het muziekbestand */
-        .music-toast {
-            position: fixed;
-            left: 20px;
-            bottom: 72px;
-            z-index: 55;
-            max-width: 260px;
-            padding: 10px 14px;
-            border-radius: 14px;
-            background: rgba(11, 11, 11, 0.9);
-            border: 1px solid var(--accent);
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            font-size: 12px;
-            line-height: 1.4;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+        .sc-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            line-height: 1.3;
         }
 
-        .music-toast.show { opacity: 1; }
+        .sc-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+            transition: color 0.3s ease;
+        }
+
+        .sc-title:hover { color: var(--accent); }
+
+        .sc-artist {
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.6);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+
+        /* Kleine equalizer, alleen zichtbaar tijdens afspelen */
+        .sc-eq {
+            display: none;
+            align-items: flex-end;
+            gap: 2px;
+            height: 12px;
+            flex: 0 0 auto;
+        }
+
+        .sc-player.is-playing .sc-eq { display: flex; }
+
+        .sc-eq i {
+            display: block;
+            width: 2px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 1px;
+            animation: sc-eq 0.9s ease-in-out infinite;
+        }
+
+        .sc-eq i:nth-child(2) { animation-delay: 0.2s; }
+        .sc-eq i:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes sc-eq {
+            0%, 100% { height: 3px; }
+            50%      { height: 12px; }
+        }
+
+        /* Verborgen SoundCloud-frame: levert alleen het geluid, de knop hierboven bedient hem */
+        .sc-frame {
+            position: fixed;
+            left: -9999px;
+            bottom: 0;
+            width: 100px;
+            height: 100px;
+            border: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
 
         @media (min-width: 640px) {
-            .music-btn {
+            .sc-player {
                 left: 60px;
                 bottom: 60px;
-                height: 52px;
-                padding: 0 22px 0 16px;
-                font-size: 14px;
+                gap: 14px;
+                padding: 6px 24px 6px 6px;
             }
 
-            .music-btn svg {
-                width: 24px;
-                height: 24px;
+            .sc-toggle {
+                width: 44px;
+                height: 44px;
             }
 
-            .music-toast {
-                left: 60px;
-                bottom: 124px;
-                max-width: 340px;
+            .sc-toggle svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .sc-title {
                 font-size: 14px;
+                max-width: 240px;
+            }
+
+            .sc-artist {
+                font-size: 12px;
+                max-width: 240px;
             }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .music-btn.invite { animation: none; }
+            .sc-player.invite .sc-toggle,
+            .sc-eq i { animation: none; }
         }
 
         /* Hero Container */
@@ -521,29 +593,30 @@
 <body>
 
     <!-- Klein versienummer linksboven -->
-    <div class="version-tag">v34.1</div>
+    <div class="version-tag">v35.1</div>
 
-    <!-- Achtergrondmuziek: staat uit tot de bezoeker op de knop drukt -->
-    <audio id="ambientAudio" src="ambient.mp3" loop preload="none"></audio>
+    <!-- SoundCloud-speler linksonder: knop + titel + artiest. Muziek staat uit tot de bezoeker op play drukt. -->
+    <div id="scPlayer" class="sc-player is-loading invite" role="group" aria-label="Muziekspeler">
+        <button id="scToggle" class="sc-toggle" type="button" aria-label="Muziek afspelen">
+            <!-- Play -->
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <polygon points="6 4 20 12 6 20 6 4"></polygon>
+            </svg>
+            <!-- Pauze -->
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <rect x="5" y="4" width="5" height="16" rx="1.2"></rect>
+                <rect x="14" y="4" width="5" height="16" rx="1.2"></rect>
+            </svg>
+        </button>
+        <div class="sc-info">
+            <a id="scTitle" class="sc-title" href="#" target="_blank" rel="noopener">Muziek laden…</a>
+            <span id="scArtist" class="sc-artist">SoundCloud</span>
+        </div>
+        <div class="sc-eq" aria-hidden="true"><i></i><i></i><i></i></div>
+    </div>
 
-    <!-- Muziekknop linksonder -->
-    <button id="musicBtn" class="music-btn invite" type="button" aria-label="Muziek aanzetten" aria-pressed="false">
-        <!-- Icoon: muziek uit (speaker met kruisje) -->
-        <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
-            <line x1="22" y1="9" x2="16" y2="15"></line>
-            <line x1="16" y1="9" x2="22" y2="15"></line>
-        </svg>
-        <!-- Icoon: muziek aan (speaker met geluidsgolven) -->
-        <svg class="icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" stroke="none"></polygon>
-            <path d="M15.5 8.5a5 5 0 0 1 0 7"></path>
-            <path d="M18.8 5.2a9.5 9.5 0 0 1 0 13.6"></path>
-        </svg>
-        <span class="label-off">Muziek aan</span>
-        <span class="label-on">Muziek uit</span>
-    </button>
-    <div id="musicToast" class="music-toast" role="status" aria-live="polite"></div>
+    <!-- Verborgen SoundCloud-frame (alleen voor het geluid) -->
+    <iframe id="scFrame" class="sc-frame" title="SoundCloud" allow="autoplay" tabindex="-1" aria-hidden="true"></iframe>
 
     <!-- Het Zwevende SVG Sterretje -->
     <div id="starContainer" class="floating-star-container">
@@ -613,153 +686,91 @@
         </div>
     </section>
 
+    <!-- SoundCloud Widget API -->
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+
     <script>
-        /* ---------- Muziekknop ---------- */
-        const audio = document.getElementById('ambientAudio');
-        const musicBtn = document.getElementById('musicBtn');
-        const musicToast = document.getElementById('musicToast');
-        const MUSIC_VOLUME = 0.6;
-        let toastTimer = null;
+        /* ---------- SoundCloud-speler ---------- */
 
-        function showToast(message) {
-            musicToast.textContent = message;
-            musicToast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => musicToast.classList.remove('show'), 6000);
+        /* Link van de SoundCloud-track (tracktitel en artiest worden automatisch opgehaald) */
+        const SOUNDCLOUD_URL = 'https://soundcloud.com/mia_lafontaine/noordenacht';
+
+        const MUSIC_VOLUME = 60; /* 0 - 100 */
+
+        const scPlayer = document.getElementById('scPlayer');
+        const scToggle = document.getElementById('scToggle');
+        const scFrame = document.getElementById('scFrame');
+        const scTitle = document.getElementById('scTitle');
+        const scArtist = document.getElementById('scArtist');
+
+        function showPlayerMessage(title, sub) {
+            scTitle.textContent = title;
+            scTitle.removeAttribute('href');
+            scArtist.textContent = sub;
+            scPlayer.classList.add('is-loading');
+            scPlayer.classList.remove('invite');
         }
 
-        function setPlayingUI(isPlaying) {
-            musicBtn.classList.toggle('is-playing', isPlaying);
-            musicBtn.setAttribute('aria-pressed', String(isPlaying));
-            musicBtn.setAttribute('aria-label', isPlaying ? 'Muziek uitzetten' : 'Muziek aanzetten');
-        }
+        function initSoundCloud() {
+            if (!/^https:\/\/soundcloud\.com\//.test(SOUNDCLOUD_URL)) {
+                showPlayerMessage('SoundCloud-link ontbreekt', 'Zie SOUNDCLOUD_URL in de code');
+                return;
+            }
 
-        musicBtn.addEventListener('click', async () => {
-            musicBtn.classList.remove('invite');
+            if (typeof SC === 'undefined' || !SC.Widget) {
+                showPlayerMessage('Muziek niet beschikbaar', 'SoundCloud kon niet laden');
+                return;
+            }
 
-            if (audio.paused) {
-                try {
-                    audio.volume = MUSIC_VOLUME;
-                    await audio.play();
-                    setPlayingUI(true);
-                } catch (err) {
-                    setPlayingUI(false);
-                    if (err && err.name === 'NotSupportedError') {
-                        showToast('Muziekbestand niet gevonden of niet af te spelen. Controleer of ambient.mp3 naast index.html staat.');
+            let ready = false;
+
+            scFrame.src = 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(SOUNDCLOUD_URL) +
+                '&auto_play=false&hide_related=true&show_comments=false&show_user=true' +
+                '&show_reposts=false&show_teaser=false&visual=false';
+
+            const widget = SC.Widget(scFrame);
+
+            widget.bind(SC.Widget.Events.READY, () => {
+                ready = true;
+                widget.setVolume(MUSIC_VOLUME);
+                widget.getCurrentSound((sound) => {
+                    if (sound) {
+                        scTitle.textContent = sound.title || 'Noordernacht';
+                        scTitle.href = sound.permalink_url || SOUNDCLOUD_URL;
+                        const artist = sound.user && sound.user.username ? sound.user.username : '';
+                        scArtist.textContent = (artist ? artist + ' · ' : '') + 'SoundCloud';
                     } else {
-                        showToast('De muziek kon niet starten. Probeer het nog een keer.');
+                        scTitle.textContent = 'Noordernacht';
+                        scTitle.href = SOUNDCLOUD_URL;
+                        scArtist.textContent = 'SoundCloud';
                     }
-                }
-            } else {
-                audio.pause();
-                setPlayingUI(false);
-            }
-        });
-
-        /* ---------- Foto's: laat zien welke foto niet gevonden wordt ---------- */
-        function markMissing(img) {
-            if (img.dataset.missing) return;
-            img.dataset.missing = '1';
-            img.style.display = 'none';
-            const note = document.createElement('span');
-            note.className = 'img-missing';
-            note.textContent = 'Niet gevonden: ' + img.getAttribute('src');
-            img.parentNode.appendChild(note);
-        }
-
-        document.querySelectorAll('.carousel-item img').forEach((img) => {
-            img.addEventListener('error', () => markMissing(img));
-        });
-
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.carousel-item img').forEach((img) => {
-                if (img.complete && img.naturalWidth === 0) markMissing(img);
+                });
+                scPlayer.classList.remove('is-loading');
             });
-        });
 
-        /* ---------- Zwevende ster ---------- */
-        const starContainer = document.getElementById('starContainer');
+            widget.bind(SC.Widget.Events.PLAY, () => scPlayer.classList.add('is-playing'));
+            widget.bind(SC.Widget.Events.PAUSE, () => scPlayer.classList.remove('is-playing'));
+            widget.bind(SC.Widget.Events.FINISH, () => {
+                /* Eindeloze herhaling */
+                widget.seekTo(0);
+                widget.play();
+            });
+            widget.bind(SC.Widget.Events.ERROR, () => {
+                scPlayer.classList.remove('is-playing');
+                showPlayerMessage('Muziek niet beschikbaar', 'Controleer de SoundCloud-link');
+            });
 
-        let targetX = window.innerWidth / 2;
-        let targetY = window.innerHeight / 2;
-        let starX = targetX;
-        let starY = targetY;
+            scToggle.addEventListener('click', () => {
+                if (!ready) return;
+                scPlayer.classList.remove('invite');
+                widget.toggle();
+            });
 
-        let rotationAngle = 0;
-        let lastMouseTime = Date.now();
-        let isUserMovingMouse = true;
+            /* Houd het label van de knop in sync met de echte status */
+            const syncLabel = () => scToggle.setAttribute('aria-label',
+                scPlayer.classList.contains('is-playing') ? 'Muziek pauzeren' : 'Muziek afspelen');
+            widget.bind(SC.Widget.Events.PLAY, syncLabel);
+            widget.bind(SC.Widget.Events.PAUSE, syncLabel);
 
-        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.innerWidth <= 768);
-
-        window.addEventListener('mousemove', (e) => {
-            lastMouseTime = Date.now();
-            isUserMovingMouse = true;
-            targetX = e.clientX;
-            targetY = e.clientY;
-        });
-
-        window.addEventListener('touchmove', (e) => {
-            lastMouseTime = Date.now();
-            isUserMovingMouse = true;
-            if (e.touches.length > 0) {
-                targetX = e.touches[0].clientX;
-                targetY = e.touches[0].clientY;
-            }
-        });
-
-        function renderAnimation() {
-            rotationAngle += 1.5;
-
-            if (isTouchDevice) {
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2 - 50;
-                const radiusX = Math.min(window.innerWidth * 0.32, 320);
-                const radiusY = Math.min(window.innerHeight * 0.22, 170);
-                const time = Date.now() * 0.0015;
-                starX = centerX + Math.cos(time) * radiusX;
-                starY = centerY + Math.sin(time * 1.3) * radiusY;
-            } else {
-                const timeSinceMove = Date.now() - lastMouseTime;
-                if (timeSinceMove > 1200) {
-                    isUserMovingMouse = false;
-                }
-
-                if (isUserMovingMouse) {
-                    starX += (targetX - starX) * 0.035;
-                    starY += (targetY - starY) * 0.035;
-                } else {
-                    const centerX = window.innerWidth / 2;
-                    const centerY = window.innerHeight / 2 - 50;
-                    const radiusX = Math.min(window.innerWidth * 0.32, 320);
-                    const radiusY = Math.min(window.innerHeight * 0.22, 170);
-                    const time = Date.now() * 0.0015;
-
-                    const targetOrbitX = centerX + Math.cos(time) * radiusX;
-                    const targetOrbitY = centerY + Math.sin(time * 1.3) * radiusY;
-
-                    starX += (targetOrbitX - starX) * 0.02;
-                    starY += (targetOrbitY - starY) * 0.02;
-                }
-            }
-
-            const offsetCorrection = window.innerWidth <= 768 ? 39 : 26;
-            starContainer.style.transform = `translate3d(${starX - offsetCorrection}px, ${starY - offsetCorrection}px, 0) rotate(${rotationAngle}deg)`;
-            requestAnimationFrame(renderAnimation);
-        }
-
-        requestAnimationFrame(renderAnimation);
-
-        /* ---------- Logo schaalt mee met scrollen ---------- */
-        const logoWrapper = document.getElementById('heroLogoWrapper');
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition <= 500) {
-                const scale = 1 - (scrollPosition / 500) * 0.25;
-                logoWrapper.style.transform = `scale(${scale})`;
-            } else {
-                logoWrapper.style.transform = 'scale(0.75)';
-            }
-        });
-    </script>
-</body>
-</html>
+            /* Als SoundCloud na 10 seconden nog niet klaar is */
+            setTimeout(()
