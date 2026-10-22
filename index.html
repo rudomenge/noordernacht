@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
-    <!-- Google Font: Inter (Gewichten 300, 400, 600, 700 en 800 voor de payoff) -->
+    <!-- Google Font: Inter (300, 400, 600, 700, 800) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * {
             margin: 0;
@@ -33,9 +32,10 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            background-color: #000000;
         }
 
-        /* Background Video - Altijd op laag 1 */
+        /* Background Video - Stabiel gepositioneerd */
         .hero video {
             position: absolute;
             top: 50%;
@@ -94,7 +94,7 @@
         @keyframes logoFadeIn {
             0% {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(12px);
             }
             100% {
                 opacity: 1;
@@ -161,6 +161,14 @@
             color: rgba(255, 255, 255, 0.75);
             animation: bounce 2s infinite;
             text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scroll-arrow svg {
+            width: 32px;
+            height: 32px;
         }
 
         @keyframes bounce {
@@ -217,6 +225,4 @@
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 6px 24px rgba(32, 224, 112,
+            text
