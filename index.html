@@ -1,4 +1,4 @@
-<!-- Versie: 32.0 - Noordernacht: nieuwe logo-opmaak, payoff in Unbounded Black, nieuwe tekst en knoppen -->
+<!-- Versie: 33.1 - Noordernacht: accentkleur #ff9b56, Agenda-knop, transparante payoff op desktop, foto-carousel, klein versienummer -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -12,6 +12,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Unbounded:wght@400..900&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --accent: #ff9b56;
+            --accent-hover: #ffae70;
+            --accent-glow: rgba(255, 155, 86, 0.35);
+            --accent-glow-hover: rgba(255, 155, 86, 0.55);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -25,6 +32,27 @@
             color: #ffffff;
             scroll-behavior: smooth;
             overflow-x: hidden;
+        }
+
+        /* Klein versienummer linksboven */
+        .version-tag {
+            position: fixed;
+            top: 12px;
+            left: 14px;
+            z-index: 60;
+            font-family: 'Inter', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+        }
+
+        @media (min-width: 640px) {
+            .version-tag {
+                top: 20px;
+                left: 20px;
+            }
         }
 
         /* Hulpklassen: andere regelafbreking en andere tekst per schermbreedte */
@@ -81,7 +109,7 @@
             opacity: 0.5;
         }
 
-        /* Tickets-knop rechtsboven (Unbounded) */
+        /* Knoppen bovenin: Tickets rechts, Agenda links (alleen desktop) */
         .ticket-btn-container {
             position: fixed;
             top: 20px;
@@ -89,325 +117,60 @@
             z-index: 50;
         }
 
+        .agenda-btn-container {
+            position: fixed;
+            top: 60px;
+            left: 60px;
+            z-index: 50;
+            display: none;
+        }
+
         .top-btn,
         .bottom-ticket-btn {
-            background-color: #ffa570;
+            background-color: var(--accent);
             color: #0b0b0b;
+            padding: 2px 13px;
             border-radius: 9999px;
             font-family: 'Unbounded', sans-serif;
             font-weight: 800;
-            font-size: 1rem;
+            font-size: 0.85rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             text-decoration: none;
             display: inline-block;
-            box-shadow: 0 4px 20px rgba(255, 165, 112, 0.35);
+            box-shadow: 0 4px 20px var(--accent-glow);
             transition: all 0.3s ease;
             cursor: pointer;
             border: none;
             outline: none;
         }
 
-        .top-btn { padding: 4px 15px; }
-        .bottom-ticket-btn { padding: 8px 34px; }
-
         .top-btn:hover,
         .bottom-ticket-btn:hover {
-            background-color: #ffb88a;
+            background-color: var(--accent-hover);
             transform: translateY(-2px) scale(1.05);
-            box-shadow: 0 6px 28px rgba(255, 165, 112, 0.55);
+            box-shadow: 0 6px 28px var(--accent-glow-hover);
         }
 
         @media (min-width: 640px) {
             .ticket-btn-container {
-                top: 80px;
-                right: 80px;
+                top: 60px;
+                right: 60px;
             }
 
-            .top-btn,
+            .agenda-btn-container { display: block; }
+
+            .top-btn {
+                font-size: 1.6rem;
+                padding: 5px 24px;
+            }
+
             .bottom-ticket-btn {
-                font-size: 2.2rem;
-                padding: 7px 30px;
+                font-size: 2rem;
+                padding: 5px 40px;
             }
-
-            .bottom-ticket-btn { padding: 7px 32px; }
         }
 
         /* Hero Content */
         .hero-content {
             position: relative;
-            z-index: 30;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        /* Logo (bevat de sterretjes zelf) */
-        .hero-logo {
-            display: block;
-            width: 92vw;
-            max-width: 92vw;
-            height: auto;
-            margin: 0 auto 25px auto;
-            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
-            transition: transform 0.1s linear;
-        }
-
-        @media (min-width: 640px) {
-            .hero-logo {
-                width: 660px;
-                max-width: 660px;
-                margin-bottom: 55px;
-            }
-        }
-
-        /* Payoff en koppen: Unbounded Black, mobiel 32/30px, desktop 76/66px */
-        .hero-subtitle,
-        .gradient-overlay h2 {
-            font-family: 'Unbounded', sans-serif;
-            font-weight: 900;
-            font-size: 32px;
-            line-height: 30px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .hero-subtitle {
-            color: #ffffff;
-            text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
-        }
-
-        .gradient-overlay h2 {
-            color: #ffa570;
-            margin-bottom: 20px;
-        }
-
-        @media (min-width: 640px) {
-            .hero-subtitle,
-            .gradient-overlay h2 {
-                font-size: 76px;
-                line-height: 66px;
-                letter-spacing: 2px;
-            }
-
-            .gradient-overlay h2 { margin-bottom: 60px; }
-        }
-
-        /* Zwevend SVG Sterretje Container */
-        .floating-star-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 52px;
-            height: 52px;
-            pointer-events: none;
-            z-index: 9999;
-            will-change: transform;
-        }
-
-        @media (max-width: 768px) {
-            .floating-star-container {
-                width: 78px;
-                height: 78px;
-            }
-        }
-
-        .floating-star-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            filter: brightness(0) saturate(100%) invert(75%) sepia(38%) saturate(1478%) hue-rotate(325deg) brightness(103%) contrast(101%);
-        }
-
-        /* Scroll Arrow */
-        .scroll-arrow {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            color: rgba(255, 255, 255, 0.75);
-            animation: bounce 2s infinite;
-            text-decoration: none;
-        }
-
-        .scroll-arrow svg { width: 32px; height: 32px; }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
-            40% { transform: translate(-50%, -12px); }
-            60% { transform: translate(-50%, -6px); }
-        }
-
-        /* Info Section: effen zwart, harde rand onder de hero */
-        .gradient-overlay {
-            position: relative;
-            z-index: 20;
-            background: #000;
-            padding: 40px 24px 160px 24px;
-            min-height: 100vh;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .gradient-overlay p {
-            font-family: 'Inter', sans-serif;
-            font-weight: 400;
-            font-size: 1.2rem;
-            line-height: 1.5;
-            color: #ffffff;
-            max-width: 330px;
-            margin: 0 auto 36px auto;
-        }
-
-        @media (min-width: 640px) {
-            .gradient-overlay {
-                padding-top: 70px;
-            }
-
-            .gradient-overlay p {
-                font-size: 1.8rem;
-                max-width: 900px;
-                margin-bottom: 60px;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Het Zwevende SVG Sterretje -->
-    <div id="starContainer" class="floating-star-container">
-        <img src="ster.svg" alt="Noordernacht Ster" />
-    </div>
-
-    <!-- Rechtsboven: Ticket Knop -->
-    <div class="ticket-btn-container">
-        <a href="#tickets" class="top-btn">Tickets</a>
-    </div>
-
-    <section class="hero">
-        <video autoplay muted loop playsinline preload="auto">
-            <source src="achtergrond.mp4" type="video/mp4">
-        </video>
-
-        <!-- Subtiele Interlace Overlay -->
-        <div class="hero-interlace-overlay"></div>
-
-        <div class="hero-content">
-            <div id="heroLogoWrapper">
-                <img src="logo.svg" alt="Noordernacht Logo" class="hero-logo">
-            </div>
-
-            <div class="hero-subtitle">Find<br class="m-br"> your people<br>Feel<br class="m-br"> the moment</div>
-        </div>
-
-        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-        </a>
-    </section>
-
-    <section class="gradient-overlay" id="tickets">
-        <h2>Over<br>Noorder<br class="m-br">nacht</h2>
-
-        <p>
-            Noordernacht is waar gelijkgestemden samenkomen in het duister van de nacht.
-            Laat de muziek je meenemen en verlies jezelf in een ruimte waarin muziek, energie
-            en verbinding je meenemen. Hier vind je jouw mensen en beleef je het moment.
-        </p>
-        <a href="#tickets" class="bottom-ticket-btn">
-            <span class="d-only">Bestel hier je tickets</span><span class="m-only">Tickets</span>
-        </a>
-    </section>
-
-    <script>
-        const starContainer = document.getElementById('starContainer');
-
-        let targetX = window.innerWidth / 2;
-        let targetY = window.innerHeight / 2;
-        let starX = targetX;
-        let starY = targetY;
-
-        let rotationAngle = 0;
-        let lastMouseTime = Date.now();
-        let isUserMovingMouse = true;
-
-        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.innerWidth <= 768);
-
-        window.addEventListener('mousemove', (e) => {
-            lastMouseTime = Date.now();
-            isUserMovingMouse = true;
-            targetX = e.clientX;
-            targetY = e.clientY;
-        });
-
-        window.addEventListener('touchmove', (e) => {
-            lastMouseTime = Date.now();
-            isUserMovingMouse = true;
-            if (e.touches.length > 0) {
-                targetX = e.touches[0].clientX;
-                targetY = e.touches[0].clientY;
-            }
-        });
-
-        function renderAnimation() {
-            rotationAngle += 1.5;
-
-            if (isTouchDevice) {
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2 - 50;
-                const radiusX = Math.min(window.innerWidth * 0.32, 320);
-                const radiusY = Math.min(window.innerHeight * 0.22, 170);
-                const time = Date.now() * 0.0015;
-                starX = centerX + Math.cos(time) * radiusX;
-                starY = centerY + Math.sin(time * 1.3) * radiusY;
-            } else {
-                const timeSinceMove = Date.now() - lastMouseTime;
-                if (timeSinceMove > 1200) {
-                    isUserMovingMouse = false;
-                }
-
-                if (isUserMovingMouse) {
-                    starX += (targetX - starX) * 0.035;
-                    starY += (targetY - starY) * 0.035;
-                } else {
-                    const centerX = window.innerWidth / 2;
-                    const centerY = window.innerHeight / 2 - 50;
-                    const radiusX = Math.min(window.innerWidth * 0.32, 320);
-                    const radiusY = Math.min(window.innerHeight * 0.22, 170);
-                    const time = Date.now() * 0.0015;
-
-                    const targetOrbitX = centerX + Math.cos(time) * radiusX;
-                    const targetOrbitY = centerY + Math.sin(time * 1.3) * radiusY;
-
-                    starX += (targetOrbitX - starX) * 0.02;
-                    starY += (targetOrbitY - starY) * 0.02;
-                }
-            }
-
-            const offsetCorrection = window.innerWidth <= 768 ? 39 : 26;
-            starContainer.style.transform = `translate3d(${starX - offsetCorrection}px, ${starY - offsetCorrection}px, 0) rotate(${rotationAngle}deg)`;
-            requestAnimationFrame(renderAnimation);
-        }
-
-        requestAnimationFrame(renderAnimation);
-
-        const logoWrapper = document.getElementById('heroLogoWrapper');
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition <= 500) {
-                const scale = 1 - (scrollPosition / 500) * 0.25;
-                logoWrapper.style.transform = `scale(${scale})`;
-            } else {
-                logoWrapper.style.transform = 'scale(0.75)';
-            }
-        });
-    </script>
-</body>
-</html>
