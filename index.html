@@ -189,25 +189,22 @@
             white-space: nowrap;
         }
 
-        /* Zwevend SVG Sterretje Container (Laden van jouw specifieke ster.svg) */
+        /* Zwevend SVG Sterretje Container (1.3x groter, zonder glow) */
         .floating-star-container {
             position: fixed;
             top: 0;
             left: 0;
-            width: 40px;
-            height: 40px;
+            width: 52px;
+            height: 52px;
             pointer-events: none;
             z-index: 9999;
             will-change: transform;
         }
 
-        .floating-star-container img {
+        .floating-star-container svg {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            /* Filter kleurt de SVG exact naar de neon-groene kleur #20e070 van de knop + felle gloei */
-            filter: drop-shadow(0 0 12px rgba(32, 224, 112, 0.95)) 
-                    invert(68%) sepia(85%) saturate(450%) hue-rotate(90deg) brightness(102%) contrast(98%);
+            display: block;
         }
 
         /* Scroll Arrow */
@@ -295,15 +292,17 @@
 </head>
 <body>
 
-    <!-- Zwevend SVG Sterretje Container die exact ster.svg inlaadt -->
+    <!-- Het SVG Sterretje (Inline SVG in exacte kleur #20e070, 1.3x groter, zonder glow) -->
     <div id="starContainer" class="floating-star-container">
-        <img src="ster.svg" alt="Noordernacht Ster" />
+        <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z" fill="#20e070"/>
+        </svg>
     </div>
 
     <!-- Linksboven: Animatie Switch Knop + Versietag + Status -->
     <div class="anim-btn-container">
         <button id="animBtn" class="top-btn" type="button">Animatie</button>
-        <span class="version-tag">v25.0</span>
+        <span class="version-tag">v26.0</span>
         <span id="statusSubTag" class="status-tag">TRAIL (SLOW)</span>
     </div>
 
@@ -322,7 +321,7 @@
 
         <div class="hero-content">
             <div id="heroLogoWrapper">
-                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
+                <img src="logo.svg" alt="Noordernacht Logo" class="hero-logo">
             </div>
 
             <div class="hero-subtitle">
@@ -416,7 +415,7 @@
                 }
             }
 
-            starContainer.style.transform = `translate3d(${starX - 20}px, ${starY - 20}px, 0) rotate(${rotationAngle}deg)`;
+            starContainer.style.transform = `translate3d(${starX - 26}px, ${starY - 26}px, 0) rotate(${rotationAngle}deg)`;
             requestAnimationFrame(renderAnimation);
         }
 
