@@ -53,8 +53,8 @@
             filter: brightness(0.7);
         }
 
-        /* Subtiele Interlacing / Scanlines Overlay over de video (Super licht voor de CPU) */
-        .hero-interlace-overlay {
+        /* Subtiele Grain / Noise Overlay over de video */
+        .hero-grain-overlay {
             position: absolute;
             top: 0;
             left: 0;
@@ -62,12 +62,8 @@
             height: 100%;
             z-index: 2;
             pointer-events: none;
-            background: linear-gradient(
-                rgba(18, 16, 16, 0) 50%, 
-                rgba(0, 0, 0, 0.25) 50%
-            );
-            background-size: 100% 4px; /* Maakt fijne horizontale interlacing-lijntjes */
-            opacity: 0.6;
+            opacity: 0.12;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
         /* Top Buttons Base (In Unbounded) */
@@ -193,17 +189,25 @@
             white-space: nowrap;
         }
 
-        /* Zwevend SVG Sterretje Container */
+        /* Zwevend SVG Sterretje Container (Laden van jouw specifieke ster.svg) */
         .floating-star-container {
             position: fixed;
             top: 0;
             left: 0;
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             pointer-events: none;
             z-index: 9999;
             will-change: transform;
-            filter: drop-shadow(0 0 14px rgba(32, 224, 112, 0.9));
+        }
+
+        .floating-star-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* Filter kleurt de SVG exact naar de neon-groene kleur #20e070 van de knop + felle gloei */
+            filter: drop-shadow(0 0 12px rgba(32, 224, 112, 0.95)) 
+                    invert(68%) sepia(85%) saturate(450%) hue-rotate(90deg) brightness(102%) contrast(98%);
         }
 
         /* Scroll Arrow */
@@ -291,17 +295,15 @@
 </head>
 <body>
 
-    <!-- Het Geüploade SVG Sterretje (Inline geïmplementeerd voor exacte groene kleur #20e070) -->
+    <!-- Zwevend SVG Sterretje Container die exact ster.svg inlaadt -->
     <div id="starContainer" class="floating-star-container">
-        <svg viewBox="0 0 100 100" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50 0 Q50 50 100 50 Q50 50 50 100 Q50 50 0 50 Q50 50 50 0 Z" fill="#20e070"/>
-        </svg>
+        <img src="ster.svg" alt="Noordernacht Ster" />
     </div>
 
     <!-- Linksboven: Animatie Switch Knop + Versietag + Status -->
     <div class="anim-btn-container">
         <button id="animBtn" class="top-btn" type="button">Animatie</button>
-        <span class="version-tag">v24.0</span>
+        <span class="version-tag">v25.0</span>
         <span id="statusSubTag" class="status-tag">TRAIL (SLOW)</span>
     </div>
 
@@ -315,8 +317,8 @@
             <source src="achtergrond.mp4" type="video/mp4">
         </video>
 
-        <!-- Subtiele interlacing overlay -->
-        <div class="hero-interlace-overlay"></div>
+        <!-- Subtiele Film Grain Overlay -->
+        <div class="hero-grain-overlay"></div>
 
         <div class="hero-content">
             <div id="heroLogoWrapper">
@@ -414,7 +416,7 @@
                 }
             }
 
-            starContainer.style.transform = `translate3d(${starX - 22}px, ${starY - 22}px, 0) rotate(${rotationAngle}deg)`;
+            starContainer.style.transform = `translate3d(${starX - 20}px, ${starY - 20}px, 0) rotate(${rotationAngle}deg)`;
             requestAnimationFrame(renderAnimation);
         }
 
