@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noordernacht</title>
     
-    <!-- Unbounded (Headers, Payoff, Knoppen) + Inter (Broodtekst) -->
+    <!-- Werkende Google Fonts import -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Unbounded:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Unbounded:wght@400..900&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -53,7 +53,7 @@
             filter: brightness(0.65);
         }
 
-        /* Top Buttons Base (Nu in Unbounded) */
+        /* Top Buttons Base (In Unbounded) */
         .top-btn {
             background-color: #20e070;
             color: #0b0b0b;
@@ -201,7 +201,6 @@
             z-index: 9999;
             filter: drop-shadow(0 0 10px rgba(32, 224, 112, 0.8));
             transform: translate(-50%, -50%);
-            transition: opacity 0.3s ease;
         }
 
         /* Scroll Arrow */
@@ -254,8 +253,107 @@
             }
         }
 
-        /* Broodtekst - Altijd vast op Inter */
+        /* Broodtekst - Vast op Inter */
         .gradient-overlay p {
             font-family: 'Inter', sans-serif;
             font-weight: 300;
             font-size: 1.2rem;
+            color: #cccccc;
+            max-width: 720px;
+            margin: 0 auto 40px auto;
+            line-height: 1.7;
+        }
+
+        .bottom-ticket-btn {
+            background-color: #20e070;
+            color: #0b0b0b;
+            padding: 16px 40px;
+            border-radius: 9999px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 6px 24px rgba(32, 224, 112, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .bottom-ticket-btn:hover {
+            background-color: #28f07c;
+            transform: translateY(-3px) scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SVG Sterretje uit het logo -->
+    <svg id="starSvg" class="floating-star" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 0 C50 32, 68 50, 100 50 C68 50, 50 68, 50 100 C50 68, 32 50, 0 50 C32 50, 50 32, 50 0 Z" fill="#20e070"/>
+    </svg>
+
+    <!-- Linksboven: Animatie Switch Knop + Versietag -->
+    <div class="anim-btn-container">
+        <button id="animBtn" class="top-btn" type="button">Animatie</button>
+        <span class="version-tag">v14.0</span>
+    </div>
+
+    <!-- Rechtsboven: Ticket Knop (in Unbounded) -->
+    <div class="ticket-btn-container">
+        <a href="#tickets" class="top-btn">Tickets</a>
+    </div>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="achtergrond.mp4" type="video/mp4">
+        </video>
+
+        <div class="hero-content">
+            <div id="heroLogoWrapper">
+                <img src="logo.png" alt="Noordernacht Logo" class="hero-logo">
+            </div>
+
+            <!-- Groen bolletje + Animatie status -->
+            <div class="anim-indicator-badge">
+                <span class="dot"></span>
+                <span id="animBadgeText">CURSOR TRAIL (SLOW MOTION)</span>
+            </div>
+
+            <!-- Payoff in Unbounded -->
+            <div class="hero-subtitle">
+                <span class="whitespace-nowrap">Find your people,</span> 
+                <span class="whitespace-nowrap">Feel the moment</span>
+            </div>
+        </div>
+
+        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </a>
+    </section>
+
+    <section class="gradient-overlay" id="tickets">
+        <h2>Over Noordernacht</h2>
+        
+        <p>
+            Noordernacht is dé plek waar gelijkgestemden samenkomen in het duister van de nacht. 
+            Laat de meeslepende elektronische beats je meenemen en verlies jezelf in een betoverende sfeer 
+            waarin muziek, energie en verbinding centraal staan. Hier vind je jouw mensen en beleef je het moment.
+        </p>
+        <a href="#tickets" class="bottom-ticket-btn">Meteen Tickets Bestellen</a>
+    </section>
+
+    <script>
+        const star = document.getElementById('starSvg');
+        const badgeText = document.getElementById('animBadgeText');
+        
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let starX = mouseX;
+        let starY = mouseY;
+
+        // 0 = Cursor Trail (Slow Motion), 1 = Orbit Flow (Rondzweven)
+        let currentAnimMode = 0; 
+        let orbitAngle = 0;
+
+        window.addEventListener('mousemove', (e)
