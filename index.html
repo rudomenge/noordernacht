@@ -1,4 +1,4 @@
-<!-- Versie: 36.1 - Noordernacht: SoundCloud start pas na een klik op play, rest van v36.0 (volume, carousel, mobiel) -->
+<!-- Versie: 36.2 - Noordernacht: mobiel logo 1.1x groter, payoff dichter op het logo, geheel gecentreerd; rest van v36.1 -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -371,6 +371,7 @@
             position: relative;
             width: 100%;
             height: 100vh;
+            height: 100svh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -487,16 +488,19 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 20px 20px 0 20px;
+            padding: 0 20px;
+            /* Op mobiel het geheel iets omhoog, zodat logo + payoff optisch in het midden staan */
+            transform: translateY(-4vh);
         }
 
-        /* Logo (bevat de sterretjes zelf): op mobiel bijna schermbreed */
+        /* Logo (bevat de sterretjes zelf): op mobiel schermbreed. De SVG heeft
+           lege ruimte rond het beeld, vandaar de negatieve marge onder het logo. */
         .hero-logo {
             display: block;
-            width: 92vw;
-            max-width: 92vw;
+            width: 101vw;
+            max-width: 101vw;
             height: auto;
-            margin: 0 auto 22px auto;
+            margin: 0 -10.5vw -6vw -10.5vw;
             filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
             transition: transform 0.1s linear;
         }
@@ -504,12 +508,13 @@
         @media (min-width: 640px) {
             .hero-content {
                 padding-top: 50px;
+                transform: none;
             }
 
             .hero-logo {
                 width: 695px;
                 max-width: 695px;
-                margin-bottom: 33px;
+                margin: 0 auto 33px auto;
             }
         }
 
@@ -722,7 +727,7 @@
 <body>
 
     <!-- Klein versienummer linksboven -->
-    <div class="version-tag">v36.1</div>
+    <div class="version-tag">v36.2</div>
 
     <!-- Muziekspeler linksonder: play/pauze + titel + artiest + volume. Muziek staat uit tot de bezoeker op play drukt. -->
     <div id="scPlayer" class="sc-player invite" role="group" aria-label="Muziekspeler">
