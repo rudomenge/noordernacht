@@ -1,4 +1,4 @@
-<!-- Versie: 35.2 - Noordernacht: ster/logo/foto-script los van SoundCloud, SoundCloud async + foutmeldingen -->
+<!-- Versie: 36.0 - Noordernacht: volumeknop bij muziek, carousel pauzeert niet meer, mobiel groter logo + Agenda-knop onder de carousel -->
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -75,11 +75,9 @@
             align-items: center;
             gap: 10px;
             max-width: calc(100vw - 40px);
-            padding: 5px 16px 5px 5px;
+            padding: 5px 12px 5px 5px;
             border-radius: 9999px;
-            background: rgba(11, 11, 11, 0.6);
-            -webkit-backdrop-filter: blur(8px);
-            backdrop-filter: blur(8px);
+            background: rgba(11, 11, 11, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.25);
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -126,18 +124,14 @@
         .sc-player.is-playing .icon-play { display: none; }
         .sc-player.is-playing .icon-pause { display: block; }
 
-        .sc-player.is-loading .sc-toggle {
+        /* Bezig met laden na een klik */
+        .sc-player.is-busy .sc-toggle {
             opacity: 0.5;
             cursor: default;
         }
 
-        .sc-player.is-loading .sc-toggle:hover {
-            transform: none;
-            background: var(--accent);
-        }
-
         /* Zachte pulserende ring tot de bezoeker voor het eerst klikt */
-        .sc-player.invite:not(.is-loading) .sc-toggle {
+        .sc-player.invite .sc-toggle {
             animation: sc-pulse 2.4s ease-out infinite;
         }
 
@@ -208,13 +202,119 @@
             50%      { height: 12px; }
         }
 
-        /* Verborgen SoundCloud-frame: 1px in beeld en onzichtbaar. Levert alleen het geluid. */
+        /* Volumeknop: speaker die een klein schuifje openklapt */
+        .sc-vol {
+            --vol-w: 64px;
+            display: flex;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        .sc-vol-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+            transition: color 0.3s ease;
+        }
+
+        .sc-vol-btn:hover,
+        .sc-vol.open .sc-vol-btn {
+            color: var(--accent);
+        }
+
+        .sc-vol-btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .sc-vol-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .sc-vol-btn .icon-muted { display: none; }
+        .sc-vol.is-muted .icon-vol { display: none; }
+        .sc-vol.is-muted .icon-muted { display: block; }
+
+        .sc-vol-wrap {
+            width: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            transition: width 0.3s ease, margin 0.3s ease;
+        }
+
+        .sc-vol.open .sc-vol-wrap,
+        .sc-vol:focus-within .sc-vol-wrap {
+            width: var(--vol-w);
+            margin-left: 4px;
+        }
+
+        @media (hover: hover) {
+            .sc-vol:hover .sc-vol-wrap {
+                width: var(--vol-w);
+                margin-left: 4px;
+            }
+        }
+
+        .sc-vol-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: var(--vol-w);
+            height: 18px;
+            margin: 0;
+            background: transparent;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .sc-vol-slider::-webkit-slider-runnable-track {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .sc-vol-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            margin-top: -4.5px;
+            border: none;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .sc-vol-slider::-moz-range-track {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .sc-vol-slider::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            border: none;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* Verborgen SoundCloud-frame (wordt door het script aangemaakt): levert alleen het geluid */
         .sc-frame {
             position: fixed;
-            left: 0;
+            left: -9999px;
             bottom: 0;
-            width: 1px;
-            height: 1px;
+            width: 100px;
+            height: 100px;
             border: 0;
             opacity: 0;
             pointer-events: none;
@@ -225,7 +325,7 @@
                 left: 60px;
                 bottom: 60px;
                 gap: 14px;
-                padding: 6px 24px 6px 6px;
+                padding: 6px 16px 6px 6px;
             }
 
             .sc-toggle {
@@ -246,6 +346,18 @@
             .sc-artist {
                 font-size: 12px;
                 max-width: 240px;
+            }
+
+            .sc-vol { --vol-w: 90px; }
+
+            .sc-vol-btn {
+                width: 32px;
+                height: 32px;
+            }
+
+            .sc-vol-btn svg {
+                width: 19px;
+                height: 19px;
             }
         }
 
@@ -334,6 +446,12 @@
             outline: none;
         }
 
+        /* Knoppen in de zwarte sectie: op mobiel iets groter dan de knop bovenin */
+        .bottom-ticket-btn {
+            font-size: 1.14rem;
+            padding: 3px 17px;
+        }
+
         .top-btn:hover,
         .bottom-ticket-btn:hover {
             background-color: var(--accent-hover);
@@ -369,21 +487,25 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 50px 20px 0 20px;
+            padding: 20px 20px 0 20px;
         }
 
-        /* Logo (bevat de sterretjes zelf) */
+        /* Logo (bevat de sterretjes zelf): op mobiel bijna schermbreed */
         .hero-logo {
             display: block;
-            width: 81vw;
-            max-width: 81vw;
+            width: 92vw;
+            max-width: 92vw;
             height: auto;
-            margin: 0 auto 25px auto;
+            margin: 0 auto 22px auto;
             filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
             transition: transform 0.1s linear;
         }
 
         @media (min-width: 640px) {
+            .hero-content {
+                padding-top: 50px;
+            }
+
             .hero-logo {
                 width: 695px;
                 max-width: 695px;
@@ -408,9 +530,12 @@
             text-shadow: 0 3px 12px rgba(0, 0, 0, 0.9);
         }
 
+        /* Kop op mobiel iets groter dan de payoff */
         .gradient-overlay h2 {
             color: var(--accent);
-            margin-bottom: 22px;
+            font-size: 31px;
+            line-height: 26px;
+            margin-bottom: 14px;
         }
 
         @media (min-width: 640px) {
@@ -515,21 +640,17 @@
             }
         }
 
-        /* Foto-carousel: loopt langzaam en eindeloos van rechts naar links */
+        /* Foto-carousel: loopt langzaam en eindeloos van rechts naar links, pauzeert nooit */
         .carousel {
             width: 100%;
             overflow: hidden;
-            margin-top: 63px;
+            margin-top: 32px;
         }
 
         .carousel-track {
             display: flex;
             width: max-content;
             animation: carousel-scroll 45s linear infinite;
-        }
-
-        .carousel:hover .carousel-track {
-            animation-play-state: paused;
         }
 
         .carousel-item {
@@ -552,357 +673,3 @@
             object-fit: cover;
             object-position: center center;
             display: block;
-        }
-
-        /* Verschijnt alleen als een foto niet gevonden wordt */
-        .img-missing {
-            padding: 12px;
-            text-align: center;
-            font-family: 'Inter', sans-serif;
-            font-size: 11px;
-            line-height: 1.4;
-            color: var(--accent);
-            word-break: break-all;
-        }
-
-        @keyframes carousel-scroll {
-            from { transform: translateX(0); }
-            to   { transform: translateX(-50%); }
-        }
-
-        @media (min-width: 640px) {
-            .carousel { margin-top: 204px; }
-
-            .carousel-track { animation-duration: 70s; }
-
-            .carousel-item {
-                width: 490px;
-                height: 330px;
-                margin-right: 57px;
-                border-radius: 50px;
-            }
-
-            .img-missing { font-size: 16px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .carousel-track { animation: none; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Klein versienummer linksboven -->
-    <div class="version-tag">v35.2</div>
-
-    <!-- SoundCloud-speler linksonder: knop + titel + artiest. Muziek staat uit tot de bezoeker op play drukt. -->
-    <div id="scPlayer" class="sc-player is-loading invite" role="group" aria-label="Muziekspeler">
-        <button id="scToggle" class="sc-toggle" type="button" aria-label="Muziek afspelen">
-            <!-- Play -->
-            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <polygon points="6 4 20 12 6 20 6 4"></polygon>
-            </svg>
-            <!-- Pauze -->
-            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <rect x="5" y="4" width="5" height="16" rx="1.2"></rect>
-                <rect x="14" y="4" width="5" height="16" rx="1.2"></rect>
-            </svg>
-        </button>
-        <div class="sc-info">
-            <a id="scTitle" class="sc-title" href="#" target="_blank" rel="noopener">Muziek laden…</a>
-            <span id="scArtist" class="sc-artist">SoundCloud</span>
-        </div>
-        <div class="sc-eq" aria-hidden="true"><i></i><i></i><i></i></div>
-    </div>
-
-    <!-- Verborgen SoundCloud-frame (alleen voor het geluid) -->
-    <iframe id="scFrame" class="sc-frame" title="SoundCloud" allow="autoplay" tabindex="-1" aria-hidden="true"></iframe>
-
-    <!-- Het Zwevende SVG Sterretje -->
-    <div id="starContainer" class="floating-star-container">
-        <img src="ster.svg" alt="" />
-    </div>
-
-    <!-- Linksboven: Agenda Knop (alleen desktop) -->
-    <div class="agenda-btn-container">
-        <a href="#agenda" class="top-btn">Agenda</a>
-    </div>
-
-    <!-- Rechtsboven: Ticket Knop -->
-    <div class="ticket-btn-container">
-        <a href="#tickets" class="top-btn">Tickets</a>
-    </div>
-
-    <section class="hero">
-        <video autoplay muted loop playsinline preload="auto">
-            <source src="achtergrond.mp4" type="video/mp4">
-        </video>
-
-        <!-- Subtiele Interlace Overlay -->
-        <div class="hero-interlace-overlay"></div>
-
-        <div class="hero-content">
-            <div id="heroLogoWrapper">
-                <img src="logo.svg" alt="Noordernacht Logo" class="hero-logo">
-            </div>
-
-            <div class="hero-subtitle">Find<br class="m-br"> your people<br>Feel<br class="m-br"> the moment</div>
-        </div>
-
-        <a href="#tickets" class="scroll-arrow" aria-label="Scroll naar onderen">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-        </a>
-    </section>
-
-    <section class="gradient-overlay" id="tickets">
-        <h2>Over<br>Noorder<br class="m-br">nacht</h2>
-
-        <p>
-            Noordernacht is waar gelijkgestemden samenkomen in het duister van de nacht.
-            Laat de muziek je meenemen en verlies jezelf in een ruimte waarin muziek, energie
-            en verbinding je meenemen. Hier vind je jouw mensen en beleef je het moment.
-        </p>
-        <a href="#tickets" class="bottom-ticket-btn">
-            <span class="d-only">Bestel hier je tickets</span><span class="m-only">Tickets</span>
-        </a>
-
-        <!-- Foto-carousel: de set staat twee keer (tweede set verborgen voor schermlezers) voor een naadloze lus -->
-        <div class="carousel" aria-label="Sfeerfoto's">
-            <div class="carousel-track">
-                <div class="carousel-item"><img src="foto-1.jpg" alt=""></div>
-                <div class="carousel-item"><img src="foto-2.jpg" alt=""></div>
-                <div class="carousel-item"><img src="foto-3.jpg" alt=""></div>
-                <div class="carousel-item"><img src="foto-4.jpg" alt=""></div>
-                <div class="carousel-item"><img src="foto-5.jpg" alt=""></div>
-                <div class="carousel-item"><img src="foto-6.jpg" alt=""></div>
-
-                <div class="carousel-item" aria-hidden="true"><img src="foto-1.jpg" alt=""></div>
-                <div class="carousel-item" aria-hidden="true"><img src="foto-2.jpg" alt=""></div>
-                <div class="carousel-item" aria-hidden="true"><img src="foto-3.jpg" alt=""></div>
-                <div class="carousel-item" aria-hidden="true"><img src="foto-4.jpg" alt=""></div>
-                <div class="carousel-item" aria-hidden="true"><img src="foto-5.jpg" alt=""></div>
-                <div class="carousel-item" aria-hidden="true"><img src="foto-6.jpg" alt=""></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===================== SCRIPT 1: ster, logo en foto's (los van SoundCloud) ===================== -->
-    <script>
-        /* ---------- Foto's: laat zien welke foto niet gevonden wordt ---------- */
-        function markMissing(img) {
-            if (img.dataset.missing) return;
-            img.dataset.missing = '1';
-            img.style.display = 'none';
-            const note = document.createElement('span');
-            note.className = 'img-missing';
-            note.textContent = 'Niet gevonden: ' + img.getAttribute('src');
-            img.parentNode.appendChild(note);
-        }
-
-        document.querySelectorAll('.carousel-item img').forEach((img) => {
-            img.addEventListener('error', () => markMissing(img));
-        });
-
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.carousel-item img').forEach((img) => {
-                if (img.complete && img.naturalWidth === 0) markMissing(img);
-            });
-        });
-
-        /* ---------- Zwevende ster ---------- */
-        const starContainer = document.getElementById('starContainer');
-
-        let targetX = window.innerWidth / 2;
-        let targetY = window.innerHeight / 2;
-        let starX = targetX;
-        let starY = targetY;
-
-        let rotationAngle = 0;
-        let lastMouseTime = Date.now();
-        let isUserMovingMouse = true;
-
-        const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.innerWidth <= 768);
-
-        window.addEventListener('mousemove', (e) => {
-            lastMouseTime = Date.now();
-            isUserMovingMouse = true;
-            targetX = e.clientX;
-            targetY = e.clientY;
-        });
-
-        window.addEventListener('touchmove', (e) => {
-            lastMouseTime = Date.now();
-            isUserMovingMouse = true;
-            if (e.touches.length > 0) {
-                targetX = e.touches[0].clientX;
-                targetY = e.touches[0].clientY;
-            }
-        });
-
-        function renderAnimation() {
-            rotationAngle += 1.5;
-
-            if (isTouchDevice) {
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2 - 50;
-                const radiusX = Math.min(window.innerWidth * 0.32, 320);
-                const radiusY = Math.min(window.innerHeight * 0.22, 170);
-                const time = Date.now() * 0.0015;
-                starX = centerX + Math.cos(time) * radiusX;
-                starY = centerY + Math.sin(time * 1.3) * radiusY;
-            } else {
-                const timeSinceMove = Date.now() - lastMouseTime;
-                if (timeSinceMove > 1200) {
-                    isUserMovingMouse = false;
-                }
-
-                if (isUserMovingMouse) {
-                    starX += (targetX - starX) * 0.035;
-                    starY += (targetY - starY) * 0.035;
-                } else {
-                    const centerX = window.innerWidth / 2;
-                    const centerY = window.innerHeight / 2 - 50;
-                    const radiusX = Math.min(window.innerWidth * 0.32, 320);
-                    const radiusY = Math.min(window.innerHeight * 0.22, 170);
-                    const time = Date.now() * 0.0015;
-
-                    const targetOrbitX = centerX + Math.cos(time) * radiusX;
-                    const targetOrbitY = centerY + Math.sin(time * 1.3) * radiusY;
-
-                    starX += (targetOrbitX - starX) * 0.02;
-                    starY += (targetOrbitY - starY) * 0.02;
-                }
-            }
-
-            const offsetCorrection = window.innerWidth <= 768 ? 39 : 26;
-            starContainer.style.transform = `translate3d(${starX - offsetCorrection}px, ${starY - offsetCorrection}px, 0) rotate(${rotationAngle}deg)`;
-            requestAnimationFrame(renderAnimation);
-        }
-
-        requestAnimationFrame(renderAnimation);
-
-        /* ---------- Logo schaalt mee met scrollen ---------- */
-        const logoWrapper = document.getElementById('heroLogoWrapper');
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            if (scrollPosition <= 500) {
-                const scale = 1 - (scrollPosition / 500) * 0.25;
-                logoWrapper.style.transform = `scale(${scale})`;
-            } else {
-                logoWrapper.style.transform = 'scale(0.75)';
-            }
-        });
-    </script>
-
-    <!-- ===================== SCRIPT 2: SoundCloud-speler (apart, kan niets anders blokkeren) ===================== -->
-    <script>
-        (function () {
-            /* Link van de SoundCloud-track (tracktitel en artiest worden automatisch opgehaald) */
-            var SOUNDCLOUD_URL = 'https://soundcloud.com/mia_lafontaine/noordenacht';
-            var MUSIC_VOLUME = 60; /* 0 - 100 */
-
-            var scPlayer = document.getElementById('scPlayer');
-            var scToggle = document.getElementById('scToggle');
-            var scFrame = document.getElementById('scFrame');
-            var scTitle = document.getElementById('scTitle');
-            var scArtist = document.getElementById('scArtist');
-            var ready = false;
-
-            function showPlayerMessage(title, sub) {
-                scTitle.textContent = title;
-                scTitle.removeAttribute('href');
-                scArtist.textContent = sub;
-                scPlayer.classList.add('is-loading');
-                scPlayer.classList.remove('invite');
-                scPlayer.classList.remove('is-playing');
-            }
-
-            function setupWidget() {
-                try {
-                    if (typeof SC === 'undefined' || !SC.Widget) {
-                        showPlayerMessage('Muziek niet beschikbaar', 'SoundCloud kon niet laden');
-                        return;
-                    }
-
-                    scFrame.src = 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(SOUNDCLOUD_URL) +
-                        '&auto_play=false&hide_related=true&show_comments=false&show_user=true' +
-                        '&show_reposts=false&show_teaser=false&visual=false';
-
-                    var widget = SC.Widget(scFrame);
-
-                    widget.bind(SC.Widget.Events.READY, function () {
-                        ready = true;
-                        widget.setVolume(MUSIC_VOLUME);
-                        widget.getCurrentSound(function (sound) {
-                            if (sound) {
-                                scTitle.textContent = sound.title || 'Noordernacht';
-                                scTitle.href = sound.permalink_url || SOUNDCLOUD_URL;
-                                var artist = sound.user && sound.user.username ? sound.user.username : '';
-                                scArtist.textContent = (artist ? artist + ' · ' : '') + 'SoundCloud';
-                            } else {
-                                scTitle.textContent = 'Noordernacht';
-                                scTitle.href = SOUNDCLOUD_URL;
-                                scArtist.textContent = 'SoundCloud';
-                            }
-                        });
-                        scPlayer.classList.remove('is-loading');
-                    });
-
-                    function syncLabel() {
-                        scToggle.setAttribute('aria-label',
-                            scPlayer.classList.contains('is-playing') ? 'Muziek pauzeren' : 'Muziek afspelen');
-                    }
-
-                    widget.bind(SC.Widget.Events.PLAY, function () {
-                        scPlayer.classList.add('is-playing');
-                        syncLabel();
-                    });
-                    widget.bind(SC.Widget.Events.PAUSE, function () {
-                        scPlayer.classList.remove('is-playing');
-                        syncLabel();
-                    });
-                    widget.bind(SC.Widget.Events.FINISH, function () {
-                        /* Eindeloze herhaling */
-                        widget.seekTo(0);
-                        widget.play();
-                    });
-                    widget.bind(SC.Widget.Events.ERROR, function () {
-                        showPlayerMessage('Muziek niet beschikbaar', 'Controleer de SoundCloud-link');
-                    });
-
-                    scToggle.addEventListener('click', function () {
-                        if (!ready) return;
-                        scPlayer.classList.remove('invite');
-                        widget.toggle();
-                    });
-
-                    /* Als SoundCloud na 10 seconden nog niet klaar is */
-                    setTimeout(function () {
-                        if (!ready) {
-                            showPlayerMessage('Muziek niet beschikbaar', 'SoundCloud reageert niet');
-                        }
-                    }, 10000);
-                } catch (err) {
-                    if (window.console) console.error('SoundCloud-speler:', err);
-                    showPlayerMessage('Muziek niet beschikbaar', 'Er ging iets mis');
-                }
-            }
-
-            if (!/^https:\/\/soundcloud\.com\//.test(SOUNDCLOUD_URL)) {
-                showPlayerMessage('SoundCloud-link ontbreekt', 'Zie SOUNDCLOUD_URL in de code');
-                return;
-            }
-
-            /* SoundCloud-script op de achtergrond laden, zodat de pagina er nooit op wacht */
-            var apiScript = document.createElement('script');
-            apiScript.src = 'https://w.soundcloud.com/player/api.js';
-            apiScript.async = true;
-            apiScript.onload = setupWidget;
-            apiScript.onerror = function () {
-                showPlayerMessage('Muziek niet beschikbaar', 'SoundCloud wordt geblokkeerd');
-            };
-            document.head.appendChild(apiScript);
-        })();
-    </script>
-</body>
-</html>
